@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using KPcore.Models;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace KPcore.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Topic> Topics { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -19,6 +21,16 @@ namespace KPcore.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Topic>()
+                .HasOne(t => t.Subject)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Topic>()
+                .HasOne(t => t.Teacher)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+            
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
