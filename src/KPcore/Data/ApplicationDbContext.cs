@@ -15,6 +15,7 @@ namespace KPcore.Data
         public DbSet<Topic> Topics { get; set; }
         public DbSet<TopicEntry> TopicEntries { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<StudentGroup> StudentGroups { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -47,6 +48,19 @@ namespace KPcore.Data
                 .HasOne(s => s.Subject)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<StudentGroup>()
+                .HasKey(sg => new { sg.StudentId, sg.GroupId });
+
+            builder.Entity<StudentGroup>()
+                .HasOne(s => s.Student)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<StudentGroup>()
+                .HasOne(g => g.Group)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
 
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
