@@ -13,6 +13,7 @@ namespace KPcore.Data
     {
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<TopicEntry> TopicEntries { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -30,7 +31,17 @@ namespace KPcore.Data
                 .HasOne(t => t.Teacher)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
+            builder.Entity<TopicEntry>()
+                .HasOne(t => t.Topic)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TopicEntry>()
+                .HasOne(a => a.Author)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
