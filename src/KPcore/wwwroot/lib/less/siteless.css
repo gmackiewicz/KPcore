@@ -75,7 +75,7 @@ textarea {
 }
 hr {
   border: 0;
-  height: 4px;
+  height: 3px;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0));
 }
 .font-lato {
@@ -123,7 +123,7 @@ h2 {
   border: 2px solid black;
 }
 .btn-grey:hover {
-  background: #F64C2B;
+  background: #f6492b;
   color: #ffffff;
 }
 .btn-grey:active,
@@ -160,4 +160,51 @@ h2 {
 }
 .font-grey {
   color: #999999;
+}
+.group-list .molten-core {
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+}
+.group-list a {
+  color: #fc9a07;
+  text-decoration: none;
+}
+.group-list a:hover {
+  color: #ffffff;
+}
+.group-list hr {
+  margin: 5px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
+}
+.group-list li {
+  font-size: 28px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
+}
+.group-list li:hover {
+  animation: rgb 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes rgb {
+  /* 0% will fallback to the default background-color of #rgb*/
+  100% {
+    background-color: rgba(246, 73, 43, 0.1);
+    /*red*/
+  }
+}
+.fade {
+  opacity: 1;
+}
+.fade .showthis {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+.fade .hidethis {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+.fade:hover .hidethis {
+  opacity: 0;
+}
+.fade:hover .showthis {
+  opacity: 1;
 }
