@@ -8,6 +8,8 @@ namespace KPcore.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        public int UserStatus { get; set; }
+
         public bool HasPassword { get; set; }
 
         public IList<UserLoginInfo> Logins { get; set; }

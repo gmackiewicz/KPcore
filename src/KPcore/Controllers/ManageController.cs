@@ -47,6 +47,7 @@ namespace KPcore.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : message == ManageMessageId.VerifyTeacherSuccess ? "Your teacher account has been approved."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -328,6 +329,49 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
 
+
+        //
+        // GET: /Manage/VerifyTeacher
+        [HttpGet]
+        public async Task<IActionResult> VerifyTeacher()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            return View(new VerifyTeacherViewModel());
+        }
+
+        //
+        // POST: /Manage/VerifyTeacher
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerifyTeacher(VerifyTeacherViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await GetCurrentUserAsync();
+            var verificationCode = "tajnykod";
+
+            if (user != null)
+            {
+                if (model.Code == verificationCode)
+                {
+                    user.Status = 1;
+                    await _userManager.UpdateAsync(user);
+                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.VerifyTeacherSuccess });
+                }
+            }
+            // If we got this far, something failed, redisplay the form
+            ModelState.AddModelError(string.Empty, "Failed to verify teacher's account");
+            return View(model);
+        }
+
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)
@@ -347,6 +391,7 @@ namespace KPcore.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
             RemovePhoneSuccess,
+            VerifyTeacherSuccess,
             Error
         }
 
