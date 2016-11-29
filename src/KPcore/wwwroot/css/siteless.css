@@ -54,7 +54,7 @@ textarea {
   height: 130%;
 }
 .image-bg-fluid-height {
-  background: url(../../images/background.jpg) no-repeat center center fixed;
+  background: url(../images/background.jpg) no-repeat center center fixed;
   padding: 100px 0;
   width: 100%;
 }

@@ -8,6 +8,7 @@
 @color-molten-core-alpha: rgba(246, 73, 43, .1);
 @color-molten-core: rgba(246, 73, 43, 1);
 @transparent: rgba(0, 0, 0, 0);
+@half-transparent: rgba(0, 0, 0, 0.6);
 @color-molten-core-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-alpha, @transparent);
 @color-molten-core-gradient: linear-gradient(to right, @transparent, @color-molten-core, @transparent);
 @comment-line-gradient: linear-gradient(to right, @color-white-alpha09, @transparent, @transparent);
@@ -24,7 +25,13 @@ body {
     .font-lato;
 }
 
+.bg-transparent{
+    background: @transparent;
+}
 
+.bg-half-transparent{
+    background: @half-transparent;
+}
 /* Wrapping element */
 
 
@@ -89,8 +96,10 @@ textarea {
 }
 
 .image-bg-fluid-height {
-    background: url('../../images/background.jpg') no-repeat center center scroll;
+    
+  background: url(../../images/background.jpg) no-repeat center center fixed; 
     padding: 100px 0;
+    width: 100%;
 }
 
 .img-center {
@@ -107,6 +116,9 @@ textarea {
     text-align: center;
 }
 
+.login-button{
+    margin: 10px 0 10px 0;
+}
 .img-overlay:before {
     content: ' ';
     display: block;
