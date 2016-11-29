@@ -1,6 +1,6 @@
 ﻿[
   {
-    "outputFile": "wwwroot/lib/less/siteless.css",
+    "outputFile": "wwwroot/css/siteless.css",
     "inputFile": "wwwroot/lib/less/siteless.less"
   }
 ]
