@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using KPcore.Models;
-using KPcore.Models.AccountViewModels;
 using KPcore.Services;
+using KPcore.ViewModels.AccountViewModels;
 
 namespace KPcore.Controllers
 {
