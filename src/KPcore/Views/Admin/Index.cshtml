@@ -1,0 +1,38 @@
+﻿@model AdminIndexViewModel
+@{
+    ViewData["Title"] = "Admin panel";
+}
+
+<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <h4>Do whatever you want :)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Subjects:</dt>
+        <dd>
+            <a asp-controller="Admin" asp-action="AddSubject" class="btn-bracketed">Add new subject</a>
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Subject name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    @foreach (var s in Model.Subjects)
+                    {
+                        <tr>
+                            <td>@s.Name</td>
+                            <td>@s.Description</td>
+                            <td>edytuj/usuń</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </dd>
+    </dl>
+</div>
