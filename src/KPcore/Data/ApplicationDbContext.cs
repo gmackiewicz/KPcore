@@ -47,7 +47,7 @@ namespace KPcore.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Group>()
-                .HasOne(s => s.Subject)
+                .HasOne(t => t.Topic)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
