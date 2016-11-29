@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KPcore.Models.AccountViewModels
+namespace KPcore.ViewModels.AccountViewModels
 {
     public class VerifyCodeViewModel
     {
