@@ -10,9 +10,9 @@ namespace KPcore.Models
     {
         public int Id { get; set; }
 
-        public int? SubjectId { get; set; }
+        public int? TopicId { get; set; }
 
-        public Subject Subject { get; set; }
+        public Topic Topic { get; set; }
 
         [Required]
         [StringLength(100)]
