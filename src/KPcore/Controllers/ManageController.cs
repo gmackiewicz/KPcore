@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using KPcore.Models;
-using KPcore.Models.ManageViewModels;
 using KPcore.Services;
+using KPcore.ViewModels.ManageViewModels;
 
 namespace KPcore.Controllers
 {
