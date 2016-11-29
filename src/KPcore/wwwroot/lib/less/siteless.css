@@ -5,6 +5,12 @@
   color: #ffffff;
   font-family: 'Lato', sans-serif;
 }
+.bg-transparent {
+  background: rgba(0, 0, 0, 0);
+}
+.bg-half-transparent {
+  background: rgba(0, 0, 0, 0.6);
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -48,8 +54,9 @@ textarea {
   height: 130%;
 }
 .image-bg-fluid-height {
-  background: url('../../images/background.jpg') no-repeat center center scroll;
+  background: url(../../images/background.jpg) no-repeat center center fixed;
   padding: 100px 0;
+  width: 100%;
 }
 .img-center {
   margin: 0 auto;
@@ -62,6 +69,9 @@ textarea {
   left: 0;
   right: 0;
   text-align: center;
+}
+.login-button {
+  margin: 10px 0 10px 0;
 }
 .img-overlay:before {
   content: ' ';
