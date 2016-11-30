@@ -27,17 +27,10 @@ namespace KPcore.Controllers
             var user = GetCurrentUserAsync();
             var controller = context.Controller as Controller;
             var model = controller?.ViewData.Model as BaseViewModel;
-            if (model != null)
-            {
-                model.CurrentUser = user.Result;
-            }
-            else
-            {
-                Console.WriteLine("halohalo");
-            }
+            if (model != null) model.CurrentUser = user.Result;
+
         }
-
-
+        
         protected Task<ApplicationUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
