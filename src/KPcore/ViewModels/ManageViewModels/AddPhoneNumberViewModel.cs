@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.ManageViewModels
 {
-    public class AddPhoneNumberViewModel
+    public class AddPhoneNumberViewModel : BaseViewModel
     {
         [Required]
         [Phone]

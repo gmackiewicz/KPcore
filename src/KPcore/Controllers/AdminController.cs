@@ -13,16 +13,14 @@ using KPcore.ViewModels.AdminViewModels;
 namespace KPcore.Controllers
 {
     [Authorize]
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly ISubjectRepository _subjectRepository;
-        private readonly UserManager<ApplicationUser> _userManager;
 
         public AdminController(
             UserManager<ApplicationUser> userManager,
-            ISubjectRepository subjectRepository)
+            ISubjectRepository subjectRepository) : base(userManager)
         {
-            _userManager = userManager;
             _subjectRepository = subjectRepository;
         }
 
@@ -50,7 +48,7 @@ namespace KPcore.Controllers
         // GET: /Admin/AddSubject
         public IActionResult AddSubject()
         {
-            return View();
+            return View(new AddSubjectViewModel());
         }
 
         // POST: /Admin/AddSubject
@@ -93,12 +91,7 @@ namespace KPcore.Controllers
             AddSubjectSuccess,
             Error,
         }
-
-        private Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return _userManager.GetUserAsync(HttpContext.User);
-        }
-
+        
         #endregion
     }
 }

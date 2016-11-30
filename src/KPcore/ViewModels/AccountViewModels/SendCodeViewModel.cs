@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KPcore.ViewModels.AccountViewModels
 {
-    public class SendCodeViewModel
+    public class SendCodeViewModel : BaseViewModel
     {
         public string SelectedProvider { get; set; }
 

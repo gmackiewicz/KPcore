@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KPcore.ViewModels.AccountViewModels
 {
-    public class VerifyCodeViewModel
+    public class VerifyCodeViewModel : BaseViewModel
     {
         [Required]
         public string Provider { get; set; }

@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.AccountViewModels
 {
-    public class ExternalLoginConfirmationViewModel
+    public class ExternalLoginConfirmationViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]

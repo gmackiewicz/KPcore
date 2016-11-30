@@ -1,6 +1,6 @@
 ﻿namespace KPcore.ViewModels.ManageViewModels
 {
-    public class FactorViewModel
+    public class FactorViewModel : BaseViewModel
     {
         public string Purpose { get; set; }
     }
