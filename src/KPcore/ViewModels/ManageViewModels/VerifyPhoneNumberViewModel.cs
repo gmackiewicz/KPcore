@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.ManageViewModels
 {
-    public class VerifyPhoneNumberViewModel
+    public class VerifyPhoneNumberViewModel : BaseViewModel
     {
         [Required]
         public string Code { get; set; }

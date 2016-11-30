@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.AccountViewModels
 {
-    public class ResetPasswordViewModel
+    public class ResetPasswordViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]

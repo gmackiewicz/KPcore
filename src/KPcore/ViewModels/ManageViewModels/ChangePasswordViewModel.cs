@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.ManageViewModels
 {
-    public class ChangePasswordViewModel
+    public class ChangePasswordViewModel : BaseViewModel
     {
         [Required]
         [DataType(DataType.Password)]

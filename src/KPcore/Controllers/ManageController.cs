@@ -12,9 +12,9 @@ using KPcore.ViewModels.ManageViewModels;
 namespace KPcore.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
@@ -25,9 +25,9 @@ namespace KPcore.Controllers
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+        ILoggerFactory loggerFactory) : base(userManager)
         {
-            _userManager = userManager;
+            //_userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
@@ -89,7 +89,7 @@ namespace KPcore.Controllers
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
         {
-            return View();
+            return View(new AddPhoneNumberViewModel());
         }
 
         //
@@ -209,7 +209,7 @@ namespace KPcore.Controllers
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            return View();
+            return View(new ChangePasswordViewModel());
         }
 
         //
@@ -243,7 +243,7 @@ namespace KPcore.Controllers
         [HttpGet]
         public IActionResult SetPassword()
         {
-            return View();
+            return View(new SetPasswordViewModel());
         }
 
         //
