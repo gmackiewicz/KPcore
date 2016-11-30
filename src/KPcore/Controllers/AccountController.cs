@@ -19,20 +19,14 @@ namespace KPcore.Controllers
     public class AccountController : BaseController
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
-            ISmsSender smsSender,
             ILoggerFactory loggerFactory) : base(userManager)
         {
             _signInManager = signInManager;
-            _emailSender = emailSender;
-            _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -43,7 +37,7 @@ namespace KPcore.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(new LoginViewModel());
         }
 
         //
@@ -186,7 +180,7 @@ namespace KPcore.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         //
@@ -230,7 +224,7 @@ namespace KPcore.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
-            return View();
+            return View(new ResetPasswordViewModel());
         }
         
         #region Helpers

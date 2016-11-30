@@ -60,13 +60,14 @@ namespace KPcore.Controllers
             {
                 return View(model);
             }
-            // Generate the token and send it
+
             var user = await GetCurrentUserAsync();
             if (user == null || user.Status != 2)
             {
                 ModelState.AddModelError(string.Empty, "Failed to add new subject");
                 return View(model);
             }
+
             var subject = new Subject
             {
                 Name = model.Name,

@@ -14,7 +14,6 @@ namespace KPcore.Controllers
     [Authorize]
     public class ManageController : BaseController
     {
-        //private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
 
@@ -23,7 +22,6 @@ namespace KPcore.Controllers
         SignInManager<ApplicationUser> signInManager,
         ILoggerFactory loggerFactory) : base(userManager)
         {
-            //_userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ManageController>();
         }
