@@ -91,7 +91,7 @@ namespace KPcore.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return View(new RegisterViewModel());
         }
 
         //
@@ -259,7 +259,7 @@ namespace KPcore.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return View(new ForgotPasswordViewModel());
         }
 
         //
@@ -306,7 +306,7 @@ namespace KPcore.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-            return code == null ? View("Error") : View();
+            return code == null ? View("Error") : View(new ResetPasswordViewModel());
         }
 
         //
@@ -454,7 +454,7 @@ namespace KPcore.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
         }
-        
+
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

@@ -89,7 +89,7 @@ namespace KPcore.Controllers
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
         {
-            return View();
+            return View(new AddPhoneNumberViewModel());
         }
 
         //
@@ -209,7 +209,7 @@ namespace KPcore.Controllers
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            return View();
+            return View(new ChangePasswordViewModel());
         }
 
         //
@@ -243,7 +243,7 @@ namespace KPcore.Controllers
         [HttpGet]
         public IActionResult SetPassword()
         {
-            return View();
+            return View(new SetPasswordViewModel());
         }
 
         //
