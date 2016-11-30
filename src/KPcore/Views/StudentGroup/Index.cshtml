@@ -1,0 +1,38 @@
+﻿@model StudentGroupIndexViewModel
+@{
+    ViewData["Title"] = "Your groups";
+}
+
+<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <h4>Do whatever you want :)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Your groups:</dt>
+        <dd>
+            <a asp-controller="Group" asp-action="CreateNewGroup" class="btn-bracketed">Create new group</a>
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Group name</th>
+                        <th>Leader?</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    @foreach (var g in Model.StudentGroups)
+                    {
+                        <tr>
+                            <td>@g.Group.Name</td>
+                            <td>@g.Leader</td>
+                            <td>edytuj/usuń</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </dd>
+    </dl>
+</div>
