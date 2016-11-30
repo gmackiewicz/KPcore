@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KPcore.ViewModels.ManageViewModels
 {
-    public class ConfigureTwoFactorViewModel
+    public class ConfigureTwoFactorViewModel : BaseViewModel
     {
         public string SelectedProvider { get; set; }
 

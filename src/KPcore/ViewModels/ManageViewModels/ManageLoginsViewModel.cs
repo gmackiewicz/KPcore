@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace KPcore.ViewModels.ManageViewModels
 {
-    public class ManageLoginsViewModel
+    public class ManageLoginsViewModel : BaseViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
 

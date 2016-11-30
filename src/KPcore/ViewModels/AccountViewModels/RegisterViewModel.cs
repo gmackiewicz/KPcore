@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.AccountViewModels
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KPcore.ViewModels.AdminViewModels
 {
-    public class AddSubjectViewModel
+    public class AddSubjectViewModel : BaseViewModel
     {
         [Required]
         [StringLength(100)]

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace KPcore.ViewModels.ManageViewModels
 {
-    public class IndexViewModel
+    public class IndexViewModel : BaseViewModel
     {
         public int UserStatus { get; set; }
 

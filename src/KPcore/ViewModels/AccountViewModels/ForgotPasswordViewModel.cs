@@ -2,7 +2,7 @@
 
 namespace KPcore.ViewModels.AccountViewModels
 {
-    public class ForgotPasswordViewModel
+    public class ForgotPasswordViewModel : BaseViewModel
     {
         [Required]
         [EmailAddress]
