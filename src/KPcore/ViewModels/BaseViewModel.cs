@@ -11,12 +11,5 @@ namespace KPcore.ViewModels
     public class BaseViewModel
     {
         public ApplicationUser CurrentUser { get; set; }
-
-        public BaseViewModel()
-        {
-/*
-            CurrentUser = /*#1#
-*/
-        }
     }
 }
