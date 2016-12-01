@@ -22,10 +22,12 @@ namespace KPcore.Controllers
             _groupRepository = groupRepository;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(GroupMessageId? message = null)
         {
             ViewData["StatusMessage"] =
                 message == GroupMessageId.CreateGroupSuccess ? "A new group has been created."
+                : message == GroupMessageId.NoGroupToView ? "No group to view"
                 : message == GroupMessageId.Error ? "An error has occurred."
                 : "";
 
@@ -71,14 +73,47 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.CreateGroupSuccess });
         }
 
+        // GET: /Group/Details
+        [HttpGet]
+        public IActionResult Details(int? groupId)
+        {
+            if (groupId == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
+            }
+
+            var group = _groupRepository.GetGroupById(groupId);
+
+            if (group == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
+            }
+
+            var model = new GroupDetailsViewModel
+            {
+                Id = group.Id,
+                Name = group.Name,
+                TopicId = group.TopicId,
+                Topic = group.Topic
+            };
+
+            return View(model);
+        }
+
         #region Helpers
 
         public enum GroupMessageId
         {
             CreateGroupSuccess,
             Error,
+            NoGroupToView
         }
 
         #endregion
+
+        public IActionResult EditGroup()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
