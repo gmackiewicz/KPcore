@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@inject SignInManager<ApplicationUser> SignInManager
 
 <div class="row bg-transparent">
     <div class="col-md-10 col-md-offset-1 bg-half-transparent">
@@ -9,9 +9,25 @@
             <img class="img-responsive img-center" src="~/images/KuzniaProjektowLogoImpact.png" alt="">
         </header>
         <div class="text-center text-capitalize login-button">
-            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-lg btn-grey">
-                Log in
-            </a>
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                @Html.ActionLink("Log in", "Login", "Account", null, new { @class = "btn btn-lg btn-grey" })
+            }
+            else
+            {
+                if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
+                {
+                    @Html.ActionLink("Twoje grupy", "Index", "Group", null, new { @class = "btn btn-lg btn-grey" })
+                }
+                if (Model.CurrentUser.Status == 1 || Model.CurrentUser.Status == 2)
+                {
+                    @Html.ActionLink("Twoje tematy", "Index", "Topic", null, new { @class = "btn btn-lg btn-grey" })
+                }
+                if (Model.CurrentUser.Status == 2)
+                {
+                    @Html.ActionLink("Admin panel", "Index", "Admin", null, new { @class = "btn btn-lg btn-grey" })
+                }
+            }
         </div>
     </div>
 </div>
