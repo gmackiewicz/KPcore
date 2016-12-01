@@ -1,4 +1,7 @@
-﻿body {
+﻿.inblock {
+  display: inline;
+}
+body {
   padding-top: 50px;
   padding-bottom: 20px;
   background: #181818;
@@ -111,11 +114,6 @@ h2 {
   margin: 0;
   margin-bottom: -15px;
 }
-.group-title h1 {
-  padding: 0;
-  margin: 0;
-  margin-bottom: -15px;
-}
 .bg-red {
   background: rgba(255, 0, 0, 0.5);
 }
@@ -171,6 +169,10 @@ h2 {
 .font-grey {
   color: #999999;
 }
+.molten-core-bold {
+  height: 20px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+}
 .group-list .molten-core {
   height: 1px;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
@@ -217,4 +219,37 @@ h2 {
 }
 .fade:hover .showthis {
   opacity: 1;
+}
+.group-list-sm .molten-core {
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+}
+.group-list-sm a {
+  color: #fc9a07;
+  text-decoration: none;
+}
+.group-list-sm a:hover {
+  color: #ffffff;
+}
+.group-list-sm hr {
+  margin: 5px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
+}
+.group-list-sm li {
+  font-size: 28px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
+}
+.group-list-sm li:hover {
+  animation: rgb 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes rgb {
+  /* 0% will fallback to the default background-color of #rgb*/
+  100% {
+    background-color: rgba(246, 73, 43, 0.1);
+    /*red*/
+  }
+}
+.group-list-sm li {
+  font-size: 15px;
 }

@@ -17,6 +17,10 @@
 @bold-font-weight: 800;
 @thin-font-weight: 300;
 
+.inblock{
+  display: inline;
+}
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -166,9 +170,6 @@ h2 {
 }
 
 .group-title {
-    h1 {
-        .remove-space;
-    }
 }
 
 .bg-red {
@@ -242,6 +243,11 @@ h2 {
     color: @color-darker-grey;
 }
 
+.molten-core-bold {
+        height: 20px;
+        background-image: @color-molten-core-gradient;
+    }
+
 .group-list {
     .molten-core {
         height: 1px;
@@ -303,4 +309,10 @@ h2 {
             opacity: 1;
         }
     }
+}
+.group-list-sm{
+  .group-list;
+  & li{
+    font-size: 15px;
+  }
 }
