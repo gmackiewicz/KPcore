@@ -1,0 +1,42 @@
+@model TeacherTopicsIndexViewModel
+@{
+    ViewData["Title"] = "Your topics";
+}
+
+<h2>@ViewData["Title"].</h2>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Your topic:</dt>
+        <dd>
+            <a asp-controller="Topic" asp-action="Create" class="btn-bracketed">Create new topic</a>
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description
+                        <th>Subject</th>
+                        <th>Creation date</th>
+                        <th>Meetings date</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    @foreach (var t in Model.Topics)
+                    {
+                        <tr>
+                            <td>@t.Title</td>
+                            <td>@t.Description</td>
+                            <td>@t.SubjectId</td>
+                            <td>@t.CreationDate</td>
+                            <td>@t.MeetingsDate</td>
+                            <td>edytuj/usuñ</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </dd>
+    </dl>
+</div>
