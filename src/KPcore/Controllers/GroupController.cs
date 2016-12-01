@@ -22,8 +22,14 @@ namespace KPcore.Controllers
             _groupRepository = groupRepository;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(GroupMessageId? message = null)
         {
+            ViewData["StatusMessage"] =
+                message == GroupMessageId.CreateGroupSuccess ? "A new group has been created."
+                : message == GroupMessageId.Error ? "An error has occurred."
+                : "";
+
+
             var user = await GetCurrentUserAsync();
             var model = new StudentGroupIndexViewModel
             {
