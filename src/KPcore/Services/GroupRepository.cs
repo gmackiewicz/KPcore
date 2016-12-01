@@ -31,6 +31,7 @@ namespace KPcore.Services
                     on sg.GroupId equals g.Id
                     select new StudentGroup
                     {
+                        GroupId = g.Id,
                         Group = g,
                         Leader = sg.Leader,
                         StudentId = sg.StudentId
@@ -49,6 +50,11 @@ namespace KPcore.Services
 
             _dbContext.StudentGroups.Add(studentGroup);
             _dbContext.SaveChanges();
+        }
+
+        public Group GetGroupById(int? groupId)
+        {
+            return _dbContext.Groups.FirstOrDefault(g => g.Id == groupId);
         }
     }
 }
