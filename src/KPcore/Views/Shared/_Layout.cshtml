@@ -1,11 +1,11 @@
 ﻿@model KPcore.ViewModels.BaseViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @{
-    var _userStatus = -1;
-    var _isLoggedIn = SignInManager.IsSignedIn(User);
-    if (_isLoggedIn)
+    var userStatus = -1;
+    var isLoggedIn = SignInManager.IsSignedIn(User);
+    if (isLoggedIn)
     {
-        _userStatus = Model.CurrentUser.Status;
+        userStatus = Model.CurrentUser.Status;
     }
 }
 <!DOCTYPE html>
@@ -50,18 +50,18 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    @{ if (_isLoggedIn)
+                    @{ if (isLoggedIn)
                         {
-                            if (_userStatus == 0 || _userStatus == 2)
+                            if (userStatus == 0 || userStatus == 2)
                             {
                                 <li>@Html.ActionLink("Twoje grupy", "Index", "Group")</li>
                             }
-                            if (_userStatus == 1 || _userStatus == 2)
+                            if (userStatus == 1 || userStatus == 2)
                             {
 
                                 <li>@Html.ActionLink("Twoje tematy", "Index", "Topic")</li>
                             }
-                            if (_userStatus == 2)
+                            if (userStatus == 2)
                             {
                                 <li>@Html.ActionLink("Admin panel", "Index", "Admin")</li>
                             }
