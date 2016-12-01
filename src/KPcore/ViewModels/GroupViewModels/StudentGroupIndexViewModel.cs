@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using KPcore.Models;
 
-namespace KPcore.ViewModels.StudentGroupsViewModels
+namespace KPcore.ViewModels.GroupViewModels
 {
     public class StudentGroupIndexViewModel : BaseViewModel
     {

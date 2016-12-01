@@ -54,6 +54,7 @@ namespace KPcore
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

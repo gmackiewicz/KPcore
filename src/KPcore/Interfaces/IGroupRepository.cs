@@ -3,9 +3,10 @@ using KPcore.Models;
 
 namespace KPcore.Interfaces
 {
-    public interface IStudentGroupRepository
+    public interface IGroupRepository
     {
+        void CreateGroup(Group group, string creator);
         IEnumerable<StudentGroup> GetAllUsersGroup(string userid);
-        void Add(StudentGroup studentGroup);
+        void AddUserToGroup(int groupId, string newMemberId, bool leader);
     }
 }
