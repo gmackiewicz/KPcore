@@ -56,5 +56,18 @@ namespace KPcore.Services
         {
             return _dbContext.Groups.FirstOrDefault(g => g.Id == groupId);
         }
+
+        public IEnumerable<ApplicationUser> GetStudentsOfGroup(int? groupId)
+        {
+            var users = _dbContext.StudentGroups.Where(g => g.GroupId == groupId && !g.Leader).Select(u => u.StudentId).ToList();
+            var result = _dbContext.Users.Where(u => users.Contains(u.Id)).ToList();
+            return result;
+        }
+
+        public ApplicationUser GetLeader(int? groupId)
+        {
+            var leaderId = _dbContext.StudentGroups.Where(g => g.GroupId == groupId && g.Leader).Select(u => u.StudentId).FirstOrDefault();
+            return _dbContext.Users.FirstOrDefault(u => u.Id == leaderId);
+        }
     }
 }

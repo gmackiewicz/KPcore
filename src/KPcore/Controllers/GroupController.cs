@@ -89,12 +89,16 @@ namespace KPcore.Controllers
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
             }
 
+            var studentsList = _groupRepository.GetStudentsOfGroup(groupId);
+
             var model = new GroupDetailsViewModel
             {
                 Id = group.Id,
                 Name = group.Name,
                 TopicId = group.TopicId,
-                Topic = group.Topic
+                Topic = group.Topic,
+                StudentsList = studentsList,
+                GroupLeader = _groupRepository.GetLeader(groupId)
             };
 
             return View(model);

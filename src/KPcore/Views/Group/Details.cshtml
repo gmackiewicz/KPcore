@@ -58,21 +58,22 @@
                 <h3>Users:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
-                    @for (int i = 0; i < 10; i++)
+
+                    <li>
+                        <div class="list-item-info">
+                            Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
+                            <hr class="hr-narrow" />
+                        </div>
+                    </li>
+                    @foreach (var s in Model.StudentsList)
                     {
                         <li>
                             <div class="list-item-info">
-                                <a href="#">Imie nazwisko @i</a>
+                                <a href="#">@s.FirstName @s.LastName</a>
                                 <hr class="hr-narrow" />
                             </div>
                         </li>
                     }
-                    <li>
-                        <div class="list-item-info">
-                            <a href="#">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</a>
-                            <hr class="hr-narrow" />
-                        </div>
-                    </li>
                 </ul>
             </div>
             <!-- ADD USER BUTTON -->

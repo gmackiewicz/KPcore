@@ -17,5 +17,9 @@ namespace KPcore.ViewModels.GroupViewModels
         public Topic Topic { get; set; }
 
         public string Name { get; set; }
+
+        public IEnumerable<ApplicationUser> StudentsList { get; set; }
+
+        public ApplicationUser GroupLeader { get; set; }
     }
 }
