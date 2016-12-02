@@ -48,6 +48,7 @@ namespace KPcore.Services
         {
             return _dbContext.Groups
                 .Include(g => g.Topic)
+                .Include(g => g.Topic.Subject)
                 .FirstOrDefault(g => g.Id == groupId);
         }
 
