@@ -16,17 +16,15 @@
         @foreach (var g in Model.StudentGroups)
         {
             <li>
-                <div class="row">
-                    <div class="group-list-sm col-xs-6 col-xs-offset-3 list-item-info">
+                <div class="group-list-sm col-xs-6 col-xs-offset-3 list-item-info">
 
-                        @Html.ActionLink(g.Group.Name, "Details", new { groupId = g.GroupId })
+                    @Html.ActionLink(g.Group.Name, "Details", new { groupId = g.GroupId })
 
-                        <hr class="hr-narrow" />
-                    </div>
-                    <div class="col-xs-3 text-left list-item-options">
-                        <a class="fa fa-minus-square-o fa-lg" title="Usuń grupę" aria-hidden="true"></a>
-                        <a class="fa fa-pencil-square-o fa-lg" title="Edytuj grupę" aria-hidden="true"></a>
-                    </div>
+                    <hr class="hr-narrow" />
+                </div>
+                <div class="col-xs-3 text-left list-item-options">
+                    <a class="fa fa-minus-square-o fa-lg" title="Usuń grupę" aria-hidden="true"></a>
+                    <a class="fa fa-pencil-square-o fa-lg" title="Edytuj grupę" aria-hidden="true"></a>
                 </div>
             </li>
 

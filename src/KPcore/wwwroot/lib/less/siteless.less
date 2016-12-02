@@ -153,9 +153,11 @@ h1 {
     font-weight: 800;
     font-size: 40px;
     .font-lato;
+    margin: 5px;
 }
 
 h2 {
+    margin: 5px;
     font-weight: 200;
     font-size: 28px;
     .font-lato;
@@ -174,6 +176,7 @@ h2 {
 }
 
 .group-title {
+    word-wrap: break-word;
 }
 
 .bg-red {
@@ -231,7 +234,10 @@ h2 {
     padding-top: 10px;
     padding-bottom: 10px;
     background: black;
-
+    word-wrap: break-word;
+    * {
+        word-wrap: break-word;
+    }
     hr {
         margin: 0;
         height: 1px;
@@ -248,7 +254,8 @@ h2 {
 }
 
 .molten-core-bold {
-    height: 20px;
+    height: 10px;
+    margin: 0px;
     background-image: @color-molten-core-gradient;
 }
 
@@ -281,6 +288,7 @@ h2 {
 .group-list {
     .molten-core {
         height: 1px;
+        margin: 0px;
         background-image: @color-molten-core-gradient;
     }
 
@@ -295,6 +303,7 @@ h2 {
 }
 
 .list-item-info {
+    word-wrap: break-word;
     padding: 5px 0 5px 0;
     font-size: 15px;
     background-image: @color-molten-core-alpha-gradient;
@@ -338,4 +347,18 @@ h2 {
     margin: 0px;
     height: 2px;
     background-image: @color-molten-core-gradient;
+}
+
+.text-small{
+    font-size: 10px;
+}
+
+.row {
+    background-color: rgba(255,255,255,0.05);
+    border: 2px solid red;
+}
+
+div[class*=col]{
+    background-color: rgba(255,255,255,0.05);
+    border: 2px solid green;
 }
