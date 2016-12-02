@@ -26,9 +26,10 @@ namespace KPcore.Controllers
         public async Task<IActionResult> Index(GroupMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == GroupMessageId.CreateGroupSuccess ? "A new group has been created."
-                : message == GroupMessageId.NoGroupToView ? "No group to view"
-                : message == GroupMessageId.Error ? "An error has occurred."
+                message == GroupMessageId.CreateGroupSuccess ? "Nowa grupa zosta³a utworzona."
+                : message == GroupMessageId.NoGroupToView ? "Nie ma takiej grupy."
+                : message == GroupMessageId.ErrorAddingCommentToGroup ? "B³¹d podczas dodawania nowego komentarza."
+                : message == GroupMessageId.Error ? "Wyst¹pi³ b³¹d."
                 : "";
 
 
@@ -60,7 +61,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Failed to add new group");
+                ModelState.AddModelError(string.Empty, "Nie uda³o siê stworzyæ nowej grupy.");
                 return View(model);
             }
 
@@ -89,12 +90,17 @@ namespace KPcore.Controllers
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
             }
 
+            var studentsList = _groupRepository.GetStudentsOfGroup(groupId);
+
             var model = new GroupDetailsViewModel
             {
                 Id = group.Id,
                 Name = group.Name,
                 TopicId = group.TopicId,
-                Topic = group.Topic
+                Topic = group.Topic,
+                StudentsList = studentsList,
+                GroupLeader = _groupRepository.GetLeader(groupId),
+                GroupComments = _groupRepository.GetGroupComments(groupId)
             };
 
             return View(model);
@@ -106,7 +112,8 @@ namespace KPcore.Controllers
         {
             CreateGroupSuccess,
             Error,
-            NoGroupToView
+            NoGroupToView,
+            ErrorAddingCommentToGroup
         }
 
         #endregion
@@ -114,6 +121,54 @@ namespace KPcore.Controllers
         public IActionResult EditGroup()
         {
             throw new NotImplementedException();
+        }
+
+        // GET: /Group/AddComment
+        public IActionResult AddComment(int? groupId)
+        {
+            if (groupId == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
+            }
+
+            var group = _groupRepository.GetGroupById(groupId);
+
+            if (group == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
+            }
+
+            return View(new NewGroupCommentViewModel { Group = group, GroupId = group.Id });
+
+        }
+
+        // POST: /Group/AddComment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(NewGroupCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie uda³o siê dodaæ komentarza.");
+                return View(model);
+            }
+
+            var comment = new GroupComment
+            {
+                GroupId = model.GroupId,
+                AuthorId = user.Id,
+                Content = model.Content,
+                CreationDate = DateTime.Now
+            };
+
+            _groupRepository.AddComment(comment);
+            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
         }
     }
 }

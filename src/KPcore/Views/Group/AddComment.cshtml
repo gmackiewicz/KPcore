@@ -1,0 +1,32 @@
+@model KPcore.ViewModels.GroupViewModels.NewGroupCommentViewModel
+
+@{
+    ViewData["Title"] = "Dodaj komentarz";
+}
+
+<h2>Dodaj komentarz</h2>
+
+<form asp-action="AddComment">
+    <div class="form-horizontal">
+        <h4>@Model.Group.Name</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
+        <div class="form-group">
+            <label asp-for="Content" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

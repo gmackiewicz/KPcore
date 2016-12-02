@@ -1,4 +1,13 @@
 ﻿@model KPcore.ViewModels.BaseViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var userStatus = -1;
+    var isLoggedIn = SignInManager.IsSignedIn(User);
+    if (isLoggedIn)
+    {
+        userStatus = Model.CurrentUser.Status;
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,17 +50,22 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    @if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
-                    {
-                        <li><a asp-area="" asp-controller="Group" asp-action="Index">Your groups</a></li>
-                    }
-                    @if (Model.CurrentUser.Status == 1 || Model.CurrentUser.Status == 2)
-                    {
-                        <li><a asp-area="" asp-controller="Topic" asp-action="Index">Your topics</a></li>
-                    }
-                    @if (Model.CurrentUser.Status == 2)
-                    {
-                        <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin panel</a></li>
+                    @{ if (isLoggedIn)
+                        {
+                            if (userStatus == 0 || userStatus == 2)
+                            {
+                                <li>@Html.ActionLink("Twoje grupy", "Index", "Group")</li>
+                            }
+                            if (userStatus == 1 || userStatus == 2)
+                            {
+
+                                <li>@Html.ActionLink("Twoje tematy", "Index", "Topic")</li>
+                            }
+                            if (userStatus == 2)
+                            {
+                                <li>@Html.ActionLink("Admin panel", "Index", "Admin")</li>
+                            }
+                        }
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
