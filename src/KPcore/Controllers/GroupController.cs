@@ -98,7 +98,8 @@ namespace KPcore.Controllers
                 TopicId = group.TopicId,
                 Topic = group.Topic,
                 StudentsList = studentsList,
-                GroupLeader = _groupRepository.GetLeader(groupId)
+                GroupLeader = _groupRepository.GetLeader(groupId),
+                GroupComments = _groupRepository.GetGroupComments(groupId)
             };
 
             return View(model);
@@ -118,6 +119,57 @@ namespace KPcore.Controllers
         public IActionResult EditGroup()
         {
             throw new NotImplementedException();
+        }
+
+        // GET: /Group/AddComment
+        public IActionResult AddComment(int? groupId)
+        {
+            if (groupId == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
+            }
+
+            var group = _groupRepository.GetGroupById(groupId);
+
+            if (group == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
+            }
+
+            return View(new NewGroupCommentViewModel { Group = group, GroupId = group.Id });
+
+        }
+
+        // POST: /Group/AddComment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddComment(NewGroupCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to add new comment");
+                return View(model);
+            }
+
+            var comment = new GroupComment
+            {
+                GroupId = model.GroupId,
+                AuthorId = user.Id,
+                Content = model.Content,
+                CreationDate = DateTime.Now
+            };
+
+            _groupRepository.AddComment(comment);
+            return RedirectToAction(nameof(Index), new
+            {
+                Message = GroupMessageId.CreateGroupSuccess
+            });
         }
     }
 }

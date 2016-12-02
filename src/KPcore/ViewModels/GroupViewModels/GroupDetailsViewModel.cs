@@ -21,5 +21,6 @@ namespace KPcore.ViewModels.GroupViewModels
         public IEnumerable<ApplicationUser> StudentsList { get; set; }
 
         public ApplicationUser GroupLeader { get; set; }
+        public IEnumerable<GroupComment> GroupComments { get; set; }
     }
 }
