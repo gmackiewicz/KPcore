@@ -28,5 +28,13 @@ namespace KPcore.Services
                 .Include(t => t.Subject)
                 .Where(t => t.TeacherId == userid);
         }
+
+        public Topic GetTopicById(int? topicId)
+        {
+            return _dbContext.Topics
+                .Include(t => t.Teacher)
+                .Include(t => t.Subject)
+                .FirstOrDefault(t => t.Id == topicId);
+        }
     }
 }

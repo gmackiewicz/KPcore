@@ -1,0 +1,160 @@
+﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div>
+    <div class="border-transparent space-after">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center group-title">
+                <h1>NAZWA GRUPY</h1>
+                <hr />
+                <h2>@Html.DisplayFor(model => model.Subject.Name)</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+                <h1>@Html.DisplayFor(model => model.Title)</h1>
+                <h2>Prowadzący: @Html.DisplayFor(model => model.Teacher.FirstName) @Html.DisplayFor(model => model.Teacher.LastName)</h2>
+                <span class="date">Data dodania: </span>
+                <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
+            </div>
+            <div class="col-md-2 group-options">
+                <button class="btn btn-grey">Dodaj nowy termin</button>
+                <button class="btn btn-grey">Oceń termin</button>
+            </div>
+        </div>
+        <div class="row description border-transparent">
+            <div class="col-md-3 text-right">
+                <h1 class="thin">OPIS:</h1>
+            </div>
+            <div class="col-md-6">
+                <span>@Html.DisplayFor(model => model.Description)</span>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+
+    </div>
+    <!-- CONTENT -->
+    <div class="row space-after ">
+        <div class="col-md-12 text-center">
+            <h2>NAJBLIŻSZY TERMIN CZĄSTKOWY:</h2>
+            <h2 class="bold">TUTAJ temat -> grupa -> terminy -> z listy pobrać najnowszą</h2>
+        </div>
+    </div>
+    <div class="row space-before">
+
+        <!-- COMMENT SECTION START -->
+        <div class="col-sm-8 border-transparent comment-section">
+            <div class="row">
+                <!-- Add comment button -->
+                <div class="col-sm-3 text-center">
+                    <span class="text-center add-comment">
+                        @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Group", new { groupId = Model.Id, }, new { @class = "btn btn-grey" })
+                    </span>
+                </div>
+                <!-- Add comment button end-->
+                <!-- Comments title-->
+                <div class="col-sm-6 text-center">
+                    <span class="text-center">
+                        <h2 class="inblock">KOMENTARZE</h2>
+                    </span>
+                </div>
+                <!-- Comments title end-->
+                <!-- Coherence -->
+                <div class="col-sm-3"></div>
+            </div>
+            <!-- COMMENT START -->
+            @*@foreach (var c in Model.GroupComments)
+                {*@
+            <div class="row">
+                <div class="col-sm-12 single-comment">
+                    <div class="row">
+                        <div class="col-sm-8 bold inblock">
+                            @*@c.Author.FirstName @c.Author.LastName*@
+                        </div>
+
+                        <div class="col-sm-4 text-right inblock">
+                            @*@if (Model.CurrentUser.Id == c.AuthorId)
+                                {*@
+                            @Html.ActionLink("Edytuj", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                            @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                            @*}*@
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-12">
+                            @*@c.Content*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 thin font-grey">
+                            <span>Data dodania:</span> <span class="bold">@*@c.CreationDate*@</span>
+                        </div>
+                    </div>
+                    @*@if (c.ModificationDate != null)
+                        {*@
+                    <div class="row">
+                        <div class="col-sm-12 text-small thin font-grey">
+                            <span>Data modyfikacji:</span> <span class="bold">@*@c.ModificationDate*@</span>
+                        </div>
+                    </div>
+                    @*}*@
+                </div>
+            </div>
+            @*}*@
+            <!-- COMMENT END -->
+        </div>
+        <!-- COMMENT SECIONT END -->
+        <!-- dLIST -->
+        <div class="col-sm-4 space-after">
+            <div class="text-center group-list-sm border-transparent">
+                <h3>Terminy:</h3>
+                <hr class="molten-core" />
+                <ul class="list-unstyled">
+
+                    @*@foreach (var s in Model.StudentsList)
+                        {*@
+                    <li>
+                        <div class="list-item-info">
+                            <a href="#">@*@s.FirstName @s.LastName*@</a>
+                            <hr class="hr-narrow" />
+                        </div>
+                    </li>
+                    @*}*@
+                </ul>
+            </div>
+
+            <div class="text-center group-list-sm space-before border-transparent">
+                <h3>Członkowie:</h3>
+                <hr class="molten-core" />
+                <ul class="list-unstyled">
+
+                    <li>
+                        <div class="list-item-info">
+                            Lider: <a href="#">@*@Model.GroupLeader.FirstName @Model.GroupLeader.LastName*@</a>
+                            <hr class="hr-narrow" />
+                        </div>
+                    </li>
+                    @*@foreach (var s in Model.StudentsList)
+                        {*@
+                    <li>
+                        <div class="list-item-info">
+                            <a href="#">@*@s.FirstName @s.LastName*@</a>
+                            <hr class="hr-narrow" />
+                        </div>
+                    </li>
+                    @*}*@
+                </ul>
+            </div>
+        </div>
+        <!-- USER LIST END -->
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Edit", "EditTopic", new { id = Model.Id }) |
+    <a asp-action="Index">Back to List</a>
+</div>

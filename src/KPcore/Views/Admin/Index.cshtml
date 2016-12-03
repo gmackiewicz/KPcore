@@ -1,25 +1,26 @@
 ﻿@model AdminIndexViewModel
 @{
-    ViewData["Title"] = "Admin panel";
+    ViewData["Title"] = "Panel admina";
 }
 
 <h2>@ViewData["Title"].</h2>
 <p class="text-success">@ViewData["StatusMessage"]</p>
 
 <div>
-    <h4>Do whatever you want :)</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Subjects:</dt>
+        <dt class="text-center">
+            <h2>Przedmioty:</h2>
+            <a asp-controller="Admin" asp-action="AddSubject" class="btn btn-grey btn-bracketed">Dodaj nowy</a>
+
+        </dt>
         <dd>
-            <a asp-controller="Admin" asp-action="AddSubject" class="btn-bracketed">Add new subject</a>
-            <hr />
             <div class="table-responsive">
                 <table class="table table-condensed">
-                    <tr>
-                        <th>Subject name</th>
-                        <th>Description</th>
-                        <th>Actions</th>
+                    <tr class="color-molten-core">
+                        <th>Nazwa przedmiotu</th>
+                        <th>Opis</th>
+                        <th>Akcje</th>
                     </tr>
 
                     @foreach (var s in Model.Subjects)
@@ -27,7 +28,9 @@
                         <tr>
                             <td>@s.Name</td>
                             <td>@s.Description</td>
-                            <td>edytuj/usuń</td>
+                            <td>
+                                edytuj/usuń
+                            </td>
                         </tr>
                     }
                 </table>

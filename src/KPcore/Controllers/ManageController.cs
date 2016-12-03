@@ -32,10 +32,10 @@ namespace KPcore.Controllers
         public async Task<IActionResult> Index(ManageMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.VerifyTeacherSuccess ? "Your teacher account has been approved."
+                message == ManageMessageId.ChangePasswordSuccess ? "Twoje hasło zostało zmienione."
+                : message == ManageMessageId.SetPasswordSuccess ? "Twoje nowe hasło zostało ustawione."
+                : message == ManageMessageId.Error ? "Wystąpił błąd."
+                : message == ManageMessageId.VerifyTeacherSuccess ? "Twoje konto nauczyciela zostało zatwierdzone."
                 : "";
 
             var user = await GetCurrentUserAsync();
