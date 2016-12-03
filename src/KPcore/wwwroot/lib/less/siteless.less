@@ -1,5 +1,5 @@
-﻿@default-bg-color: #181818;
-@negative-margin: -15px;
+﻿//Colors
+@default-bg-color: #181818;
 @color-light-grey: #cccccc;
 @color-darker-grey: #999999;
 @color-white: #ffffff;
@@ -9,19 +9,50 @@
 @color-molten-core: rgba(246, 73, 43, 1);
 @transparent: rgba(0, 0, 0, 0);
 @half-transparent: rgba(0, 0, 0, 0.6);
+@core-2300: rgb(252, 154, 7);
+
+//Gradients
 @color-molten-core-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-alpha, @transparent);
 @color-molten-core-gradient: linear-gradient(to right, @transparent, @color-molten-core, @transparent);
 @comment-line-gradient: linear-gradient(to right, @color-white-alpha09, @transparent, @transparent);
 @default-gradient: linear-gradient(to right, @transparent, @color-white-alpha09, @transparent);
-@core-2300: rgb(252, 154, 7);
+
+//Font settings
 @bold-font-weight: 800;
 @thin-font-weight: 300;
+@h1-font-size: 200%;
+@h2-font-size: 150%;
+@h1-small: 150%;
+@h2-small: 120%;
+@btn-padding: 5px;
+
+//Spacing rules
+@space-after: 18px;
+@negative-margin: -15px;
+@space-before: 18px;
 
 .color-molten-core {
     color: @color-molten-core !important;
 }
 
+.space-before{
+    margin-top: @space-before;
+}
+a {
+
+    &:hover {
+        color: @color-molten-core;
+        background-image: @color-molten-core-alpha-gradient;
+    }
+
+    &:active {
+        text-decoration:none;
+        color: @color-molten-core-light;
+    }
+}
+
 .inblock {
+    word-wrap: break-word;
     display: inline;
 }
 
@@ -54,7 +85,7 @@ body {
 /* Set widths on the form inputs since otherwise they're 100% wide */
 
 input,
-select{
+select {
     max-width: 280px;
 }
 
@@ -89,14 +120,7 @@ select{
 }
 
 
-/* Hide/rearrange for smaller screens */
 
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
-}
 
 .logo {
     height: 130%;
@@ -149,16 +173,16 @@ hr {
 }
 
 h1 {
-    font-weight: 800;
-    font-size: 200%;
+    font-weight: @bold-font-weight;
+    font-size: @h1-font-size;
     .font-lato;
-    margin: 5px;
+    margin: 3px;
 }
 
 h2 {
     margin: 5px;
-    font-weight: 200;
-    font-size: 150%;
+    font-weight: @thin-font-weight;
+    font-size: @h2-font-size;
     .font-lato;
 }
 
@@ -178,8 +202,19 @@ h2 {
     word-wrap: break-word;
 }
 
+
+.space-after {
+    margin-bottom: @space-after;
+}
+
 .bg-red {
     background: rgba(255, 0, 0, .5);
+}
+
+.vertical-center {
+    min-height: 100%; /* Fallback for browsers do NOT support vh unit */
+    display: flex;
+    align-items: center;
 }
 
 .group-options {
@@ -194,9 +229,13 @@ h2 {
     }
 }
 
+.btn {
+    padding: @btn-padding;
+}
+
 .btn-grey {
-    margin: 3px;
-    background: #222222;
+    padding: @btn-padding;
+    background: #444444;
     color: @color-light-grey;
     border: 1px solid black;
 
@@ -235,9 +274,11 @@ h2 {
     padding-bottom: 10px;
     background: black;
     word-wrap: break-word;
+
     * {
         word-wrap: break-word;
     }
+
     hr {
         margin: 0;
         height: 1px;
@@ -253,7 +294,17 @@ h2 {
     color: @color-darker-grey;
 }
 
+.group-control-buttons {
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
 .molten-core-bold {
+    @media screen and (max-width: 767px) {
+        height: 2px;
+    }
+
     height: 10px;
     margin: 0px;
     background-image: @color-molten-core-gradient;
@@ -343,13 +394,13 @@ h2 {
     }
 }
 
-.hr-narrow{
+.hr-narrow {
     margin: 0px;
     height: 2px;
     background-image: @color-molten-core-gradient;
 }
 
-.text-small{
+.text-small {
     font-size: 10px;
 }
 
@@ -362,3 +413,29 @@ div[class*=col]{
     background-color: rgba(255,255,255,0.05);
     border: 2px solid green;
 }*/
+
+/* Hide/rearrange for smaller screens */
+
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+
+    .logo {
+        height: 100%;
+    }
+
+    h1 {
+        font-size: @h1-small;
+    }
+
+    h2 {
+        font-size: @h2-small;
+    }
+
+    .btn {
+        padding: 3px;
+        margin: 5px;
+    }
+}
