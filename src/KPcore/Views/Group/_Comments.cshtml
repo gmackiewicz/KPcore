@@ -1,0 +1,68 @@
+﻿@model KPcore.ViewModels.GroupViewModels.GroupDetailsViewModel
+
+<div class="row">
+    <!-- Add comment button -->
+    <div class="col-sm-4 text-center col-sm-offset-2 add-comment ">
+        <span class="text-center ">
+            @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Group", new { groupId = Model.Id, }, new { @class = "btn btn-grey" })
+        </span>
+    </div>
+    <!-- Add comment button end-->
+    <!-- Comments title-->
+    <div class="col-md-4 text-center small-screen-invisible">
+        <h2 class="inblock">KOMENTARZE</h2>
+    </div>
+    <div class="col-md-2"></div>
+    <!-- Comments title end-->
+    <!-- Coherence -->
+</div>
+<!-- COMMENT START -->
+@if (Model.GroupComments.Any())
+{
+    foreach (var c in Model.GroupComments)
+    {
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10 single-comment">
+                <div class="row">
+                    <div class="col-sm-8 bold inblock">
+                        @c.Author.FirstName @c.Author.LastName
+                    </div>
+
+                    <div class="col-sm-4 text-right inblock">
+                        @if (Model.CurrentUser.Id == c.AuthorId)
+                        {
+                            @Html.ActionLink("Edytuj", "EditComment", new { groupid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
+                            @Html.ActionLink("Usuń", "DeleteComment", new { commentid = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-12">
+                        @c.Content
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 thin font-grey">
+                        <span>Data dodania:</span> <span class="bold">@c.CreationDate</span>
+                    </div>
+                </div>
+                @if (c.ModificationDate != null)
+                {
+                    <div class="row">
+                        <div class="col-sm-12 text-small thin font-grey">
+                            <span>Data modyfikacji:</span> <span class="bold">@c.ModificationDate</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="col-sm-12 text-center">
+        <h2>Na chwilę obecną brak komentarzy.</h2>
+    </div>
+}
+<!-- COMMENT END -->
