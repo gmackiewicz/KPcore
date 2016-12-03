@@ -23,8 +23,8 @@
                         <form asp-action="EditGroupName">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div id="group-name-edit" class="form-group hidden">
-                                <input asp-for="Name" class="form-control inblock" />
                                 <span asp-validation-for="Name" class="text-danger" />
+                                @Html.TextBoxFor(model => model.Name, new {@class = "form-control inblock"})
                                 <input type="submit" value="Zmień" class="btn btn-grey inblock" />
                                 <a id="btn-cancel" href="#" class="btn btn-danger inblock">Anuluj</a>
                             </div>
