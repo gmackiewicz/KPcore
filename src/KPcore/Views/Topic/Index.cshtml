@@ -26,11 +26,24 @@
                     @foreach (var t in Model.Topics)
                     {
                         <tr>
-                            <td>@t.Title</td>
+                            <td>
+                                @Html.ActionLink(t.Title, "Details", new { topicId = t.Id })
+                            </td>
                             <td>@t.Description</td>
                             <td>@t.Subject.Name</td>
                             <td>@t.CreationDate</td>
-                            <td>@t.MeetingsDate</td>
+                            <td>
+                                @if (t.MeetingsDate != null)
+                                {
+                                    <span>
+                                        @t.MeetingsDate.Value.DayOfWeek @t.MeetingsDate.Value.Hour:@t.MeetingsDate.Value.Minute
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>nie ustalono</span>
+                                }
+                            </td>
                             <td>edytuj/usuń</td>
                         </tr>
                     }
