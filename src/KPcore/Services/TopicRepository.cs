@@ -3,6 +3,7 @@ using System.Linq;
 using KPcore.Data;
 using KPcore.Interfaces;
 using KPcore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KPcore.Services
 {
@@ -23,7 +24,9 @@ namespace KPcore.Services
 
         public IEnumerable<Topic> GetAllUsersTopics(string userid)
         {
-            return _dbContext.Topics.Where(t => t.TeacherId == userid);
+            return _dbContext.Topics
+                .Include(t => t.Subject)
+                .Where(t => t.TeacherId == userid);
         }
     }
 }
