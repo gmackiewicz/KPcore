@@ -16,12 +16,16 @@ namespace KPcore.Controllers
     public class TopicController : BaseController
     {
         private readonly ITopicRepository _topicRepository;
+        private readonly IGroupRepository _groupRepository;
         private readonly ISubjectRepository _subjectRepository;
 
         public TopicController(UserManager<ApplicationUser> userManager,
-            ITopicRepository topicRepository, ISubjectRepository subjectRepository) : base(userManager)
+            ITopicRepository topicRepository,
+            IGroupRepository groupRepository,
+            ISubjectRepository subjectRepository) : base(userManager)
         {
             _topicRepository = topicRepository;
+            _groupRepository = groupRepository;
             _subjectRepository = subjectRepository;
         }
 
@@ -102,7 +106,7 @@ namespace KPcore.Controllers
             {
                 return RedirectToAction(nameof(Index), new { Message = TopicMessageId.NoTopicToView });
             }
-
+            var group = _groupRepository.GetGroupByTopicId(topicId);
             var model = new TopicDetailsViewModel
             {
                 Id = topic.Id,
@@ -112,7 +116,10 @@ namespace KPcore.Controllers
                 Subject = topic.Subject,
                 CreationDate = topic.CreationDate,
                 MeetingsDate = topic.MeetingsDate,
-                TopicComments = _topicRepository.GetTopicComments(topicId)
+                TopicComments = _topicRepository.GetTopicComments(topicId),
+                Group = group,
+                GroupLeader = _groupRepository.GetLeader(group.Id),
+                GroupMembers = _groupRepository.GetStudentsOfGroup(group.Id)
             };
 
             return View(model);

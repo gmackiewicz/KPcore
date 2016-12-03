@@ -14,5 +14,8 @@ namespace KPcore.ViewModels.TopicViewModels
         public DateTime CreationDate { get; set; }
         public DateTime? MeetingsDate { get; set; }
         public IEnumerable<TopicEntry> TopicComments { get; set; }
+        public Group Group { get; set; }
+        public ApplicationUser GroupLeader { get; set; }
+        public IEnumerable<ApplicationUser> GroupMembers { get; set; }
     }
 }

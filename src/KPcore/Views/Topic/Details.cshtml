@@ -1,4 +1,5 @@
-﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
+﻿@using Microsoft.VisualStudio.Web.CodeGeneration
+@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
 
 @{
     ViewData["Title"] = "Szczegóły";
@@ -8,7 +9,16 @@
     <div class="border-transparent space-after">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center group-title">
-                <h1>NAZWA GRUPY</h1>
+                <h1>
+                    @if (Model.Group != null)
+                    {
+                        @Html.DisplayFor(m => m.Group.Name)
+                    }
+                    else
+                    {
+                        <span>BRAK GRUPY</span>
+                    }
+                </h1>
                 <hr />
                 <h2>@Html.DisplayFor(model => model.Subject.Name)</h2>
             </div>
@@ -135,19 +145,19 @@
 
                     <li>
                         <div class="list-item-info">
-                            Lider: <a href="#">@*@Model.GroupLeader.FirstName @Model.GroupLeader.LastName*@</a>
+                            Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
                             <hr class="hr-narrow" />
                         </div>
                     </li>
-                    @*@foreach (var s in Model.StudentsList)
-                        {*@
-                    <li>
-                        <div class="list-item-info">
-                            <a href="#">@*@s.FirstName @s.LastName*@</a>
-                            <hr class="hr-narrow" />
-                        </div>
-                    </li>
-                    @*}*@
+                    @foreach (var s in Model.GroupMembers)
+                    {
+                        <li>
+                            <div class="list-item-info">
+                                <a href="#">@s.FirstName @s.LastName</a>
+                                <hr class="hr-narrow" />
+                            </div>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -155,6 +165,5 @@
     </div>
 </div>
 <div>
-    @Html.ActionLink("Edit", "EditTopic", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "EditTopic", new { id = Model.Id })
 </div>
