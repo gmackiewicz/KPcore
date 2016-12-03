@@ -1,0 +1,50 @@
+﻿@model KPcore.ViewModels.GroupViewModels.GroupDetailsViewModel
+
+@{
+    var leader = (Model.GroupLeader.Id == Model.CurrentUser.Id);
+}
+<div class="text-center group-list-sm border-transparent">
+    <h3>Członkowie:</h3>
+    <hr class="molten-core" />
+    <ul class="list-unstyled">
+
+        <li>
+            <div class="list-item-info">
+                Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
+                <hr class="hr-narrow" />
+            </div>
+        </li>
+        @foreach (var s in Model.StudentsList)
+        {
+            <li>
+                <div class="list-item-info">
+                    <a href="#">@s.FirstName @s.LastName</a>
+                    <div class="pull-right">
+                        @if (leader)
+                        {
+                            @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey" })
+                        }
+
+                    </div>
+                    <hr class="hr-narrow" />
+                </div>
+            </li>
+        }
+    </ul>
+    <!-- ADD USER BUTTON -->
+    <div class="row space-after">
+        <div class="text-center">
+            @{
+                if (leader)
+                {
+                    @Html.ActionLink("Dodaj osobę", "AddMember", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
+                }
+                else
+                {
+                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
+                }
+            }
+        </div>
+    </div>
+    <!-- ADD USER BUTTON END -->
+</div>
