@@ -93,7 +93,7 @@
                             <div class="col-sm-4 text-right inblock">
                                 @if (Model.CurrentUser.Id == c.AuthorId)
                                 {
-                                    @Html.ActionLink("Edytuj", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                    @Html.ActionLink("Edytuj", "EditComment", new { groupid = Model.Id, commentid =  c.Id}, new { @class = "btn-small-grey" })
                                     @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
                                 }
                             </div>

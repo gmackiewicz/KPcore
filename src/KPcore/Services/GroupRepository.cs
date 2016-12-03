@@ -91,5 +91,18 @@ namespace KPcore.Services
             _dbContext.StudentGroups.Remove(memberToRemove);
             _dbContext.SaveChanges();
         }
+
+        public GroupComment GetCommentById(int? commentId)
+        {
+            return _dbContext.GroupComments
+                .Include(gc => gc.Group)
+                .FirstOrDefault(gc => gc.Id == commentId);
+        }
+
+        public void EditComment(GroupComment comment)
+        {
+            _dbContext.GroupComments.Update(comment);
+            _dbContext.SaveChanges();
+        }
     }
 }

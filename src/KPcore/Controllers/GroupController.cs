@@ -7,6 +7,7 @@ using KPcore.ViewModels.GroupViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 
 namespace KPcore.Controllers
 {
@@ -140,14 +141,14 @@ namespace KPcore.Controllers
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
             }
 
-            return View(new NewGroupCommentViewModel { Group = group, GroupId = group.Id });
+            return View(new GroupCommentViewModel { Group = group, GroupId = group.Id });
 
         }
 
         // POST: /Group/AddComment
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddComment(NewGroupCommentViewModel model)
+        public async Task<IActionResult> AddComment(GroupCommentViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -228,6 +229,61 @@ namespace KPcore.Controllers
 
             _groupRepository.AddUserToGroup(model.GroupId, model.SelectedUser, false);
             return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
+        }
+
+
+        // GET: /Group/EditComment
+        public IActionResult EditComment(int? commentId)
+        {
+            if (commentId == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
+            }
+
+            var comment = _groupRepository.GetCommentById(commentId);
+
+            var model = new GroupCommentViewModel
+            {
+                CommentId = comment.Id,
+                Group = comment.Group,
+                GroupId = comment.GroupId,
+                Content = comment.Content,
+                CreationDate = comment.CreationDate
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/EditComment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditComment(GroupCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się edytować komentarza.");
+                return View(model);
+            }
+
+            var comment = new GroupComment
+            {
+                Id = model.CommentId.Value,
+                GroupId = model.GroupId,
+                AuthorId = user.Id,
+                Content = model.Content,
+                CreationDate = model.CreationDate,
+                ModificationDate = DateTime.Now
+            };
+
+            _groupRepository.EditComment(comment);
+
+            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
         }
     }
 }
