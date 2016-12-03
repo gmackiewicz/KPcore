@@ -32,6 +32,7 @@ namespace KPcore.Controllers
                 message == GroupMessageId.CreateGroupSuccess ? "Nowa grupa została utworzona."
                 : message == GroupMessageId.NoGroupToView ? "Nie ma takiej grupy."
                 : message == GroupMessageId.ErrorAddingCommentToGroup ? "Błąd podczas dodawania nowego komentarza."
+                : message == GroupMessageId.LeaveGroupSuccess ? "Opuściłeś grupę."
                 : message == GroupMessageId.Error ? "Wystąpił błąd."
                 : "";
 
@@ -116,7 +117,8 @@ namespace KPcore.Controllers
             CreateGroupSuccess,
             Error,
             NoGroupToView,
-            ErrorAddingCommentToGroup
+            ErrorAddingCommentToGroup,
+            LeaveGroupSuccess
         }
 
         #endregion
@@ -297,6 +299,17 @@ namespace KPcore.Controllers
                 _groupRepository.DeleteComment(commentid);
             }
             return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
+        }
+
+        public async Task<IActionResult> LeaveGroup(int groupid)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                _groupRepository.RemoveMemberFromGroup(groupid, user.Id);
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
+            }
+            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
         }
     }
 }
