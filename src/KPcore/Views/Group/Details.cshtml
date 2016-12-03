@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Szczegóły";
+    var leader = (Model.GroupLeader.Id == Model.CurrentUser.Id);
 }
 <div>
-    
+
 </div>
 
 <div class="container-fluid">
@@ -16,11 +17,12 @@
                     @Html.DisplayFor(model => model.Name)
                 </h1>
             </div>
-            <div class="col-sm-2 text-right text-small group-control-buttons">
-                <dl>
-                    <dd>@Html.ActionLink("Edytuj", "EditGroup", new { id = Model.Id })</dd>
-                    <dd>@Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id })</dd>
-                </dl>
+            <div class="col-sm-2 text-right group-control-buttons">
+                @if (leader)
+                {
+                    @Html.ActionLink("Edytuj", "EditGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                    @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                }
             </div>
             <div class="col-sm-12">
                 <hr class="molten-core-bold" />
@@ -34,15 +36,18 @@
                     }
                     else
                     {
-                        <a href="#">
-                            <h2>
-                                <i class="fa fa-plus-square-o"></i> Dodaj temat do grupy
-                            </h2>
-                        </a>
+                        if (leader)
+                        {
+                            <a href="#">
+                                <h2>
+                                    <i class="fa fa-plus-square-o"></i> Dodaj temat do grupy
+                                </h2>
+                            </a>
+                        }
                     }
                 }
             </div>
-            <div class="col-sm-6 col-sm-offset-3"><hr class="hr-narrow"/></div>
+            <div class="col-sm-6 col-sm-offset-3"><hr class="hr-narrow" /></div>
             <div class="col-sm-3"></div>
         </div>
         <div class="col-sm-3 space-after"></div>
@@ -50,14 +55,14 @@
     <!-- GROUP TITLE END -->
     <!-- CONTENT -->
     <div class=row>
-        
+
         <!-- COMMENT SECTION START -->
         <div class="col-sm-8">
             <div class="row">
                 <!-- Add comment button -->
                 <div class="col-sm-3 text-center">
                     <span class="text-center add-comment">
-                        @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Group", new {groupId = Model.Id,}, new {@class = "btn btn-grey"})
+                        @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Group", new { groupId = Model.Id, }, new { @class = "btn btn-grey" })
                     </span>
                 </div>
                 <!-- Add comment button end-->
@@ -80,8 +85,13 @@
                             <div class="col-sm-8 bold inblock">
                                 @c.Author.FirstName @c.Author.LastName
                             </div>
+
                             <div class="col-sm-4 text-right inblock">
-                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                @if (Model.CurrentUser.Id == c.AuthorId)
+                                {
+                                    @Html.ActionLink("Edytuj", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                    @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                }
                             </div>
                         </div>
                         <hr />
@@ -95,13 +105,20 @@
                                 <span>Data dodania:</span> <span class="bold">@c.CreationDate</span>
                             </div>
                         </div>
+                        @if (c.ModificationDate != null)
+                        {
+                            <div class="row">
+                                <div class="col-sm-12 text-small thin font-grey">
+                                    <span>Data modyfikacji:</span> <span class="bold">@c.ModificationDate</span>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             }
             <!-- COMMENT END -->
         </div>
         <!-- COMMENT SECIONT END -->
-
         <!-- USER LIST -->
         <div class="col-sm-4 space-after">
             <div class="text-center group-list-sm">
@@ -120,6 +137,12 @@
                         <li>
                             <div class="list-item-info">
                                 <a href="#">@s.FirstName @s.LastName</a>
+                                <div class="pull-right">
+                                    @if (leader)
+                                    {
+                                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                    }
+                                </div>
                                 <hr class="hr-narrow" />
                             </div>
                         </li>

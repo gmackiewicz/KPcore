@@ -8,8 +8,21 @@
 @color-molten-core-alpha: rgba(246, 73, 43, .1);
 @color-molten-core: rgba(246, 73, 43, 1);
 @transparent: rgba(0, 0, 0, 0);
+@transparent-white:rgba(255, 255, 255, 0.2);
 @half-transparent: rgba(0, 0, 0, 0.6);
 @core-2300: rgb(252, 154, 7);
+
+//Small button
+@sm-btn-padding: 1px;
+@sm-btn-margin: 1px;
+@sm-btn-background: @half-transparent;
+@sm-btn-font-size: 75%;
+.sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white){
+    border: @arguments;
+    border-radius: 5px;
+}
+@sm-btn-hover-color: white;
+@sm-btn-hover-bg: @transparent-white;
 
 //Gradients
 @color-molten-core-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-alpha, @transparent);
@@ -35,9 +48,10 @@
     color: @color-molten-core !important;
 }
 
-.space-before{
+.space-before {
     margin-top: @space-before;
 }
+
 a {
 
     &:hover {
@@ -46,7 +60,7 @@ a {
     }
 
     &:active {
-        text-decoration:none;
+        text-decoration: none;
         color: @color-molten-core-light;
     }
 }
@@ -177,6 +191,27 @@ h1 {
     font-size: @h1-font-size;
     .font-lato;
     margin: 3px;
+}
+
+.btn-small-grey {
+    margin: @sm-btn-margin;
+    background-color: @sm-btn-background;
+    &:hover{
+        color: @sm-btn-hover-color;
+        background-color: @sm-btn-hover-bg;
+    }
+    padding: @sm-btn-padding;
+    font-size: @sm-btn-font-size;
+    .sm-btn-border;
+    &:link {
+        color: @color-molten-core !important;
+    }
+
+    &:visited {
+        color: @color-molten-core !important;
+    }
+
+    color: @color-molten-core !important;
 }
 
 h2 {

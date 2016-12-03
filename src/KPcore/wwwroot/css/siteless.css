@@ -107,6 +107,25 @@ h1 {
   font-family: 'Lato', sans-serif;
   margin: 3px;
 }
+.btn-small-grey {
+  margin: 1px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1px;
+  font-size: 75%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  color: #f6492b !important;
+}
+.btn-small-grey:hover {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.btn-small-grey:link {
+  color: #f6492b !important;
+}
+.btn-small-grey:visited {
+  color: #f6492b !important;
+}
 h2 {
   margin: 5px;
   font-weight: 300;
