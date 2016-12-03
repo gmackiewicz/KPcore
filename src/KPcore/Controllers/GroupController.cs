@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KPcore.Interfaces;
@@ -15,11 +14,14 @@ namespace KPcore.Controllers
     public class GroupController : BaseController
     {
         private readonly IGroupRepository _groupRepository;
+        private readonly IUserRepository _userRepository;
 
         public GroupController(UserManager<ApplicationUser> userManager,
-            IGroupRepository groupRepository) : base(userManager)
+            IGroupRepository groupRepository,
+            IUserRepository userRepository) : base(userManager)
         {
             _groupRepository = groupRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -186,9 +188,46 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Details), new { groupId = groupid });
         }
 
-        public IActionResult AddMember(int groupid)
+        public async Task<IActionResult> AddMember(int groupid)
         {
-            throw new NotImplementedException();
+            var currentUser = await GetCurrentUserAsync();
+            var groupLeader = _groupRepository.GetLeader(groupid);
+
+            if (currentUser == null || currentUser.Id != groupLeader.Id)
+            {
+                return RedirectToAction(nameof(Details), new { groupId = groupid });
+            }
+
+            var students = _userRepository.GetAllStudents();
+            var groupMembers = _groupRepository.GetStudentsOfGroup(groupid).Select(gm => gm.Id);
+            var membersToAdd = students.Where(s => (!groupMembers.Contains(s.Id))).ToList();
+
+            var model = new AddMemberToGroupViewModel(membersToAdd);
+            ViewBag.UserList = model.UsersList;
+
+            return View(model);
+        }
+
+
+        // POST: /Group/AddMember
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddMember(AddMemberToGroupViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się dodać użytkownika do grupy.");
+                return View(model);
+            }
+
+            _groupRepository.AddUserToGroup(model.GroupId, model.SelectedUser, false);
+            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
         }
     }
 }

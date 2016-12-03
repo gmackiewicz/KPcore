@@ -1,0 +1,33 @@
+﻿@model AddMemberToGroupViewModel
+
+@{
+    ViewData["Title"] = "Dodaj członka do grupy";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="AddMember">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
+        <div class="form-group">
+            <label asp-for="SelectedUser" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="SelectedUser" asp-items="ViewBag.UserList" class="form-control"></select>
+                <span asp-validation-for="SelectedUser" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Zatwierdź" class="btn btn-success" />
+                @Html.ActionLink("Wróć", "Details", new { groupId = Model.GroupId }, new { @class = "btn btn-grey" })
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
