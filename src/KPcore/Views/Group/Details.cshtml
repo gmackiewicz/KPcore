@@ -156,8 +156,9 @@
                                 <div class="pull-right">
                                     @if (leader)
                                     {
-                                        @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey" })
+                                    @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey" })
                                     }
+
                                 </div>
                                 <hr class="hr-narrow" />
                             </div>
@@ -165,16 +166,24 @@
                     }
                 </ul>
                 <!-- ADD USER BUTTON -->
-                @if (leader)
-                {
-                    <div class="row space-after">
-                        <div class="text-center">
-                            @Html.ActionLink("Dodaj osobę", "AddMember", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
-                        </div>
+                <div class="row space-after">
+                    <div class="text-center">
+                        @{
+                            if (leader)
+                            {
+                                @Html.ActionLink("Dodaj osobę", "AddMember", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Opuść grupę", "LeaveGroup", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
+                            }
+                        }
                     </div>
-                }
+                </div>
                 <!-- ADD USER BUTTON END -->
             </div>
+
+
 
         </div>
         <!-- USER LIST END -->
