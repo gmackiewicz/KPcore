@@ -120,6 +120,17 @@ namespace KPcore.Controllers
             throw new NotImplementedException();
         }
 
+        public async Task<IActionResult> DeleteTopic(int topicid)
+        {
+            var user = await GetCurrentUserAsync();
+            var topic = _topicRepository.GetTopicById(topicid);
+            if (topic.TeacherId == user.Id)
+            {
+                _topicRepository.DeleteTopic(topicid);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
         #region Helpers
 
         public enum TopicMessageId
