@@ -32,7 +32,7 @@
                         @if (Model.CurrentUser.Id == c.AuthorId)
                         {
                             @Html.ActionLink("Edytuj", "EditComment", new { groupid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
-                            @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                            @Html.ActionLink("Usuń", "DeleteComment", new { commentid = c.Id }, new { @class = "btn-small-grey" })
                         }
                     </div>
                 </div>
