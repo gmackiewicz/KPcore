@@ -6,26 +6,38 @@
 @color-white-alpha09: rgba(255, 255, 255, .9);
 @color-molten-core-light: rgb(255, 190, 20);
 @color-molten-core-alpha: rgba(246, 73, 43, .1);
+@color-molten-core-light-alpha: rgba(255, 190, 20, .5);
 @color-molten-core: rgba(246, 73, 43, 1);
 @transparent: rgba(0, 0, 0, 0);
-@transparent-white:rgba(255, 255, 255, 0.2);
+@transparent-white: rgba(255, 255, 255, 0.2);
+@transparent-whiter: rgba(255, 255, 255, 0.05);
 @half-transparent: rgba(0, 0, 0, 0.6);
 @core-2300: rgb(252, 154, 7);
 
 //Small button
-@sm-btn-padding: 1px;
+@sm-btn-padding: 3px;
 @sm-btn-margin: 1px;
 @sm-btn-background: @half-transparent;
 @sm-btn-font-size: 75%;
-.sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white){
+
+.sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white) {
     border: @arguments;
     border-radius: 5px;
 }
+
 @sm-btn-hover-color: white;
 @sm-btn-hover-bg: @transparent-white;
 
+//Border
+.border-transparent {
+    border: 1px solid @transparent-white;
+    border-radius: 3px;
+    background-color: @transparent-whiter;
+}
+
 //Gradients
 @color-molten-core-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-alpha, @transparent);
+@color-molten-core-light-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-light-alpha, @transparent);
 @color-molten-core-gradient: linear-gradient(to right, @transparent, @color-molten-core, @transparent);
 @comment-line-gradient: linear-gradient(to right, @color-white-alpha09, @transparent, @transparent);
 @default-gradient: linear-gradient(to right, @transparent, @color-white-alpha09, @transparent);
@@ -44,12 +56,32 @@
 @negative-margin: -15px;
 @space-before: 18px;
 
+.hr-narrow-main {
+    .hr-narrow;
+    background-image: @color-molten-core-light-alpha-gradient;
+}
+
 .color-molten-core {
     color: @color-molten-core !important;
 }
 
+@media screen and (min-width: 767px) {
+    .user-list {
+        padding-right: 0;
+    }
+}
+
+.comment-section {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
 .space-before {
     margin-top: @space-before;
+}
+
+.date {
+    margin-left: 5px;
 }
 
 a {
@@ -196,13 +228,16 @@ h1 {
 .btn-small-grey {
     margin: @sm-btn-margin;
     background-color: @sm-btn-background;
-    &:hover{
+
+    &:hover {
         color: @sm-btn-hover-color;
         background-color: @sm-btn-hover-bg;
     }
+
     padding: @sm-btn-padding;
     font-size: @sm-btn-font-size;
     .sm-btn-border;
+
     &:link {
         color: @color-molten-core !important;
     }
