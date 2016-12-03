@@ -31,7 +31,7 @@
                         if (Model.Topic != null)
                         {
                             <a href="#">
-                                <h1>@Model.Topic.Title</h1>
+                                <h1>@Html.ActionLink(@Model.Topic.Title, "Details", "Topic", new { topicId = @Model.Topic.Id })</h1>
                             </a>
                             <h2>@Model.Topic.Subject.Name</h2>
                         }
