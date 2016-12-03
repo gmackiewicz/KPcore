@@ -285,5 +285,17 @@ namespace KPcore.Controllers
 
             return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
         }
+
+        public async Task<IActionResult> DeleteComment(int commentid)
+        {
+            var comment = _groupRepository.GetCommentById(commentid);
+            var user = await GetCurrentUserAsync();
+
+            if (comment.AuthorId == user.Id)
+            {
+                _groupRepository.DeleteComment(commentid);
+            }
+            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
+        }
     }
 }
