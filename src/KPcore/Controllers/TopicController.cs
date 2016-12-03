@@ -28,8 +28,9 @@ namespace KPcore.Controllers
         public async Task<IActionResult> Index(TopicMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == TopicMessageId.CreateTopicSuccess ? "A new topic has been added."
-                : message == TopicMessageId.Error ? "An error has occurred."
+                message == TopicMessageId.CreateTopicSuccess ? "Nowy temat zosta³ dodany pomyœlnie."
+                : message == TopicMessageId.NoTopicToView ? "Brak tematu do wyœwietlenia."
+                : message == TopicMessageId.Error ? "Wyst¹pi³ b³¹d."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -65,7 +66,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Failed to add new topic");
+                ModelState.AddModelError(string.Empty, "Nie uda³o siê utworzyæ tematu.");
                 return View(model);
             }
 
@@ -83,14 +84,52 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Index), new { Message = TopicMessageId.CreateTopicSuccess });
         }
 
+
+        // GET: /Topic/Details
+        [HttpGet]
+        public IActionResult Details(int? topicId)
+        {
+            if (topicId == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = TopicMessageId.NoTopicToView });
+            }
+
+            var topic = _topicRepository.GetTopicById(topicId);
+
+            if (topic == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = TopicMessageId.NoTopicToView });
+            }
+
+            var model = new TopicDetailsViewModel
+            {
+                Id = topic.Id,
+                Title = topic.Title,
+                Description = topic.Description,
+                Teacher = topic.Teacher,
+                Subject = topic.Subject,
+                CreationDate = topic.CreationDate,
+                MeetingsDate = topic.MeetingsDate
+            };
+
+            return View(model);
+        }
+
+        public IActionResult EditTopic(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         #region Helpers
 
         public enum TopicMessageId
         {
             CreateTopicSuccess,
             Error,
+            NoTopicToView
         }
 
         #endregion
+
     }
 }
