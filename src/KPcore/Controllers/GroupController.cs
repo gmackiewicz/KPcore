@@ -125,8 +125,7 @@ namespace KPcore.Controllers
             NoGroupToView,
             ErrorAddingCommentToGroup,
             LeaveGroupSuccess,
-            DeleteGroupSuccess
-            LeaveGroupSuccess,
+            DeleteGroupSuccess,
             NameChanged,
             NameChangeError
         }
