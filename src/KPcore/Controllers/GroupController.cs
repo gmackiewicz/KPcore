@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,10 +26,10 @@ namespace KPcore.Controllers
         public async Task<IActionResult> Index(GroupMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == GroupMessageId.CreateGroupSuccess ? "Nowa grupa zosta³a utworzona."
+                message == GroupMessageId.CreateGroupSuccess ? "Nowa grupa zostaÅ‚a utworzona."
                 : message == GroupMessageId.NoGroupToView ? "Nie ma takiej grupy."
-                : message == GroupMessageId.ErrorAddingCommentToGroup ? "B³¹d podczas dodawania nowego komentarza."
-                : message == GroupMessageId.Error ? "Wyst¹pi³ b³¹d."
+                : message == GroupMessageId.ErrorAddingCommentToGroup ? "BÅ‚Ä…d podczas dodawania nowego komentarza."
+                : message == GroupMessageId.Error ? "WystÄ…piÅ‚ bÅ‚Ä…d."
                 : "";
 
 
@@ -61,7 +61,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Nie uda³o siê stworzyæ nowej grupy.");
+                ModelState.AddModelError(string.Empty, "Nie udaÅ‚o siÄ™ stworzyÄ‡ nowej grupy.");
                 return View(model);
             }
 
@@ -155,7 +155,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Nie uda³o siê dodaæ komentarza.");
+                ModelState.AddModelError(string.Empty, "Nie udaÅ‚o siÄ™ dodaÄ‡ komentarza.");
                 return View(model);
             }
 
