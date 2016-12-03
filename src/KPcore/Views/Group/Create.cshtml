@@ -1,14 +1,13 @@
-@model CreateGroupViewModel
+@model GroupViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tworzenie grupy";
 }
 
-<h2>Create</h2>
+<h2>@ViewData["Title"]</h2>
 
 <form asp-action="Create">
     <div class="form-horizontal">
-        <h4>CreateGroupViewModel</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">

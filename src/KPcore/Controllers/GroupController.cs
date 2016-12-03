@@ -49,13 +49,13 @@ namespace KPcore.Controllers
         // GET: /Group/Create
         public IActionResult Create()
         {
-            return View(new CreateGroupViewModel());
+            return View(new GroupViewModel());
         }
 
         // POST: /Group/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateGroupViewModel model)
+        public async Task<IActionResult> Create(GroupViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -122,12 +122,7 @@ namespace KPcore.Controllers
         }
 
         #endregion
-
-        public IActionResult EditGroup()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         // GET: /Group/AddComment
         public IActionResult AddComment(int? groupId)
         {
@@ -310,6 +305,60 @@ namespace KPcore.Controllers
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
             }
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
+        }
+
+        public IActionResult DeleteGroup(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IActionResult> EditGroup(int? id)
+        {
+            var user = await GetCurrentUserAsync();
+            if (id == null || user == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
+            }
+
+            var groupToEdit = _groupRepository.GetGroupById(id);
+
+            var model = new GroupViewModel
+            {
+                Id = groupToEdit.Id,
+                Name = groupToEdit.Name,
+                TopicId = groupToEdit.TopicId
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/EditGroup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditGroup(GroupViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się edytować grupy.");
+                return View(model);
+            }
+
+            var group = new Group
+            {
+                Id = model.Id,
+                Name = model.Name,
+                TopicId = model.TopicId
+            };
+
+            _groupRepository.EditGroup(group);
+
+            return RedirectToAction(nameof(Details), new { groupId = group.Id});
         }
     }
 }
