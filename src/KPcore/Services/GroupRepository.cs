@@ -104,5 +104,12 @@ namespace KPcore.Services
             _dbContext.GroupComments.Update(comment);
             _dbContext.SaveChanges();
         }
+
+        public void DeleteComment(int commentid)
+        {
+            var commentToRemove = _dbContext.GroupComments.FirstOrDefault(gc => gc.Id == commentid);
+            _dbContext.GroupComments.Remove(commentToRemove);
+            _dbContext.SaveChanges();
+        }
     }
 }
