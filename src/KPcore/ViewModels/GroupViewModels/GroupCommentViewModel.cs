@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.ComponentModel.DataAnnotations;
 using KPcore.Models;
 
@@ -13,7 +13,7 @@ namespace KPcore.ViewModels.GroupViewModels
 
         [Required]
         [StringLength(500)]
-        [Display(Name = "Treœæ komentarza:")]
+        [Display(Name = "TreÅ›Ä‡ komentarza:")]
         public string Content { get; set; }
     }
 }
