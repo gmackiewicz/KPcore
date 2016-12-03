@@ -53,7 +53,6 @@
                     }
                 </div>
                 <div class="col-sm-6 col-sm-offset-3">
-                    <hr class="hr-narrow" />
                 </div>
                 <div class="col-sm-3"></div>
             </div>
@@ -85,43 +84,52 @@
                 <div class="col-sm-3"></div>
             </div>
             <!-- COMMENT START -->
-            @foreach (var c in Model.GroupComments)
+            @if (Model.GroupComments.Any())
             {
-                <div class="row">
-                    <div class="col-sm-offset-1 col-sm-10 single-comment">
-                        <div class="row">
-                            <div class="col-sm-8 bold inblock">
-                                @c.Author.FirstName @c.Author.LastName
-                            </div>
-
-                            <div class="col-sm-4 text-right inblock">
-                                @if (Model.CurrentUser.Id == c.AuthorId)
-                                {
-                                    @Html.ActionLink("Edytuj", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
-                                    @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
-                                }
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-12">
-                                @c.Content
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12 thin font-grey">
-                                <span>Data dodania:</span> <span class="bold">@c.CreationDate</span>
-                            </div>
-                        </div>
-                        @if (c.ModificationDate != null)
-                        {
+                @foreach (var c in Model.GroupComments)
+                {
+                    <div class="row">
+                        <div class="col-sm-offset-1 col-sm-10 single-comment">
                             <div class="row">
-                                <div class="col-sm-12 text-small thin font-grey">
-                                    <span>Data modyfikacji:</span> <span class="bold">@c.ModificationDate</span>
+                                <div class="col-sm-8 bold inblock">
+                                    @c.Author.FirstName @c.Author.LastName
+                                </div>
+
+                                <div class="col-sm-4 text-right inblock">
+                                    @if (Model.CurrentUser.Id == c.AuthorId)
+                                    {
+                                        @Html.ActionLink("Edytuj", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                    }
                                 </div>
                             </div>
-                        }
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @c.Content
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 thin font-grey">
+                                    <span>Data dodania:</span> <span class="bold">@c.CreationDate</span>
+                                </div>
+                            </div>
+                            @if (c.ModificationDate != null)
+                            {
+                                <div class="row">
+                                    <div class="col-sm-12 text-small thin font-grey">
+                                        <span>Data modyfikacji:</span> <span class="bold">@c.ModificationDate</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
+                }
+            }
+            else
+            {
+                <div class="col-sm-12 text-center">
+                    <h2>Na chwilę obecną brak komentarzy.</h2>
                 </div>
             }
             <!-- COMMENT END -->
