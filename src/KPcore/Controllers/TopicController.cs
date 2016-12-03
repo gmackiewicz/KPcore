@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,9 +28,9 @@ namespace KPcore.Controllers
         public async Task<IActionResult> Index(TopicMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == TopicMessageId.CreateTopicSuccess ? "Nowy temat zosta³ dodany pomyœlnie."
-                : message == TopicMessageId.NoTopicToView ? "Brak tematu do wyœwietlenia."
-                : message == TopicMessageId.Error ? "Wyst¹pi³ b³¹d."
+                message == TopicMessageId.CreateTopicSuccess ? "Nowy temat zostaÅ‚ dodany pomyÅ›lnie."
+                : message == TopicMessageId.NoTopicToView ? "Brak tematu do wyÅ›wietlenia."
+                : message == TopicMessageId.Error ? "WystÄ…piÅ‚ bÅ‚Ä…d."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -66,7 +66,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Nie uda³o siê utworzyæ tematu.");
+                ModelState.AddModelError(string.Empty, "Nie udaÅ‚o siÄ™ utworzyÄ‡ tematu.");
                 return View(model);
             }
 

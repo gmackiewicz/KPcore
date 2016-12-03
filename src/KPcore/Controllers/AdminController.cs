@@ -29,8 +29,8 @@ namespace KPcore.Controllers
         public async Task<IActionResult> Index(AdminMessageId? message = null)
         {
             ViewData["StatusMessage"] =
-                message == AdminMessageId.AddSubjectSuccess ? "A new subject has been added."
-                : message == AdminMessageId.Error ? "An error has occurred."
+                message == AdminMessageId.AddSubjectSuccess ? "Nowy przedmiot został dodany pomyślnie."
+                : message == AdminMessageId.Error ? "Wystąpił błąd."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -64,7 +64,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null || user.Status != 2)
             {
-                ModelState.AddModelError(string.Empty, "Failed to add new subject");
+                ModelState.AddModelError(string.Empty, "Nie udało się utworzyć przedmiotu.");
                 return View(model);
             }
 
