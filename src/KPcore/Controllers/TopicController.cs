@@ -44,10 +44,11 @@ namespace KPcore.Controllers
         // GET: /Topic/Create
         public IActionResult Create()
         {
-            var model = new CreateTopicViewModel
-            {
-                Subjects = _subjectRepository.ListAll()
-            };
+            var subjects = _subjectRepository.ListAll();
+
+            var model = new CreateTopicViewModel(subjects);
+
+            ViewBag.SubjectList = model.SubjectList;
             return View(model);
         }
 
