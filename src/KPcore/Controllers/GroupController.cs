@@ -201,7 +201,8 @@ namespace KPcore.Controllers
 
             var students = _userRepository.GetAllStudents();
             var groupMembers = _groupRepository.GetStudentsOfGroup(groupid).Select(gm => gm.Id);
-            var membersToAdd = students.Where(s => (!groupMembers.Contains(s.Id))).ToList();
+            var leader = _groupRepository.GetLeader(groupid);
+            var membersToAdd = students.Where(s => (!groupMembers.Contains(s.Id)) && leader.Id != s.Id).ToList();
 
             var model = new AddMemberToGroupViewModel(membersToAdd);
             ViewBag.UserList = model.UsersList;
