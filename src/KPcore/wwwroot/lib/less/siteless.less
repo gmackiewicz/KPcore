@@ -54,8 +54,7 @@ body {
 /* Set widths on the form inputs since otherwise they're 100% wide */
 
 input,
-select,
-textarea {
+select{
     max-width: 280px;
 }
 
@@ -151,7 +150,7 @@ hr {
 
 h1 {
     font-weight: 800;
-    font-size: 40px;
+    font-size: 200%;
     .font-lato;
     margin: 5px;
 }
@@ -159,7 +158,7 @@ h1 {
 h2 {
     margin: 5px;
     font-weight: 200;
-    font-size: 28px;
+    font-size: 150%;
     .font-lato;
 }
 
@@ -196,9 +195,10 @@ h2 {
 }
 
 .btn-grey {
-    background: #101010;
+    margin: 3px;
+    background: #222222;
     color: @color-light-grey;
-    border: 2px solid black;
+    border: 1px solid black;
 
     &:hover {
         background: @color-molten-core;
@@ -353,7 +353,7 @@ h2 {
     font-size: 10px;
 }
 
-.row {
+/*.row {
     background-color: rgba(255,255,255,0.05);
     border: 2px solid red;
 }
@@ -361,4 +361,4 @@ h2 {
 div[class*=col]{
     background-color: rgba(255,255,255,0.05);
     border: 2px solid green;
-}
+}*/

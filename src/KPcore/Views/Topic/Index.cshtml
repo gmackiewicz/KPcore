@@ -1,6 +1,6 @@
-@model TeacherTopicsIndexViewModel
+﻿@model TeacherTopicsIndexViewModel
 @{
-    ViewData["Title"] = "Your topics";
+    ViewData["Title"] = "Twoje tematy";
 }
 
 <h2>@ViewData["Title"].</h2>
@@ -10,17 +10,17 @@
     <dl class="dl-horizontal">
         <dt>Your topic:</dt>
         <dd>
-            <a asp-controller="Topic" asp-action="Create" class="btn-bracketed">Create new topic</a>
+            <a asp-controller="Topic" asp-action="Create" class="btn-bracketed">Stwórz nowy temat</a>
             <hr />
             <div class="table-responsive">
                 <table class="table table-condensed">
                     <tr>
-                        <th>Title</th>
-                        <th>Description
-                        <th>Subject</th>
-                        <th>Creation date</th>
-                        <th>Meetings date</th>
-                        <th>Actions</th>
+                        <th>Nazwa</th>
+                        <th>Opis</th>
+                        <th>Przedmiot</th>
+                        <th>Data utworzenia</th>
+                        <th>Termin spotkań</th>
+                        <th>Akcje</th>
                     </tr>
 
                     @foreach (var t in Model.Topics)
@@ -28,10 +28,21 @@
                         <tr>
                             <td>@t.Title</td>
                             <td>@t.Description</td>
-                            <td>@t.SubjectId</td>
+                            <td>@t.Subject.Name</td>
                             <td>@t.CreationDate</td>
-                            <td>@t.MeetingsDate</td>
-                            <td>edytuj/usu�</td>
+                            <td>
+                                @if (t.MeetingsDate != null)
+                                {
+                                    <span>
+                                        @t.MeetingsDate.Value.DayOfWeek @t.MeetingsDate.Value.Hour:@t.MeetingsDate.Value.Minute
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>nie ustalono</span>
+                                }
+                            </td>
+                            <td>edytuj/usuń</td>
                         </tr>
                     }
                 </table>
