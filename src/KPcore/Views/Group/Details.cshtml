@@ -98,7 +98,7 @@
                                 <div class="col-sm-4 text-right inblock">
                                     @if (Model.CurrentUser.Id == c.AuthorId)
                                     {
-                                        @Html.ActionLink("Edytuj", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                        @Html.ActionLink("Edytuj", "EditComment", new { groupid = Model.Id, commentid =  c.Id}, new { @class = "btn-small-grey" })
                                         @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
                                     }
                                 </div>
@@ -156,7 +156,7 @@
                                 <div class="pull-right">
                                     @if (leader)
                                     {
-                                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                        @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey" })
                                     }
                                 </div>
                                 <hr class="hr-narrow" />
@@ -169,7 +169,7 @@
                 {
                     <div class="row space-after">
                         <div class="text-center">
-                            <a href="#" class="btn btn-grey">Dodaj osobę</a>
+                            @Html.ActionLink("Dodaj osobę", "AddMember", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
                         </div>
                     </div>
                 }

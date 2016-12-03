@@ -84,5 +84,25 @@ namespace KPcore.Services
             _dbContext.GroupComments.Add(comment);
             _dbContext.SaveChanges();
         }
+
+        public void RemoveMemberFromGroup(int groupid, string memberid)
+        {
+            var memberToRemove = _dbContext.StudentGroups.FirstOrDefault(sg => sg.GroupId == groupid && sg.StudentId == memberid);
+            _dbContext.StudentGroups.Remove(memberToRemove);
+            _dbContext.SaveChanges();
+        }
+
+        public GroupComment GetCommentById(int? commentId)
+        {
+            return _dbContext.GroupComments
+                .Include(gc => gc.Group)
+                .FirstOrDefault(gc => gc.Id == commentId);
+        }
+
+        public void EditComment(GroupComment comment)
+        {
+            _dbContext.GroupComments.Update(comment);
+            _dbContext.SaveChanges();
+        }
     }
 }
