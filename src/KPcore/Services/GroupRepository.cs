@@ -137,5 +137,10 @@ namespace KPcore.Services
         {
             return _dbContext.Groups.FirstOrDefault(g => g.TopicId == topicId);
         }
+
+        public IEnumerable<Deadline> GetDeadlinesByGroup(int groupId)
+        {
+            return _dbContext.Deadlines.Where(d => d.GroupId == groupId).ToList();
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿@using Microsoft.VisualStudio.Web.CodeGeneration
-@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
+﻿@model TopicDetailsViewModel
 
 @{
     ViewData["Title"] = "Szczegóły";
@@ -31,7 +30,7 @@
                 <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
             </div>
             <div class="col-md-2 group-options">
-                <button class="btn btn-grey">Dodaj nowy termin</button>
+                @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { groupId = Model.Group.Id, }, new { @class = "btn btn-grey" })
                 <button class="btn btn-grey">Oceń termin</button>
             </div>
         </div>
@@ -125,16 +124,25 @@
                 <h3>Terminy:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
-
-                    @*@foreach (var s in Model.StudentsList)
-                        {*@
-                    <li>
+                    @if (Model.Deadlines.Count() != 0)
+                    {
+                        foreach (var d in Model.Deadlines)
+                        {
+                            <li>
+                                <div class="list-item-info">
+                                    <a href="#">@d.DeadlineDate @d.Mark</a>
+                                    <hr class="hr-narrow" />
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
                         <div class="list-item-info">
-                            <a href="#">@*@s.FirstName @s.LastName*@</a>
+                            Brak terminów do wyświetlenia.
                             <hr class="hr-narrow" />
                         </div>
-                    </li>
-                    @*}*@
+                    }
                 </ul>
             </div>
 

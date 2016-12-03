@@ -119,7 +119,8 @@ namespace KPcore.Controllers
                 TopicComments = _topicRepository.GetTopicComments(topicId),
                 Group = group,
                 GroupLeader = _groupRepository.GetLeader(group.Id),
-                GroupMembers = _groupRepository.GetStudentsOfGroup(group.Id)
+                GroupMembers = _groupRepository.GetStudentsOfGroup(group.Id),
+                Deadlines = _groupRepository.GetDeadlinesByGroup(group.Id)
             };
 
             return View(model);

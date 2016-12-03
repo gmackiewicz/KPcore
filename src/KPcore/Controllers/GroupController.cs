@@ -436,5 +436,9 @@ namespace KPcore.Controllers
         }
 
 
+        public IActionResult AddDeadline(int groupid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
