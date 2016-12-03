@@ -49,7 +49,7 @@ namespace KPcore.Data
             builder.Entity<Group>()
                 .HasOne(t => t.Topic)
                 .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<StudentGroup>()
                 .HasKey(sg => new { sg.StudentId, sg.GroupId });
