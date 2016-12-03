@@ -16,6 +16,9 @@
   .user-list {
     padding-right: 0;
   }
+  .small-screen-visible {
+    display: none;
+  }
 }
 .comment-section {
   padding-top: 15px;
