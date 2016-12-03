@@ -22,7 +22,7 @@
                     <div class="pull-right">
                         @if (leader)
                         {
-                            @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey" })
+                            @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę osobę?');" })
                         }
 
                     </div>
@@ -41,7 +41,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new { groupId = Model.Id }, new { @class = "btn btn-grey", onclick = "return confirm('Na pewno chcesz opuścić tę grupę?');" })
                 }
             }
         </div>
