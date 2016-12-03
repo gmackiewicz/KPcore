@@ -31,6 +31,7 @@ namespace KPcore.Controllers
                 message == TopicMessageId.CreateTopicSuccess ? "Nowy temat został dodany pomyślnie."
                 : message == TopicMessageId.NoTopicToView ? "Brak tematu do wyświetlenia."
                 : message == TopicMessageId.Error ? "Wystąpił błąd."
+                : message == TopicMessageId.TopicDeleted ? "Temat został pomyślnie usunięty."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -120,13 +121,25 @@ namespace KPcore.Controllers
             throw new NotImplementedException();
         }
 
+        public async Task<IActionResult> DeleteTopic(int topicid)
+        {
+            var user = await GetCurrentUserAsync();
+            var topic = _topicRepository.GetTopicById(topicid);
+            if (topic.TeacherId == user.Id)
+            {
+                _topicRepository.DeleteTopic(topicid);
+            }
+            return RedirectToAction(nameof(Index), new { Message = TopicMessageId.TopicDeleted });
+        }
+
         #region Helpers
 
         public enum TopicMessageId
         {
             CreateTopicSuccess,
             Error,
-            NoTopicToView
+            NoTopicToView,
+            TopicDeleted
         }
 
         #endregion

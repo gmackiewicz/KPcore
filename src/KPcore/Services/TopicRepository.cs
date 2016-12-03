@@ -46,5 +46,11 @@ namespace KPcore.Services
                 .Include(t => t.Subject)
                 .Where(t => !usedTopics.Contains(t.Id));
         }
+        public void DeleteTopic(int topicid)
+        {
+            var topicToRemove = _dbContext.Topics.FirstOrDefault(gc => gc.Id == topicid);
+            _dbContext.Topics.Remove(topicToRemove);
+            _dbContext.SaveChanges();
+        }
     }
 }
