@@ -307,11 +307,6 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
         }
 
-        public IActionResult DeleteGroup(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IActionResult> EditGroup(int? id)
         {
             var user = await GetCurrentUserAsync();
@@ -359,6 +354,18 @@ namespace KPcore.Controllers
             _groupRepository.EditGroup(group);
 
             return RedirectToAction(nameof(Details), new { groupId = group.Id});
+        }
+        
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            var group = _groupRepository.GetGroupById(id);
+            var user = await GetCurrentUserAsync();
+
+            var groupLeader = _groupRepository.GetLeader(id);
+            if (user != null && groupLeader.Id == user.Id)
+            {
+                _groupRepository.DeleteGroup(id);
+            }
         }
     }
 }
