@@ -52,5 +52,40 @@ namespace KPcore.Services
             _dbContext.Topics.Remove(topicToRemove);
             _dbContext.SaveChanges();
         }
+
+        public IEnumerable<TopicEntry> GetTopicComments(int? topicId)
+        {
+            return _dbContext.TopicEntries
+                .Include(te => te.Author)
+                .Where(te => te.TopicId == topicId)
+                .OrderByDescending(te => te.CreationDate);
+        }
+
+        public void AddComment(TopicEntry comment)
+        {
+            _dbContext.TopicEntries.Add(comment);
+            _dbContext.SaveChanges();
+        }
+
+        public void EditComment(TopicEntry comment)
+        {
+            _dbContext.TopicEntries.Update(comment);
+            _dbContext.SaveChanges();
+        }
+
+        public void DeleteComment(int commentid)
+        {
+            var commentToRemove = _dbContext.TopicEntries.FirstOrDefault(gc => gc.Id == commentid);
+            _dbContext.TopicEntries.Remove(commentToRemove);
+            _dbContext.SaveChanges();
+        }
+
+        public TopicEntry GetCommentById(int? commentId)
+        {
+            return _dbContext.TopicEntries
+                .Include(te => te.Author)
+                .Include(te => te.Topic)
+                .FirstOrDefault(te => te.Id == commentId);
+        }
     }
 }

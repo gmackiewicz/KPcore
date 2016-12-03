@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using KPcore.Models;
 
 namespace KPcore.ViewModels.TopicViewModels
@@ -12,5 +13,6 @@ namespace KPcore.ViewModels.TopicViewModels
         public Subject Subject { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? MeetingsDate { get; set; }
+        public IEnumerable<TopicEntry> TopicComments { get; set; }
     }
 }
