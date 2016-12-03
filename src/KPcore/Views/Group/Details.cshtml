@@ -144,7 +144,7 @@
                                 <div class="pull-right">
                                     @if (leader)
                                     {
-                                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                                        @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey" })
                                     }
                                 </div>
                                 <hr class="hr-narrow" />
@@ -154,10 +154,11 @@
                 </ul>
             </div>
             <!-- ADD USER BUTTON -->
-            @if (leader) {
+            @if (leader)
+            {
                 <div class="row">
                     <div class="text-center">
-                        <a href="#" class="btn btn-grey">Dodaj osobę</a>
+                        @Html.ActionLink("Dodaj osobę", "AddMember", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
                     </div>
                 </div>
             }

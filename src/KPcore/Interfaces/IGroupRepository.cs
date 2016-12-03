@@ -13,5 +13,6 @@ namespace KPcore.Interfaces
         ApplicationUser GetLeader(int? groupId);
         IEnumerable<GroupComment> GetGroupComments(int? groupId);
         void AddComment(GroupComment comment);
+        void RemoveMemberFromGroup(int groupid, string memberid);
     }
 }

@@ -170,5 +170,25 @@ namespace KPcore.Controllers
             _groupRepository.AddComment(comment);
             return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
         }
+
+        public async Task<IActionResult> RemoveMember(int groupid, string memberid)
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var groupLeader = _groupRepository.GetLeader(groupid);
+
+            if (currentUser != null && currentUser.Id == groupLeader.Id)
+            {
+                _groupRepository.RemoveMemberFromGroup(groupid, memberid);
+                return RedirectToAction(nameof(Details), new { groupId = groupid });
+            }
+
+            ModelState.AddModelError(string.Empty, "Nie udało się usunąć członka grupy.");
+            return RedirectToAction(nameof(Details), new { groupId = groupid });
+        }
+
+        public IActionResult AddMember(int groupid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
