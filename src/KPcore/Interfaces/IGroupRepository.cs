@@ -18,5 +18,7 @@ namespace KPcore.Interfaces
         void EditComment(GroupComment comment);
         void DeleteComment(int commentid);
         void EditGroup(Group group);
+        void DeleteGroup(int id);
+        void AddTopicToGroup(int modelGroupId, int modelSelectedTopic);
     }
 }

@@ -16,12 +16,15 @@ namespace KPcore.Controllers
     {
         private readonly IGroupRepository _groupRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ITopicRepository _topicRepository;
 
         public GroupController(UserManager<ApplicationUser> userManager,
             IGroupRepository groupRepository,
+            ITopicRepository topicRepository,
             IUserRepository userRepository) : base(userManager)
         {
             _groupRepository = groupRepository;
+            _topicRepository = topicRepository;
             _userRepository = userRepository;
         }
 
@@ -33,6 +36,7 @@ namespace KPcore.Controllers
                 : message == GroupMessageId.NoGroupToView ? "Nie ma takiej grupy."
                 : message == GroupMessageId.ErrorAddingCommentToGroup ? "Błąd podczas dodawania nowego komentarza."
                 : message == GroupMessageId.LeaveGroupSuccess ? "Opuściłeś grupę."
+                : message == GroupMessageId.DeleteGroupSuccess ? "Usunąłeś grupę."
                 : message == GroupMessageId.Error ? "Wystąpił błąd."
                 : message == GroupMessageId.NameChanged ? "Pomyślnie zmieniono nazwę grupy."
                 : message == GroupMessageId.NameChangeError ? "Wystąpił błąd podczas zmieniana nazwy grupy: nieprawidłowa nazwa."
@@ -51,13 +55,13 @@ namespace KPcore.Controllers
         // GET: /Group/Create
         public IActionResult Create()
         {
-            return View(new CreateGroupViewModel());
+            return View(new GroupViewModel());
         }
 
         // POST: /Group/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateGroupViewModel model)
+        public async Task<IActionResult> Create(GroupViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -121,16 +125,13 @@ namespace KPcore.Controllers
             NoGroupToView,
             ErrorAddingCommentToGroup,
             LeaveGroupSuccess,
+            DeleteGroupSuccess
+            LeaveGroupSuccess,
             NameChanged,
             NameChangeError
         }
 
         #endregion
-
-        public IActionResult EditGroup()
-        {
-            throw new NotImplementedException();
-        }
 
         // GET: /Group/AddComment
         public IActionResult AddComment(int? groupId)
@@ -215,8 +216,7 @@ namespace KPcore.Controllers
 
             return View(model);
         }
-
-
+        
         // POST: /Group/AddMember
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -332,5 +332,110 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
         }
+
+        public async Task<IActionResult> EditGroup(int? id)
+        {
+            var user = await GetCurrentUserAsync();
+            if (id == null || user == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
+            }
+
+            var groupToEdit = _groupRepository.GetGroupById(id);
+
+            var model = new GroupViewModel
+            {
+                Id = groupToEdit.Id,
+                Name = groupToEdit.Name,
+                TopicId = groupToEdit.TopicId
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/EditGroup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditGroup(GroupViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się edytować grupy.");
+                return View(model);
+            }
+
+            var group = new Group
+            {
+                Id = model.Id,
+                Name = model.Name,
+                TopicId = model.TopicId
+            };
+
+            _groupRepository.EditGroup(group);
+
+            return RedirectToAction(nameof(Details), new { groupId = group.Id });
+        }
+
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            var group = _groupRepository.GetGroupById(id);
+            var user = await GetCurrentUserAsync();
+
+            var groupLeader = _groupRepository.GetLeader(id);
+            if (user != null && groupLeader.Id == user.Id)
+            {
+                _groupRepository.DeleteGroup(id);
+            }
+            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.DeleteGroupSuccess });
+        }
+
+        public IActionResult ChooseTopicForGroup(int id)
+        {
+            var group = _groupRepository.GetGroupById(id);
+            var availableTopics = _topicRepository.GetAvailableTopics();
+
+            if (group != null && group.TopicId == null)
+            {
+                var model = new ChooseTopicForGroupViewModel(availableTopics)
+                {
+                    Group = group,
+                    GroupId = id
+                };
+
+                ViewBag.TopicList = model.TopicsList;
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Details), new { groupId = id });
+        }
+
+        // POST: /Group/ChooseTopicForGroup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChooseTopicForGroup(ChooseTopicForGroupViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się dodać tematu do grupy.");
+                return View(model);
+            }
+
+            _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
+            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
+        }
+
+
     }
 }

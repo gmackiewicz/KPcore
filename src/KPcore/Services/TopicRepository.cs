@@ -36,6 +36,16 @@ namespace KPcore.Services
                 .Include(t => t.Subject)
                 .FirstOrDefault(t => t.Id == topicId);
         }
+
+        public IEnumerable<Topic> GetAvailableTopics()
+        {
+            var usedTopics = _dbContext.Groups.Select(g => g.TopicId).ToList();
+
+            return _dbContext.Topics
+                .Include(t => t.Teacher)
+                .Include(t => t.Subject)
+                .Where(t => !usedTopics.Contains(t.Id));
+        }
         public void DeleteTopic(int topicid)
         {
             var topicToRemove = _dbContext.Topics.FirstOrDefault(gc => gc.Id == topicid);

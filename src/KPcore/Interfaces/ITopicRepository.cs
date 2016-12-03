@@ -8,6 +8,7 @@ namespace KPcore.Interfaces
         void CreateTopic(Topic topic);
         IEnumerable<Topic> GetAllUsersTopics(string userid);
         Topic GetTopicById(int? topicId);
+        IEnumerable<Topic> GetAvailableTopics();
         void DeleteTopic(int topicId);
     }
 }
