@@ -1,8 +1,29 @@
-﻿.color-molten-core {
+﻿.border-transparent {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.hr-narrow-main {
+  margin: 0px;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 190, 20, 0.5), rgba(0, 0, 0, 0));
+}
+.color-molten-core {
   color: #f6492b !important;
+}
+.comment-section {
+  padding-top: 5px;
+}
+.nearest-deadline {
+  margin-right: -10px;
+  padding: 0;
 }
 .space-before {
   margin-top: 18px;
+}
+.date {
+  margin-left: 5px;
 }
 a:hover {
   color: #f6492b;
@@ -110,7 +131,7 @@ h1 {
 .btn-small-grey {
   margin: 1px;
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 1px;
+  padding: 3px;
   font-size: 75%;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
