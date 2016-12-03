@@ -26,6 +26,7 @@
                                 <input asp-for="Name" class="form-control inblock" />
                                 <span asp-validation-for="Name" class="text-danger" />
                                 <input type="submit" value="Zmień" class="btn btn-grey inblock" />
+                                <a id="btn-cancel" href="#" class="btn btn-danger inblock">Anuluj</a>
                             </div>
                             @Html.TextBoxFor(model => model.Id, new { type = "hidden" })
                         </form>
