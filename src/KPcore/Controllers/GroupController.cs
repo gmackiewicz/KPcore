@@ -35,7 +35,7 @@ namespace KPcore.Controllers
                 : message == GroupMessageId.LeaveGroupSuccess ? "Opuściłeś grupę."
                 : message == GroupMessageId.Error ? "Wystąpił błąd."
                 : message == GroupMessageId.NameChanged ? "Pomyślnie zmieniono nazwę grupy."
-                : message == GroupMessageId.NameChangeError ? "Wystąpił błąd podczas zmieniana nazwy grupy."
+                : message == GroupMessageId.NameChangeError ? "Wystąpił błąd podczas zmieniana nazwy grupy: nieprawidłowa nazwa."
                 : "";
 
 
@@ -275,7 +275,7 @@ namespace KPcore.Controllers
                 _groupRepository.EditGroup(group);
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NameChanged });
             }
-            else return RedirectToAction(nameof(Index), new { message = GroupMessageId.NameChangeError });
+            else return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
         }
 
         // POST: /Group/EditComment
