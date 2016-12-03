@@ -34,6 +34,8 @@ namespace KPcore.Controllers
                 : message == GroupMessageId.ErrorAddingCommentToGroup ? "Błąd podczas dodawania nowego komentarza."
                 : message == GroupMessageId.LeaveGroupSuccess ? "Opuściłeś grupę."
                 : message == GroupMessageId.Error ? "Wystąpił błąd."
+                : message == GroupMessageId.NameChanged ? "Pomyślnie zmieniono nazwę grupy."
+                : message == GroupMessageId.NameChangeError ? "Wystąpił błąd podczas zmieniana nazwy grupy."
                 : "";
 
 
@@ -118,7 +120,9 @@ namespace KPcore.Controllers
             Error,
             NoGroupToView,
             ErrorAddingCommentToGroup,
-            LeaveGroupSuccess
+            LeaveGroupSuccess,
+            NameChanged,
+            NameChangeError
         }
 
         #endregion
@@ -255,6 +259,23 @@ namespace KPcore.Controllers
             };
 
             return View(model);
+        }
+
+        public async Task<IActionResult> EditGroupName(GroupDetailsViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index), new { message = GroupMessageId.NameChangeError });
+            }
+            if (user.Status == 2)
+            {
+                var group = _groupRepository.GetGroupById(model.Id);
+                group.Name = model.Name;
+                _groupRepository.EditGroup(group);
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NameChanged });
+            }
+            else return RedirectToAction(nameof(Index), new { message = GroupMessageId.NameChangeError });
         }
 
         // POST: /Group/EditComment

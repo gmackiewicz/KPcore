@@ -111,5 +111,11 @@ namespace KPcore.Services
             _dbContext.GroupComments.Remove(commentToRemove);
             _dbContext.SaveChanges();
         }
+
+        public void EditGroup(Group @group)
+        {
+            _dbContext.Groups.Update(group);
+            _dbContext.SaveChanges();
+        }
     }
 }

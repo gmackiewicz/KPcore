@@ -8,20 +8,34 @@
 
 </div>
 
+
 <div class="container-fluid">
     <!-- GROUP TITLE -->
     <div class="row">
         <div class="col-sm-12 border-transparent space-after space-before">
             <div class="col-sm-8 col-sm-offset-2 text-center group-title">
                 <div class="col-sm-8 col-sm-offset-2">
-                    <h1>
+                    <h1 id="group-name-display">
                         @Html.DisplayFor(model => model.Name)
                     </h1>
+                    @if (leader)
+                    {
+                        <form asp-action="EditGroupName">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div id="group-name-edit" class="form-group hidden">
+                                <input asp-for="Name" class="form-control inblock" />
+                                <span asp-validation-for="Name" class="text-danger" />
+                                <input type="submit" value="Zmień" class="btn btn-grey inblock" />
+                            </div>
+                        </form>
+                    }
+                        @Html.TextBoxFor(model => model.Id, new { type = "hidden" })
+                        
                 </div>
                 <div class="col-sm-2 text-right group-control-buttons">
                     @if (leader)
                     {
-                        @Html.ActionLink("Edytuj", "EditGroup", new { id = Model.Id }, new { @class = "btn-small-grey" })
+                        <a id="btn-edit" href="#" class="btn-small-grey">Edytuj</a>
                         @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę grupę?');" })
                     }
                 </div>
