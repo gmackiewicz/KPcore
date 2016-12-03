@@ -16,12 +16,15 @@ namespace KPcore.Controllers
     {
         private readonly IGroupRepository _groupRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ITopicRepository _topicRepository;
 
         public GroupController(UserManager<ApplicationUser> userManager,
             IGroupRepository groupRepository,
+            ITopicRepository topicRepository,
             IUserRepository userRepository) : base(userManager)
         {
             _groupRepository = groupRepository;
+            _topicRepository = topicRepository;
             _userRepository = userRepository;
         }
 
@@ -208,8 +211,7 @@ namespace KPcore.Controllers
 
             return View(model);
         }
-
-
+        
         // POST: /Group/AddMember
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -370,5 +372,48 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.DeleteGroupSuccess });
         }
+
+        public IActionResult ChooseTopicForGroup(int id)
+        {
+            var group = _groupRepository.GetGroupById(id);
+            var availableTopics = _topicRepository.GetAvailableTopics();
+
+            if (group != null && group.TopicId == null)
+            {
+                var model = new ChooseTopicForGroupViewModel(availableTopics)
+                {
+                    Group = group,
+                    GroupId = id
+                };
+
+                ViewBag.TopicList = model.TopicsList;
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Details), new { groupId = id });
+        }
+
+        // POST: /Group/ChooseTopicForGroup
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChooseTopicForGroup(ChooseTopicForGroupViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się dodać tematu do grupy.");
+                return View(model);
+            }
+
+            _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
+            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
+        }
+
+
     }
 }

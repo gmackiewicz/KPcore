@@ -124,5 +124,13 @@ namespace KPcore.Services
             _dbContext.Groups.Remove(groupToRemove);
             _dbContext.SaveChanges();
         }
+
+        public void AddTopicToGroup(int groupId, int topicId)
+        {
+            var group = _dbContext.Groups.FirstOrDefault(g => g.Id == groupId);
+            group.TopicId = topicId;
+            _dbContext.Groups.Update(group);
+            _dbContext.SaveChanges();
+        }
     }
 }

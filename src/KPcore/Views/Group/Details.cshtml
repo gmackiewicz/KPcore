@@ -39,11 +39,9 @@
                         {
                             if (leader)
                             {
-                                <a href="#">
-                                    <h2>
-                                        <i class="fa fa-plus-square-o"></i> Dodaj temat do grupy
-                                    </h2>
-                                </a>
+                                <h2>
+                                    <a asp-action="ChooseTopicForGroup" , asp-controller="Group" asp-route-id="@Model.Id"><i class="fa fa-plus-square-o"></i> Dodaj temat do grupy</a>
+                                </h2>
                             }
                             else
                             {
