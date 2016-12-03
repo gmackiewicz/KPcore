@@ -12,12 +12,14 @@
 .color-molten-core {
   color: #f6492b !important;
 }
-.comment-section {
-  padding-top: 5px;
+@media screen and (min-width: 767px) {
+  .user-list {
+    padding-right: 0;
+  }
 }
-.nearest-deadline {
-  margin-right: -10px;
-  padding: 0;
+.comment-section {
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 .space-before {
   margin-top: 18px;
