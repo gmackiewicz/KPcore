@@ -75,7 +75,8 @@ namespace KPcore.Controllers
                 Description = model.Description,
                 CreationDate = DateTime.Now,
                 SubjectId = model.SelectedSubjectId,
-                TeacherId = user.Id
+                TeacherId = user.Id,
+                MeetingsDate = model.MeetingsDate
             };
 
             _topicRepository.CreateTopic(topic);

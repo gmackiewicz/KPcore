@@ -74,7 +74,9 @@ namespace KPcore.Services
         {
             return _dbContext.GroupComments
                 .Include(gc => gc.Author)
-                .Where(gc => gc.GroupId == groupId).ToList();
+                .Where(gc => gc.GroupId == groupId)
+                .OrderByDescending(gc => gc.CreationDate)
+                .ToList();
         }
 
         public void AddComment(GroupComment comment)
