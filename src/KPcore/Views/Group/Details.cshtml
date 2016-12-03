@@ -27,9 +27,9 @@
                                 <span asp-validation-for="Name" class="text-danger" />
                                 <input type="submit" value="Zmień" class="btn btn-grey inblock" />
                             </div>
+                            @Html.TextBoxFor(model => model.Id, new { type = "hidden" })
                         </form>
                     }
-                        @Html.TextBoxFor(model => model.Id, new { type = "hidden" })
                         
                 </div>
                 <div class="col-sm-2 text-right group-control-buttons">
