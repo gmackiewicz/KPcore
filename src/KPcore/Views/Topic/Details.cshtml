@@ -39,6 +39,9 @@
                 @if (Model.Group != null && teacher)
                 {
                     @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
+                }
+                @if (teacher)
+                {
                     @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
                 }
             </div>
@@ -62,7 +65,7 @@
             <h2 class="bold">
                 @if (Model.CurrentDeadline == null)
                 {
-                    <span>sBrak terminu do wyświetlenia.</span>
+                    <span>Brak terminu do wyświetlenia.</span>
                 }
                 else
                 {
@@ -221,7 +224,4 @@
         </div>
         <!-- USER LIST END -->
     </div>
-</div>
-<div>
-    @Html.ActionLink("Edit", "EditTopic", new { id = Model.Id })
 </div>

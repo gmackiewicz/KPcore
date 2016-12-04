@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using KPcore.Interfaces;
 using KPcore.Models;
@@ -127,7 +128,10 @@ namespace KPcore.Controllers
                 model.GroupLeader = _groupRepository.GetLeader(@group.Id);
                 model.GroupMembers = _groupRepository.GetStudentsOfGroup(@group.Id);
                 model.Deadlines = _deadlineRepository.GetDeadlinesByGroup(@group.Id);
-                model.CurrentDeadline = _deadlineRepository.GetCurrentDeadline(@group.Id);
+                if (model.Deadlines.Count() != 0)
+                {
+                    model.CurrentDeadline = _deadlineRepository.GetCurrentDeadline(@group.Id);
+                }
             }
 
             return View(model);
