@@ -16,10 +16,16 @@ namespace KPcore.Services
         {
             _dbContext = dbContext;
         }
-        
+
         public IEnumerable<Deadline> GetDeadlinesByGroup(int groupId)
         {
             return _dbContext.Deadlines.Where(d => d.GroupId == groupId).ToList();
+        }
+
+        public void AddDeadline(Deadline deadline)
+        {
+            _dbContext.Deadlines.Add(deadline);
+            _dbContext.SaveChanges();
         }
     }
 }

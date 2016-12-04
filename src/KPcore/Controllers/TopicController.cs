@@ -40,6 +40,7 @@ namespace KPcore.Controllers
                 : message == TopicMessageId.ErrorAddingCommentToTopic ? "Nie udało się dodać komentarza."
                 : message == TopicMessageId.Error ? "Wystąpił błąd."
                 : message == TopicMessageId.TopicDeleted ? "Temat został pomyślnie usunięty."
+                : message == TopicMessageId.AddDeadlineError ? "Wystąpił błąd podczas dodawania terminu."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -157,7 +158,8 @@ namespace KPcore.Controllers
             Error,
             NoTopicToView,
             ErrorAddingCommentToTopic,
-            TopicDeleted
+            TopicDeleted,
+            AddDeadlineError
         }
 
         #endregion

@@ -17,14 +17,17 @@ namespace KPcore.Controllers
         private readonly IGroupRepository _groupRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITopicRepository _topicRepository;
+        private readonly IDeadlineRepository _deadlineRepository;
 
         public GroupController(UserManager<ApplicationUser> userManager,
             IGroupRepository groupRepository,
             ITopicRepository topicRepository,
+            IDeadlineRepository deadlineRepository,
             IUserRepository userRepository) : base(userManager)
         {
             _groupRepository = groupRepository;
             _topicRepository = topicRepository;
+            _deadlineRepository = deadlineRepository;
             _userRepository = userRepository;
         }
 
@@ -435,10 +438,53 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
-
-        public IActionResult AddDeadline(int groupid)
+        // GET: /Group/AddDeadline
+        public async Task<IActionResult> AddDeadline(int id)
         {
-            throw new NotImplementedException();
+            var user = await GetCurrentUserAsync();
+            var group = _groupRepository.GetGroupById(id);
+
+            if (user == null || group.Topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Index), "Topic", new { Message = TopicController.TopicMessageId.AddDeadlineError });
+            }
+
+            var model = new DeadlineViewModel
+            {
+                Group = @group,
+                GroupId = @group.Id,
+                TopicId = @group.Topic.Id
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/AddDeadline
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddDeadline(DeadlineViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się dodać terminu cząstkowego.");
+                return View(model);
+            }
+
+            var deadline = new Deadline
+            {
+                DeadlineDate = model.DeadlineDate.Value,
+                Comment = model.Comment,
+                GroupId = model.GroupId
+            };
+
+            _deadlineRepository.AddDeadline(deadline);
+            return RedirectToAction(nameof(Details), "Topic", new { id = model.TopicId });
         }
     }
 }

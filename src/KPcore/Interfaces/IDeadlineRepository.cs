@@ -6,5 +6,6 @@ namespace KPcore.Interfaces
     public interface IDeadlineRepository
     {
         IEnumerable<Deadline> GetDeadlinesByGroup(int groupId);
+        void AddDeadline(Deadline deadline);
     }
 }

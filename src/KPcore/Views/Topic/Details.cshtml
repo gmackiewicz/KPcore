@@ -32,7 +32,7 @@
             <div class="col-md-2 group-options">
                 @if (Model.Group != null)
                 {
-                    @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { groupId = Model.Group.Id, }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
                     <button class="btn btn-grey">Oceń termin</button>
                 }
             </div>
@@ -127,13 +127,25 @@
                 <h3>Terminy:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
-                    @if (Model.Deadlines != null)
+                    @if (Model.Deadlines != null && Model.Deadlines.Count() != 0)
                     {
                         foreach (var d in Model.Deadlines)
                         {
                             <li>
                                 <div class="list-item-info">
-                                    <a href="#">@d.DeadlineDate @d.Mark</a>
+                                    <a href="#">
+                                        @d.DeadlineDate.Day.@d.DeadlineDate.Month.@d.DeadlineDate.Year,
+                                        @d.DeadlineDate.Hour:@d.DeadlineDate.Minute - ocena: @if (d.Mark == null)
+                                        {
+                                            <span>-</span>
+                                        }
+                                        else
+                                        {
+                                            @d.Mark
+                                        }
+                                        <br />
+                                        @d.Comment
+                                    </a>
                                     <hr class="hr-narrow" />
                                 </div>
                             </li>
