@@ -29,7 +29,7 @@ namespace KPcore.Data
             builder.Entity<Topic>()
                 .HasOne(t => t.Subject)
                 .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Topic>()
                 .HasOne(t => t.Teacher)
