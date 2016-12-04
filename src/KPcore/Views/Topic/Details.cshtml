@@ -5,58 +5,59 @@
     var teacher = (Model.Teacher.Id == Model.CurrentUser.Id);
 }
 
-<div>
-    <div class="border-transparent space-after">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3 text-center group-title">
-                <h1>
-                    @if (Model.Group != null)
+<div class="container-fluid">
+    <div class="row">
+        <div class="border-transparent space-after">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center group-title">
+                    <h1>
+                        @if (Model.Group != null)
+                        {
+                            @Html.DisplayFor(m => m.Group.Name)
+                        }
+                        else
+                        {
+                            <span>BRAK GRUPY</span>
+                        }
+                    </h1>
+                    <hr />
+                    <h2>@Html.DisplayFor(model => model.Subject.Name)</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-1 topic-description">
+                    <h1>@Html.DisplayFor(model => model.Title)</h1>
+                    <h2>Prowadzący: @Html.DisplayFor(model => model.Teacher.FirstName) @Html.DisplayFor(model => model.Teacher.LastName)</h2>
+                    <span class="date">Data dodania: </span>
+                    <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
+                    @if (Model.MeetingsDate != null)
                     {
-                        @Html.DisplayFor(m => m.Group.Name)
+                        <span class="date">Termin spotkań: </span>
+                        <span class="bold">@Model.MeetingsDate.Value.DayOfWeek @Model.MeetingsDate.Value.Hour:@Model.MeetingsDate.Value.Minute</span>
                     }
-                    else
+                </div>
+                <div class="col-md-2 group-options">
+                    @if (Model.Group != null && teacher)
                     {
-                        <span>BRAK GRUPY</span>
+                        @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
                     }
-                </h1>
-                <hr />
-                <h2>@Html.DisplayFor(model => model.Subject.Name)</h2>
+                    @if (teacher)
+                    {
+                        @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
+                    }
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-1 topic-description">
-                <h1>@Html.DisplayFor(model => model.Title)</h1>
-                <h2>Prowadzący: @Html.DisplayFor(model => model.Teacher.FirstName) @Html.DisplayFor(model => model.Teacher.LastName)</h2>
-                <span class="date">Data dodania: </span>
-                <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
-                @if (Model.MeetingsDate != null)
-                {
-                    <span class="date">Termin spotkań: </span>
-                    <span class="bold">@Model.MeetingsDate.Value.DayOfWeek @Model.MeetingsDate.Value.Hour:@Model.MeetingsDate.Value.Minute</span>
-                }
+            <div class="row description border-transparent">
+                <div class="col-md-3 topic-description-header">
+                    <h1 class="thin">OPIS:</h1>
+                </div>
+                <div class="col-md-6">
+                    <span>@Html.DisplayFor(model => model.Description)</span>
+                </div>
+                <div class="col-md-3"></div>
             </div>
-            <div class="col-md-2 group-options">
-                @if (Model.Group != null && teacher)
-                {
-                    @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
-                }
-                @if (teacher)
-                {
-                    @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
-                }
-            </div>
-        </div>
-        <div class="row description border-transparent">
-            <div class="col-md-3 topic-description-header">
-                <h1 class="thin">OPIS:</h1>
-            </div>
-            <div class="col-md-6">
-                <span>@Html.DisplayFor(model => model.Description)</span>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
 
-
+        </div>
     </div>
     <!-- CONTENT -->
     <div class="row space-after ">
@@ -64,7 +65,7 @@
             <h2>NAJBLIŻSZY TERMIN CZĄSTKOWY:</h2>
             <h2 class="bold">
                 @if (Model.CurrentDeadline == null)
-                {
+            {
                     <span>Brak terminu do wyświetlenia.</span>
                 }
                 else
@@ -82,7 +83,7 @@
         </div>
         <!-- COMMENT SECIONT END -->
         <!-- LIST -->
-        <div class="col-sm-4 space-after">
+        <div class="col-sm-4 space-after user-list">
             @await Html.PartialAsync("_Deadlines")
             @await Html.PartialAsync("_UserList")
         </div>

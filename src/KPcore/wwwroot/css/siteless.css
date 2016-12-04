@@ -316,6 +316,12 @@ h2 {
 .font-grey {
   color: #999999;
 }
+#SelectedTopic {
+  display: inline-block;
+  color: white;
+  background: black;
+  text-align: center;
+}
 @media screen and (max-width: 767px) {
   .group-control-buttons {
     position: fixed;

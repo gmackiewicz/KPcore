@@ -13,25 +13,23 @@
         @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
 
         <div class="table-responsive">
-            <table class="table table-condensed">
-                <tr>
-                    <th>ID</th>
-                    <th>Nazwa</th>
-                    <th>Opis</th>
-                    <th>Prowadzący</th>
-                    <th>Przedmiot</th>
-                    <th>Termin spotkań</th>
-                </tr>
+            <table class="table-custom">
+                <div class="row-custom header-custom">
+                    <div class="cell-custom">Nazwa</div>
+                    <div class="cell-custom">Opis</div>
+                    <div class="cell-custom">Prowadzący</div>
+                    <div class="cell-custom">Przedmiot</div>
+                    <div class="cell-custom">Termin spotkań</div>
+                </div>
 
                 @foreach (var t in Model.Topics)
                 {
-                    <tr>
-                        <td>@t.Id</td>
-                        <td>@t.Title</td>
-                        <td>@t.Description</td>
-                        <td>@t.Teacher.FirstName @t.Teacher.LastName</td>
-                        <td>@t.Subject.Name</td>
-                        <td>
+                    <div class="row-custom">
+                        <div class="cell-custom">@t.Title</div>
+                        <div class="cell-custom">@t.Description</div>
+                        <div class="cell-custom">@t.Teacher.FirstName @t.Teacher.LastName</div>
+                        <div class="cell-custom">@t.Subject.Name</div>
+                        <div class="cell-custom">
                             @if (t.MeetingsDate != null)
                             {
                                 <span>
@@ -42,23 +40,21 @@
                             {
                                 <span>nie ustalono</span>
                             }
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 }
             </table>
         </div>
-        <div class="form-group">
-            <label asp-for="SelectedTopic" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <select asp-for="SelectedTopic" asp-items="@Model.TopicsList" class="form-control"></select>
+        <div class="form-group text-center">
+            <label asp-for="SelectedTopic" class="control-label"></label>
+            <div class="col-sm-12 text-center">
+                <select asp-for="SelectedTopic" asp-items="@Model.TopicsList" class="form-control text-center"></select>
                 <span asp-validation-for="SelectedTopic" class="text-danger" />
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+        <div class="form-group text-center">
                 <input type="submit" value="Zatwierdź" class="btn btn-success" />
                 @Html.ActionLink("Wróć", "Details", new { groupId = Model.GroupId }, new { @class = "btn btn-grey" })
-            </div>
         </div>
     </div>
 </form>
