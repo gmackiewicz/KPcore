@@ -57,6 +57,7 @@ namespace KPcore
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IDeadlineRepository, DeadlineRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

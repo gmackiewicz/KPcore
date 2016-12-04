@@ -86,21 +86,21 @@ namespace KPcore.Controllers
 
         // GET: /Group/Details
         [HttpGet]
-        public IActionResult Details(int? groupId)
+        public IActionResult Details(int? id)
         {
-            if (groupId == null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
             }
 
-            var group = _groupRepository.GetGroupById(groupId);
+            var group = _groupRepository.GetGroupById(id);
 
             if (group == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
             }
 
-            var studentsList = _groupRepository.GetStudentsOfGroup(groupId);
+            var studentsList = _groupRepository.GetStudentsOfGroup(id);
 
             var model = new GroupDetailsViewModel
             {
@@ -109,8 +109,8 @@ namespace KPcore.Controllers
                 TopicId = group.TopicId,
                 Topic = group.Topic,
                 StudentsList = studentsList,
-                GroupLeader = _groupRepository.GetLeader(groupId),
-                GroupComments = _groupRepository.GetGroupComments(groupId)
+                GroupLeader = _groupRepository.GetLeader(id),
+                GroupComments = _groupRepository.GetGroupComments(id)
             };
 
             return View(model);
@@ -133,14 +133,14 @@ namespace KPcore.Controllers
         #endregion
 
         // GET: /Group/AddComment
-        public IActionResult AddComment(int? groupId)
+        public IActionResult AddComment(int? id)
         {
-            if (groupId == null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
             }
 
-            var group = _groupRepository.GetGroupById(groupId);
+            var group = _groupRepository.GetGroupById(id);
 
             if (group == null)
             {
@@ -177,7 +177,7 @@ namespace KPcore.Controllers
             };
 
             _groupRepository.AddComment(comment);
-            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
+            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
 
         public async Task<IActionResult> RemoveMember(int groupid, string memberid)
@@ -188,34 +188,34 @@ namespace KPcore.Controllers
             if (currentUser != null && currentUser.Id == groupLeader.Id)
             {
                 _groupRepository.RemoveMemberFromGroup(groupid, memberid);
-                return RedirectToAction(nameof(Details), new { groupId = groupid });
+                return RedirectToAction(nameof(Details), new { id = groupid });
             }
 
             ModelState.AddModelError(string.Empty, "Nie udało się usunąć członka grupy.");
-            return RedirectToAction(nameof(Details), new { groupId = groupid });
+            return RedirectToAction(nameof(Details), new { id = groupid });
         }
 
-        public async Task<IActionResult> AddMember(int groupid)
+        public async Task<IActionResult> AddMember(int id)
         {
             var currentUser = await GetCurrentUserAsync();
-            var groupLeader = _groupRepository.GetLeader(groupid);
+            var groupLeader = _groupRepository.GetLeader(id);
 
             if (currentUser == null || currentUser.Id != groupLeader.Id)
             {
-                return RedirectToAction(nameof(Details), new { groupId = groupid });
+                return RedirectToAction(nameof(Details), new { id });
             }
 
             var students = _userRepository.GetAllStudents();
-            var groupMembers = _groupRepository.GetStudentsOfGroup(groupid).Select(gm => gm.Id);
-            var leader = _groupRepository.GetLeader(groupid);
+            var groupMembers = _groupRepository.GetStudentsOfGroup(id).Select(gm => gm.Id);
+            var leader = _groupRepository.GetLeader(id);
             var membersToAdd = students.Where(s => (!groupMembers.Contains(s.Id)) && leader.Id != s.Id).ToList();
 
-            var model = new AddMemberToGroupViewModel(membersToAdd);
+            var model = new AddMemberToGroupViewModel(membersToAdd) { GroupId = id };
             ViewBag.UserList = model.UsersList;
 
             return View(model);
         }
-        
+
         // POST: /Group/AddMember
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -234,7 +234,7 @@ namespace KPcore.Controllers
             }
 
             _groupRepository.AddUserToGroup(model.GroupId, model.SelectedUser, false);
-            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
+            return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
 
@@ -306,7 +306,7 @@ namespace KPcore.Controllers
 
             _groupRepository.EditComment(comment);
 
-            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
+            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
 
         public async Task<IActionResult> DeleteComment(int commentid)
@@ -318,7 +318,7 @@ namespace KPcore.Controllers
             {
                 _groupRepository.DeleteComment(commentid);
             }
-            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
+            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
 
         public async Task<IActionResult> LeaveGroup(int groupid)
@@ -378,7 +378,7 @@ namespace KPcore.Controllers
 
             _groupRepository.EditGroup(group);
 
-            return RedirectToAction(nameof(Details), new { groupId = group.Id });
+            return RedirectToAction(nameof(Details), new { id = group.Id });
         }
 
         public async Task<IActionResult> DeleteGroup(int id)
@@ -411,7 +411,7 @@ namespace KPcore.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(nameof(Details), new { groupId = id });
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         // POST: /Group/ChooseTopicForGroup
@@ -432,7 +432,7 @@ namespace KPcore.Controllers
             }
 
             _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
-            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
+            return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
 

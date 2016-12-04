@@ -30,8 +30,11 @@
                 <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
             </div>
             <div class="col-md-2 group-options">
-                @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { groupId = Model.Group.Id, }, new { @class = "btn btn-grey" })
-                <button class="btn btn-grey">Oceń termin</button>
+                @if (Model.Group != null)
+                {
+                    @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { groupId = Model.Group.Id, }, new { @class = "btn btn-grey" })
+                    <button class="btn btn-grey">Oceń termin</button>
+                }
             </div>
         </div>
         <div class="row description border-transparent">
@@ -124,7 +127,7 @@
                 <h3>Terminy:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
-                    @if (Model.Deadlines.Count() != 0)
+                    @if (Model.Deadlines != null)
                     {
                         foreach (var d in Model.Deadlines)
                         {
@@ -150,19 +153,31 @@
                 <h3>Członkowie:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
-
-                    <li>
-                        <div class="list-item-info">
-                            Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
-                            <hr class="hr-narrow" />
-                        </div>
-                    </li>
-                    @foreach (var s in Model.GroupMembers)
+                    
+                    @if (Model.Group != null)
                     {
                         <li>
                             <div class="list-item-info">
-                                <a href="#">@s.FirstName @s.LastName</a>
-                                <hr class="hr-narrow" />
+                                Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
+                                <hr class="hr-narrow"/>
+                            </div>
+                        </li>
+                        foreach (var s in Model.GroupMembers)
+                         {
+                             <li>
+                                 <div class="list-item-info">
+                                     <a href="#">@s.FirstName @s.LastName</a>
+                                     <hr class="hr-narrow"/>
+                                 </div>
+                             </li>
+                         }
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="list-item-info">
+                                Brak członków do wyświetlenia.
+                                <hr class="hr-narrow"/>
                             </div>
                         </li>
                     }

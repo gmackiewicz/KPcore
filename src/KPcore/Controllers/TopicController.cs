@@ -18,15 +18,18 @@ namespace KPcore.Controllers
         private readonly ITopicRepository _topicRepository;
         private readonly IGroupRepository _groupRepository;
         private readonly ISubjectRepository _subjectRepository;
+        private readonly IDeadlineRepository _deadlineRepository;
 
         public TopicController(UserManager<ApplicationUser> userManager,
             ITopicRepository topicRepository,
             IGroupRepository groupRepository,
+            IDeadlineRepository deadlineRepository,
             ISubjectRepository subjectRepository) : base(userManager)
         {
             _topicRepository = topicRepository;
             _groupRepository = groupRepository;
             _subjectRepository = subjectRepository;
+            _deadlineRepository = deadlineRepository;
         }
 
         public async Task<IActionResult> Index(TopicMessageId? message = null)
@@ -93,20 +96,20 @@ namespace KPcore.Controllers
 
         // GET: /Topic/Details
         [HttpGet]
-        public IActionResult Details(int? topicId)
+        public IActionResult Details(int? id)
         {
-            if (topicId == null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = TopicMessageId.NoTopicToView });
             }
 
-            var topic = _topicRepository.GetTopicById(topicId);
+            var topic = _topicRepository.GetTopicById(id);
 
             if (topic == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = TopicMessageId.NoTopicToView });
             }
-            var group = _groupRepository.GetGroupByTopicId(topicId);
+            var group = _groupRepository.GetGroupByTopicId(id);
             var model = new TopicDetailsViewModel
             {
                 Id = topic.Id,
@@ -116,12 +119,16 @@ namespace KPcore.Controllers
                 Subject = topic.Subject,
                 CreationDate = topic.CreationDate,
                 MeetingsDate = topic.MeetingsDate,
-                TopicComments = _topicRepository.GetTopicComments(topicId),
-                Group = group,
-                GroupLeader = _groupRepository.GetLeader(group.Id),
-                GroupMembers = _groupRepository.GetStudentsOfGroup(group.Id),
-                Deadlines = _groupRepository.GetDeadlinesByGroup(group.Id)
+                TopicComments = _topicRepository.GetTopicComments(id)
             };
+
+            if (group != null)
+            {
+                model.Group = @group;
+                model.GroupLeader = _groupRepository.GetLeader(@group.Id);
+                model.GroupMembers = _groupRepository.GetStudentsOfGroup(@group.Id);
+                model.Deadlines = _deadlineRepository.GetDeadlinesByGroup(@group.Id);
+            }
 
             return View(model);
         }
