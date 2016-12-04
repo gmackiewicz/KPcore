@@ -37,11 +37,11 @@
             @{
                 if (leader)
                 {
-                    @Html.ActionLink("Dodaj osobę", "AddMember", new { groupId = Model.Id }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Dodaj osobę", "AddMember", new { id = Model.Id }, new { @class = "btn btn-grey" })
                 }
                 else
                 {
-                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new { groupId = Model.Id }, new { @class = "btn btn-grey", onclick = "return confirm('Na pewno chcesz opuścić tę grupę?');" })
+                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new { id = Model.Id }, new { @class = "btn btn-grey", onclick = "return confirm('Na pewno chcesz opuścić tę grupę?');" })
                 }
             }
         </div>

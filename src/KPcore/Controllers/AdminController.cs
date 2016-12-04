@@ -31,6 +31,8 @@ namespace KPcore.Controllers
             ViewData["StatusMessage"] =
                 message == AdminMessageId.AddSubjectSuccess ? "Nowy przedmiot został dodany pomyślnie."
                 : message == AdminMessageId.Error ? "Wystąpił błąd."
+                : message == AdminMessageId.RemoveSubjectSuccess ? "Przedmiot został usunięty pomyślnie."
+                : message == AdminMessageId.RemoveSubjectFailed ? "Nie udało się usunąć przedmiotu: nie jesteś Adminem!"
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -77,6 +79,18 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Index), new { Message = AdminMessageId.AddSubjectSuccess });
         }
         
+        public async Task<IActionResult> RemoveSubject(int subjectId)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user == null || user.Status != 2)
+            {
+                return RedirectToAction(nameof(Index), new {Message = AdminMessageId.RemoveSubjectFailed});
+            }
+            var subject = _subjectRepository.FindSubjectById(subjectId);
+            _subjectRepository.Remove(subject);
+            return RedirectToAction(nameof(Index), new {Message = AdminMessageId.RemoveSubjectSuccess});
+        }
+        
         #region Helpers
 
         private void AddErrors(IdentityResult result)
@@ -91,6 +105,8 @@ namespace KPcore.Controllers
         {
             AddSubjectSuccess,
             Error,
+            RemoveSubjectSuccess,
+            RemoveSubjectFailed
         }
         
         #endregion

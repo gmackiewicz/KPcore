@@ -1,12 +1,12 @@
 ﻿@model StudentGroupIndexViewModel
 @{
-    ViewData["Title"] = "Twoje grupy:";
+    ViewData["Title"] = "Twoje grupy";
 }
 
 
 <div class=row>
     <div class="col-xs-6 col-xs-offset-3 text-center ">
-        <h2>@ViewData["Title"]</h2>
+        <h2>@ViewData["Title"]:</h2>
         <hr class="molten-core" />
     </div>
 </div>
@@ -18,7 +18,7 @@
             <li>
                 <div class="group-list-sm col-sm-6 col-sm-offset-3 list-item-info">
 
-                    @Html.ActionLink(g.Group.Name, "Details", new { groupId = g.GroupId })
+                    @Html.ActionLink(g.Group.Name, "Details", new { id = g.GroupId })
 
                     <hr class="hr-narrow" />
                 </div>

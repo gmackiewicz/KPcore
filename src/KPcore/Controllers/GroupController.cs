@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using KPcore.Interfaces;
@@ -17,14 +18,17 @@ namespace KPcore.Controllers
         private readonly IGroupRepository _groupRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITopicRepository _topicRepository;
+        private readonly IDeadlineRepository _deadlineRepository;
 
         public GroupController(UserManager<ApplicationUser> userManager,
             IGroupRepository groupRepository,
             ITopicRepository topicRepository,
+            IDeadlineRepository deadlineRepository,
             IUserRepository userRepository) : base(userManager)
         {
             _groupRepository = groupRepository;
             _topicRepository = topicRepository;
+            _deadlineRepository = deadlineRepository;
             _userRepository = userRepository;
         }
 
@@ -41,7 +45,6 @@ namespace KPcore.Controllers
                 : message == GroupMessageId.NameChanged ? "Pomyślnie zmieniono nazwę grupy."
                 : message == GroupMessageId.NameChangeError ? "Wystąpił błąd podczas zmieniana nazwy grupy: nieprawidłowa nazwa."
                 : "";
-
 
             var user = await GetCurrentUserAsync();
             var model = new StudentGroupIndexViewModel
@@ -86,21 +89,21 @@ namespace KPcore.Controllers
 
         // GET: /Group/Details
         [HttpGet]
-        public IActionResult Details(int? groupId)
+        public IActionResult Details(int? id)
         {
-            if (groupId == null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
             }
 
-            var group = _groupRepository.GetGroupById(groupId);
+            var group = _groupRepository.GetGroupById(id);
 
             if (group == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
             }
 
-            var studentsList = _groupRepository.GetStudentsOfGroup(groupId);
+            var studentsList = _groupRepository.GetStudentsOfGroup(id);
 
             var model = new GroupDetailsViewModel
             {
@@ -109,152 +112,8 @@ namespace KPcore.Controllers
                 TopicId = group.TopicId,
                 Topic = group.Topic,
                 StudentsList = studentsList,
-                GroupLeader = _groupRepository.GetLeader(groupId),
-                GroupComments = _groupRepository.GetGroupComments(groupId)
-            };
-
-            return View(model);
-        }
-
-        #region Helpers
-
-        public enum GroupMessageId
-        {
-            CreateGroupSuccess,
-            Error,
-            NoGroupToView,
-            ErrorAddingCommentToGroup,
-            LeaveGroupSuccess,
-            DeleteGroupSuccess,
-            NameChanged,
-            NameChangeError
-        }
-
-        #endregion
-
-        // GET: /Group/AddComment
-        public IActionResult AddComment(int? groupId)
-        {
-            if (groupId == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
-            }
-
-            var group = _groupRepository.GetGroupById(groupId);
-
-            if (group == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
-            }
-
-            return View(new GroupCommentViewModel { Group = group, GroupId = group.Id });
-
-        }
-
-        // POST: /Group/AddComment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddComment(GroupCommentViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się dodać komentarza.");
-                return View(model);
-            }
-
-            var comment = new GroupComment
-            {
-                GroupId = model.GroupId,
-                AuthorId = user.Id,
-                Content = model.Content,
-                CreationDate = DateTime.Now
-            };
-
-            _groupRepository.AddComment(comment);
-            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
-        }
-
-        public async Task<IActionResult> RemoveMember(int groupid, string memberid)
-        {
-            var currentUser = await GetCurrentUserAsync();
-            var groupLeader = _groupRepository.GetLeader(groupid);
-
-            if (currentUser != null && currentUser.Id == groupLeader.Id)
-            {
-                _groupRepository.RemoveMemberFromGroup(groupid, memberid);
-                return RedirectToAction(nameof(Details), new { groupId = groupid });
-            }
-
-            ModelState.AddModelError(string.Empty, "Nie udało się usunąć członka grupy.");
-            return RedirectToAction(nameof(Details), new { groupId = groupid });
-        }
-
-        public async Task<IActionResult> AddMember(int groupid)
-        {
-            var currentUser = await GetCurrentUserAsync();
-            var groupLeader = _groupRepository.GetLeader(groupid);
-
-            if (currentUser == null || currentUser.Id != groupLeader.Id)
-            {
-                return RedirectToAction(nameof(Details), new { groupId = groupid });
-            }
-
-            var students = _userRepository.GetAllStudents();
-            var groupMembers = _groupRepository.GetStudentsOfGroup(groupid).Select(gm => gm.Id);
-            var leader = _groupRepository.GetLeader(groupid);
-            var membersToAdd = students.Where(s => (!groupMembers.Contains(s.Id)) && leader.Id != s.Id).ToList();
-
-            var model = new AddMemberToGroupViewModel(membersToAdd);
-            ViewBag.UserList = model.UsersList;
-
-            return View(model);
-        }
-        
-        // POST: /Group/AddMember
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddMember(AddMemberToGroupViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się dodać użytkownika do grupy.");
-                return View(model);
-            }
-
-            _groupRepository.AddUserToGroup(model.GroupId, model.SelectedUser, false);
-            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
-        }
-
-
-        // GET: /Group/EditComment
-        public IActionResult EditComment(int? commentId)
-        {
-            if (commentId == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
-            }
-
-            var comment = _groupRepository.GetCommentById(commentId);
-
-            var model = new GroupCommentViewModel
-            {
-                CommentId = comment.Id,
-                Group = comment.Group,
-                GroupId = comment.GroupId,
-                Content = comment.Content,
-                CreationDate = comment.CreationDate
+                GroupLeader = _groupRepository.GetLeader(id),
+                GroupComments = _groupRepository.GetGroupComments(id)
             };
 
             return View(model);
@@ -274,111 +133,7 @@ namespace KPcore.Controllers
                 _groupRepository.EditGroup(group);
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NameChanged });
             }
-            else return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
-        }
-
-        // POST: /Group/EditComment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditComment(GroupCommentViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się edytować komentarza.");
-                return View(model);
-            }
-
-            var comment = new GroupComment
-            {
-                Id = model.CommentId.Value,
-                GroupId = model.GroupId,
-                AuthorId = user.Id,
-                Content = model.Content,
-                CreationDate = model.CreationDate,
-                ModificationDate = DateTime.Now
-            };
-
-            _groupRepository.EditComment(comment);
-
-            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
-        }
-
-        public async Task<IActionResult> DeleteComment(int commentid)
-        {
-            var comment = _groupRepository.GetCommentById(commentid);
-            var user = await GetCurrentUserAsync();
-
-            if (comment.AuthorId == user.Id)
-            {
-                _groupRepository.DeleteComment(commentid);
-            }
-            return RedirectToAction(nameof(Details), new { groupId = comment.GroupId });
-        }
-
-        public async Task<IActionResult> LeaveGroup(int groupid)
-        {
-            var user = await GetCurrentUserAsync();
-            if (user != null)
-            {
-                _groupRepository.RemoveMemberFromGroup(groupid, user.Id);
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
-            }
-            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
-        }
-
-        public async Task<IActionResult> EditGroup(int? id)
-        {
-            var user = await GetCurrentUserAsync();
-            if (id == null || user == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
-            }
-
-            var groupToEdit = _groupRepository.GetGroupById(id);
-
-            var model = new GroupViewModel
-            {
-                Id = groupToEdit.Id,
-                Name = groupToEdit.Name,
-                TopicId = groupToEdit.TopicId
-            };
-
-            return View(model);
-        }
-
-        // POST: /Group/EditGroup
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditGroup(GroupViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się edytować grupy.");
-                return View(model);
-            }
-
-            var group = new Group
-            {
-                Id = model.Id,
-                Name = model.Name,
-                TopicId = model.TopicId
-            };
-
-            _groupRepository.EditGroup(group);
-
-            return RedirectToAction(nameof(Details), new { groupId = group.Id });
+            return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
         }
 
         public async Task<IActionResult> DeleteGroup(int id)
@@ -394,6 +149,167 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.DeleteGroupSuccess });
         }
 
+        #region GroupComments 
+
+        // GET: /Group/Comment
+        public IActionResult Comment(int groupid, int? commentid)
+        {
+            var group = _groupRepository.GetGroupById(groupid);
+            if (group == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
+            }
+            var model = new GroupCommentViewModel
+            {
+                Group = @group,
+                GroupId = groupid
+            };
+
+            var comment = _groupRepository.GetCommentById(commentid);
+            if (comment != null)
+            {
+                model.CommentId = commentid;
+                model.Content = comment.Content;
+                model.CreationDate = comment.CreationDate;
+                ViewData["Title"] = "Edytuj komentarz";
+            }
+            else
+            {
+                ViewData["Title"] = "Dodaj komentarz";
+            }
+
+            return View(model);
+        }
+
+        // POST: /Group/Comment
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Comment(GroupCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Akcja zakończyła się niepowodzeniem.");
+                return View(model);
+            }
+
+            var comment = new GroupComment
+            {
+                GroupId = model.GroupId,
+                AuthorId = user.Id,
+                Content = model.Content,
+            };
+
+            if (model.CommentId == null)
+            {
+                comment.CreationDate = DateTime.Now;
+                _groupRepository.AddComment(comment);
+            }
+            else
+            {
+                comment.Id = model.CommentId.Value;
+                comment.CreationDate = model.CreationDate;
+                comment.ModificationDate = DateTime.Now;
+                _groupRepository.EditComment(comment);
+            }
+
+            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
+        }
+
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = _groupRepository.GetCommentById(id);
+            var user = await GetCurrentUserAsync();
+
+            if (comment.AuthorId == user.Id)
+            {
+                _groupRepository.DeleteComment(id);
+            }
+            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
+        }
+
+        #endregion
+
+        #region GroupMembers
+
+        public async Task<IActionResult> RemoveMember(int groupid, string memberid)
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var groupLeader = _groupRepository.GetLeader(groupid);
+
+            if (currentUser != null && currentUser.Id == groupLeader.Id)
+            {
+                _groupRepository.RemoveMemberFromGroup(groupid, memberid);
+                return RedirectToAction(nameof(Details), new { id = groupid });
+            }
+
+            ModelState.AddModelError(string.Empty, "Nie udało się usunąć członka grupy.");
+            return RedirectToAction(nameof(Details), new { id = groupid });
+        }
+
+        public async Task<IActionResult> AddMember(int id)
+        {
+            var currentUser = await GetCurrentUserAsync();
+            var groupLeader = _groupRepository.GetLeader(id);
+
+            if (currentUser == null || currentUser.Id != groupLeader.Id)
+            {
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            var students = _userRepository.GetAllStudents();
+            var groupMembers = _groupRepository.GetStudentsOfGroup(id).Select(gm => gm.Id);
+            var leader = _groupRepository.GetLeader(id);
+            var membersToAdd = students.Where(s => (!groupMembers.Contains(s.Id)) && leader.Id != s.Id).ToList();
+
+            var model = new AddMemberToGroupViewModel(membersToAdd) { GroupId = id };
+            ViewBag.UserList = model.UsersList;
+
+            return View(model);
+        }
+
+        // POST: /Group/AddMember
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddMember(AddMemberToGroupViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się dodać użytkownika do grupy.");
+                return View(model);
+            }
+
+            _groupRepository.AddUserToGroup(model.GroupId, model.SelectedUser, false);
+            return RedirectToAction(nameof(Details), new { id = model.GroupId });
+        }
+
+        public async Task<IActionResult> LeaveGroup(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                _groupRepository.RemoveMemberFromGroup(id, user.Id);
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
+            }
+            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
+        }
+
+        #endregion
+
+        #region GroupTopic
+
+        // GET: /Group/ChooseTopicForGroup
         public IActionResult ChooseTopicForGroup(int id)
         {
             var group = _groupRepository.GetGroupById(id);
@@ -411,7 +327,7 @@ namespace KPcore.Controllers
                 return View(model);
             }
 
-            return RedirectToAction(nameof(Details), new { groupId = id });
+            return RedirectToAction(nameof(Details), new { id });
         }
 
         // POST: /Group/ChooseTopicForGroup
@@ -432,9 +348,138 @@ namespace KPcore.Controllers
             }
 
             _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
-            return RedirectToAction(nameof(Details), new { groupId = model.GroupId });
+            return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
+        #endregion
+
+        #region Deadlines
+
+        // GET: /Group/AddDeadline
+        public async Task<IActionResult> AddDeadline(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            var group = _groupRepository.GetGroupById(id);
+
+            if (user == null || group.Topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Index), "Topic", new { Message = TopicController.TopicMessageId.AddDeadlineError });
+            }
+
+            var model = new DeadlineViewModel
+            {
+                Group = @group,
+                GroupId = @group.Id,
+                TopicId = @group.Topic.Id
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/AddDeadline
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddDeadline(DeadlineViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się dodać terminu cząstkowego.");
+                return View(model);
+            }
+
+            var deadline = new Deadline
+            {
+                DeadlineDate = model.DeadlineDate.Value,
+                Comment = model.Comment,
+                GroupId = model.GroupId
+            };
+
+            _deadlineRepository.AddDeadline(deadline);
+            return RedirectToAction(nameof(Details), "Topic", new { id = model.TopicId });
+        }
+
+        // GET: /Group/MarkDeadline
+        public async Task<IActionResult> MarkDeadline(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            var deadline = _deadlineRepository.GetDeadlineById(id);
+
+            if (user == null || deadline.Group.Topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Details), new { id = deadline.Group.TopicId });
+            }
+
+            var model = new MarkDeadlineViewModel
+            {
+                Id = deadline.Id,
+                TopicId = (int)deadline.Group.TopicId,
+                GroupId = deadline.GroupId,
+                DeadlineDate = deadline.DeadlineDate,
+                DateAndTime = deadline.GetDateAndTime,
+                Mark = deadline.Mark.ToString(),
+                Comment = deadline.Comment
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/MarkDeadline
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarkDeadline(MarkDeadlineViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się ocenić terminu.");
+                return View(model);
+            }
+
+            float mark;
+            Single.TryParse(model.Mark, NumberStyles.Float, CultureInfo.InvariantCulture, out mark);
+
+            var deadline = new Deadline
+            {
+                Id = model.Id,
+                GroupId = model.GroupId,
+                DeadlineDate = model.DeadlineDate,
+                Mark = mark,
+                Comment = model.Comment
+            };
+
+            _deadlineRepository.UpdateDeadline(deadline);
+
+            return RedirectToAction(nameof(Details), new { id = model.TopicId });
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public enum GroupMessageId
+        {
+            CreateGroupSuccess,
+            Error,
+            NoGroupToView,
+            ErrorAddingCommentToGroup,
+            LeaveGroupSuccess,
+            DeleteGroupSuccess,
+            NameChanged,
+            NameChangeError
+        }
+
+        #endregion
 
     }
 }

@@ -1,18 +1,14 @@
-﻿@model GroupCommentViewModel
-
-@{
-    ViewData["Title"] = "Edytuj komentarz";
-}
+﻿@model TopicCommentViewModel
 
 <h2>@ViewData["Title"]</h2>
 
 <div class="container-fluid">
-    <form asp-action="EditComment">
+    <form asp-action="Entry">
         <div class="form-horizontal">
-            <h4>Grupa: @Model.Group.Name</h4>
+            <h4>Temat: @Model.Topic.Title</h4>
             <hr class="hr-narrow" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
+            @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
             @Html.TextBoxFor(m => m.CommentId, new { type = "hidden" })
             @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
 
@@ -27,12 +23,13 @@
             <div class="form-group ">
                 <div class="col-sm-8 col-sm-offset-1 text-right">
                     <input type="submit" value="Zatwierdź" class="btn btn-success" />
-                    @Html.ActionLink("Wróć", "Details", new { groupId = Model.GroupId }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Wróć", "Details", new { id = Model.TopicId }, new { @class = "btn btn-grey" })
                 </div>
             </div>
         </div>
     </form>
 </div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

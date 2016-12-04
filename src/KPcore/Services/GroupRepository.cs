@@ -132,5 +132,10 @@ namespace KPcore.Services
             _dbContext.Groups.Update(group);
             _dbContext.SaveChanges();
         }
+
+        public Group GetGroupByTopicId(int? topicId)
+        {
+            return _dbContext.Groups.FirstOrDefault(g => g.TopicId == topicId);
+        }
     }
 }

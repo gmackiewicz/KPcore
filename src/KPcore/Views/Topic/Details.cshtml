@@ -1,14 +1,24 @@
-﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
+﻿@model TopicDetailsViewModel
 
 @{
     ViewData["Title"] = "Szczegóły";
+    var teacher = (Model.Teacher.Id == Model.CurrentUser.Id);
 }
 
 <div>
     <div class="border-transparent space-after">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center group-title">
-                <h1>NAZWA GRUPY</h1>
+                <h1>
+                    @if (Model.Group != null)
+                    {
+                        @Html.DisplayFor(m => m.Group.Name)
+                    }
+                    else
+                    {
+                        <span>BRAK GRUPY</span>
+                    }
+                </h1>
                 <hr />
                 <h2>@Html.DisplayFor(model => model.Subject.Name)</h2>
             </div>
@@ -19,10 +29,18 @@
                 <h2>Prowadzący: @Html.DisplayFor(model => model.Teacher.FirstName) @Html.DisplayFor(model => model.Teacher.LastName)</h2>
                 <span class="date">Data dodania: </span>
                 <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
+                @if (Model.MeetingsDate != null)
+                {
+                    <span class="date">Termin spotkań: </span>
+                    <span class="bold">@Model.MeetingsDate.Value.DayOfWeek @Model.MeetingsDate.Value.Hour:@Model.MeetingsDate.Value.Minute</span>
+                }
             </div>
             <div class="col-md-2 group-options">
-                <button class="btn btn-grey">Dodaj nowy termin</button>
-                <button class="btn btn-grey">Oceń termin</button>
+                @if (Model.Group != null && teacher)
+                {
+                    @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
+                }
             </div>
         </div>
         <div class="row description border-transparent">
@@ -41,7 +59,16 @@
     <div class="row space-after ">
         <div class="col-md-12 text-center">
             <h2>NAJBLIŻSZY TERMIN CZĄSTKOWY:</h2>
-            <h2 class="bold">TUTAJ temat -> grupa -> terminy -> z listy pobrać najnowszą</h2>
+            <h2 class="bold">
+                @if (Model.CurrentDeadline == null)
+                {
+                    <span>sBrak terminu do wyświetlenia.</span>
+                }
+                else
+                {
+                    @Model.CurrentDeadline.GetDateAndTime
+                }
+            </h2>
         </div>
     </div>
     <div class="row space-before">
@@ -52,7 +79,7 @@
                 <!-- Add comment button -->
                 <div class="col-sm-3 text-center">
                     <span class="text-center add-comment">
-                        @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Topic", new { topicId = Model.Id, }, new { @class = "btn btn-grey" })
+                        @Html.ActionLink("DODAJ KOMENTARZ", "Entry", "Topic", new { topicid = Model.Id, }, new { @class = "btn btn-grey" })
                     </span>
                 </div>
                 <!-- Add comment button end-->
@@ -79,8 +106,8 @@
                             <div class="col-sm-4 text-right inblock">
                                 @if (Model.CurrentUser.Id == c.AuthorId)
                                 {
-                                    @Html.ActionLink("Edytuj", "EditComment", new { topicid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
-                                    @Html.ActionLink("Usuń", "DeleteComment", new { commentid = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
+                                    @Html.ActionLink("Edytuj", "Entry", new { topicid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
+                                    @Html.ActionLink("Usuń", "DeleteComment", new { id = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
                                 }
                             </div>
                         </div>
@@ -115,17 +142,46 @@
                 <h3>Terminy:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
+                    @if (Model.Deadlines != null && Model.Deadlines.Count() != 0)
+                    {
+                        foreach (var d in Model.Deadlines)
+                        {
+                            <li>
+                                <div class="list-item-info">
+                                    <a href="#">
+                                        @d.GetDateAndTime - ocena: @if (d.Mark == null)
+                                        {
+                                            <span>-</span>
+                                        }
+                                        else
+                                        {
+                                            @d.Mark
+                                        }
+                                        <br />
+                                        @d.Comment
+                                    </a>
+                                    <div class="pull-right">
+                                        @if (teacher)
+                                        {
+                                            @Html.ActionLink("oceń", "MarkDeadline", "Group", new { id = d.Id }, new { @class = "btn-small-grey" })
+                                        }
 
-                    @*@foreach (var s in Model.StudentsList)
-                        {*@
-                    <li>
+                                    </div>
+
+                                    <hr class="hr-narrow" />
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
                         <div class="list-item-info">
-                            <a href="#">@*@s.FirstName @s.LastName*@</a>
+                            Brak terminów do wyświetlenia.
                             <hr class="hr-narrow" />
                         </div>
-                    </li>
-                    @*}*@
+                    }
                 </ul>
+
             </div>
 
             <div class="text-center group-list-sm space-before border-transparent">
@@ -133,21 +189,33 @@
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
 
-                    <li>
-                        <div class="list-item-info">
-                            Lider: <a href="#">@*@Model.GroupLeader.FirstName @Model.GroupLeader.LastName*@</a>
-                            <hr class="hr-narrow" />
-                        </div>
-                    </li>
-                    @*@foreach (var s in Model.StudentsList)
-                        {*@
-                    <li>
-                        <div class="list-item-info">
-                            <a href="#">@*@s.FirstName @s.LastName*@</a>
-                            <hr class="hr-narrow" />
-                        </div>
-                    </li>
-                    @*}*@
+                    @if (Model.Group != null)
+                    {
+                        <li>
+                            <div class="list-item-info">
+                                Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
+                                <hr class="hr-narrow" />
+                            </div>
+                        </li>
+                        foreach (var s in Model.GroupMembers)
+                        {
+                            <li>
+                                <div class="list-item-info">
+                                    <a href="#">@s.FirstName @s.LastName</a>
+                                    <hr class="hr-narrow" />
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            <div class="list-item-info">
+                                Brak członków do wyświetlenia.
+                                <hr class="hr-narrow" />
+                            </div>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -155,6 +223,5 @@
     </div>
 </div>
 <div>
-    @Html.ActionLink("Edit", "EditTopic", new { id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edit", "EditTopic", new { id = Model.Id })
 </div>

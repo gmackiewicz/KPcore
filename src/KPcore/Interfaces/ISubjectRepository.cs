@@ -7,5 +7,7 @@ namespace KPcore.Interfaces
     {
         IEnumerable<Subject> ListAll();
         void Add(Subject subject);
+        void Remove(Subject subject);
+        Subject FindSubjectById(int? subjectId);
     }
 }

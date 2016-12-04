@@ -27,7 +27,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.ActionLink(t.Title, "Details", new { topicId = t.Id })
+                                @Html.ActionLink(t.Title, "Details", new { id = t.Id })
                             </td>
                             <td>@t.Description</td>
                             <td>@t.Subject.Name</td>
@@ -44,7 +44,7 @@
                                     <span>nie ustalono</span>
                                 }
                             </td>
-                            <td>edytuj/ @Html.ActionLink("Usuń", "DeleteTopic", new { topicId = t.Id}, new {@class = "btn btn-sm-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</td>
+                            <td>edytuj/ @Html.ActionLink("Usuń", "DeleteTopic", new { topicId = t.Id}, new {@class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</td>
                         </tr>
                     }
                 </table>

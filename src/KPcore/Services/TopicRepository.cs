@@ -53,6 +53,12 @@ namespace KPcore.Services
             _dbContext.SaveChanges();
         }
 
+        public void EditTopic(Topic topic)
+        {
+            _dbContext.Topics.Update(topic);
+            _dbContext.SaveChanges();
+        }
+
         public IEnumerable<TopicEntry> GetTopicComments(int? topicId)
         {
             return _dbContext.TopicEntries
