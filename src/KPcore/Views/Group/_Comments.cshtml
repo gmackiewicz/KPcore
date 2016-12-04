@@ -4,7 +4,7 @@
     <!-- Add comment button -->
     <div class="col-sm-4 text-center col-sm-offset-2 add-comment ">
         <span class="text-center ">
-            @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Group", new { id = Model.Id, }, new { @class = "btn btn-grey" })
+            @Html.ActionLink("DODAJ KOMENTARZ", "Comment", "Group", new { groupid = Model.Id, }, new { @class = "btn btn-grey" })
         </span>
     </div>
     <!-- Add comment button end-->
@@ -31,7 +31,7 @@
                     <div class="col-sm-4 text-right inblock">
                         @if (Model.CurrentUser.Id == c.AuthorId)
                         {
-                            @Html.ActionLink("Edytuj", "EditComment", new { id = c.Id }, new { @class = "btn-small-grey" })
+                            @Html.ActionLink("Edytuj", "Comment", new { groupid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
                             @Html.ActionLink("Usuń", "DeleteComment", new { id = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
                         }
                     </div>

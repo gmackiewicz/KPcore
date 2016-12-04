@@ -45,7 +45,6 @@ namespace KPcore.Controllers
                 : message == GroupMessageId.NameChangeError ? "Wystąpił błąd podczas zmieniana nazwy grupy: nieprawidłowa nazwa."
                 : "";
 
-
             var user = await GetCurrentUserAsync();
             var model = new StudentGroupIndexViewModel
             {
@@ -119,45 +118,42 @@ namespace KPcore.Controllers
             return View(model);
         }
 
-        #region Helpers
+        #region GroupComments 
 
-        public enum GroupMessageId
+        // GET: /Group/Comment
+        public IActionResult Comment(int groupid, int? commentid)
         {
-            CreateGroupSuccess,
-            Error,
-            NoGroupToView,
-            ErrorAddingCommentToGroup,
-            LeaveGroupSuccess,
-            DeleteGroupSuccess,
-            NameChanged,
-            NameChangeError
-        }
-
-        #endregion
-
-        // GET: /Group/AddComment
-        public IActionResult AddComment(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
-            }
-
-            var group = _groupRepository.GetGroupById(id);
-
+            var group = _groupRepository.GetGroupById(groupid);
             if (group == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.ErrorAddingCommentToGroup });
             }
+            var model = new GroupCommentViewModel
+            {
+                Group = @group,
+                GroupId = groupid
+            };
 
-            return View(new GroupCommentViewModel { Group = group, GroupId = group.Id });
+            var comment = _groupRepository.GetCommentById(commentid);
+            if (comment != null)
+            {
+                model.CommentId = commentid;
+                model.Content = comment.Content;
+                model.CreationDate = comment.CreationDate;
+                ViewData["Title"] = "Edytuj komentarz";
+            }
+            else
+            {
+                ViewData["Title"] = "Dodaj komentarz";
+            }
 
+            return View(model);
         }
 
-        // POST: /Group/AddComment
+        // POST: /Group/Comment
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddComment(GroupCommentViewModel model)
+        public async Task<IActionResult> Comment(GroupCommentViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -167,7 +163,7 @@ namespace KPcore.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Nie udało się dodać komentarza.");
+                ModelState.AddModelError(string.Empty, "Akcja zakończyła się niepowodzeniem.");
                 return View(model);
             }
 
@@ -176,12 +172,39 @@ namespace KPcore.Controllers
                 GroupId = model.GroupId,
                 AuthorId = user.Id,
                 Content = model.Content,
-                CreationDate = DateTime.Now
             };
 
-            _groupRepository.AddComment(comment);
+            if (model.CommentId == null)
+            {
+                comment.CreationDate = DateTime.Now;
+                _groupRepository.AddComment(comment);
+            }
+            else
+            {
+                comment.Id = model.CommentId.Value;
+                comment.CreationDate = model.CreationDate;
+                comment.ModificationDate = DateTime.Now;
+                _groupRepository.EditComment(comment);
+            }
+
             return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
+        
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = _groupRepository.GetCommentById(id);
+            var user = await GetCurrentUserAsync();
+
+            if (comment.AuthorId == user.Id)
+            {
+                _groupRepository.DeleteComment(id);
+            }
+            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
+        }
+        
+        #endregion
+
+        #region GroupMembers
 
         public async Task<IActionResult> RemoveMember(int groupid, string memberid)
         {
@@ -240,28 +263,19 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
-
-        // GET: /Group/EditComment
-        public IActionResult EditComment(int? id)
+        public async Task<IActionResult> LeaveGroup(int id)
         {
-            if (id == null)
+            var user = await GetCurrentUserAsync();
+            if (user != null)
             {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
+                _groupRepository.RemoveMemberFromGroup(id, user.Id);
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
             }
-
-            var comment = _groupRepository.GetCommentById(id);
-
-            var model = new GroupCommentViewModel
-            {
-                CommentId = comment.Id,
-                Group = comment.Group,
-                GroupId = comment.GroupId,
-                Content = comment.Content,
-                CreationDate = comment.CreationDate
-            };
-
-            return View(model);
+            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
         }
+
+        #endregion
+
 
         public async Task<IActionResult> EditGroupName(GroupDetailsViewModel model)
         {
@@ -277,82 +291,7 @@ namespace KPcore.Controllers
                 _groupRepository.EditGroup(group);
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NameChanged });
             }
-            else return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
-        }
-
-        // POST: /Group/EditComment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditComment(GroupCommentViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się edytować komentarza.");
-                return View(model);
-            }
-
-            var comment = new GroupComment
-            {
-                Id = model.CommentId.Value,
-                GroupId = model.GroupId,
-                AuthorId = user.Id,
-                Content = model.Content,
-                CreationDate = model.CreationDate,
-                ModificationDate = DateTime.Now
-            };
-
-            _groupRepository.EditComment(comment);
-
-            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
-        }
-
-        public async Task<IActionResult> DeleteComment(int id)
-        {
-            var comment = _groupRepository.GetCommentById(id);
-            var user = await GetCurrentUserAsync();
-
-            if (comment.AuthorId == user.Id)
-            {
-                _groupRepository.DeleteComment(id);
-            }
-            return RedirectToAction(nameof(Details), new { id = comment.GroupId });
-        }
-
-        public async Task<IActionResult> LeaveGroup(int id)
-        {
-            var user = await GetCurrentUserAsync();
-            if (user != null)
-            {
-                _groupRepository.RemoveMemberFromGroup(id, user.Id);
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
-            }
-            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
-        }
-
-        public async Task<IActionResult> EditGroup(int? id)
-        {
-            var user = await GetCurrentUserAsync();
-            if (id == null || user == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
-            }
-
-            var groupToEdit = _groupRepository.GetGroupById(id);
-
-            var model = new GroupViewModel
-            {
-                Id = groupToEdit.Id,
-                Name = groupToEdit.Name,
-                TopicId = groupToEdit.TopicId
-            };
-
-            return View(model);
+            return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
         }
 
         // POST: /Group/EditGroup
@@ -438,6 +377,8 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
+        #region Deadlines
+
         // GET: /Group/AddDeadline
         public async Task<IActionResult> AddDeadline(int id)
         {
@@ -486,5 +427,24 @@ namespace KPcore.Controllers
             _deadlineRepository.AddDeadline(deadline);
             return RedirectToAction(nameof(Details), "Topic", new { id = model.TopicId });
         }
+
+        #endregion
+
+        #region Helpers
+
+        public enum GroupMessageId
+        {
+            CreateGroupSuccess,
+            Error,
+            NoGroupToView,
+            ErrorAddingCommentToGroup,
+            LeaveGroupSuccess,
+            DeleteGroupSuccess,
+            NameChanged,
+            NameChangeError
+        }
+
+        #endregion
+
     }
 }

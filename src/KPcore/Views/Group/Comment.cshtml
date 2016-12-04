@@ -1,13 +1,9 @@
 ﻿@model GroupCommentViewModel
 
-@{
-    ViewData["Title"] = "Edytuj komentarz";
-}
-
 <h2>@ViewData["Title"]</h2>
 
 <div class="container-fluid">
-    <form asp-action="EditComment">
+    <form asp-action="Comment">
         <div class="form-horizontal">
             <h4>Grupa: @Model.Group.Name</h4>
             <hr class="hr-narrow" />
