@@ -29,11 +29,17 @@
                 <h2>Prowadzący: @Html.DisplayFor(model => model.Teacher.FirstName) @Html.DisplayFor(model => model.Teacher.LastName)</h2>
                 <span class="date">Data dodania: </span>
                 <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
+                @if (Model.MeetingsDate != null)
+                {
+                    <span class="date">Termin spotkań: </span>
+                    <span class="bold">@Model.MeetingsDate.Value.DayOfWeek @Model.MeetingsDate.Value.Hour:@Model.MeetingsDate.Value.Minute</span>
+                }
             </div>
             <div class="col-md-2 group-options">
-                @if (Model.Group != null)
+                @if (Model.Group != null && teacher)
                 {
                     @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
                 }
             </div>
         </div>

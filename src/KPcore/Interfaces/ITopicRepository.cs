@@ -15,5 +15,6 @@ namespace KPcore.Interfaces
         void DeleteComment(int commentid);
         TopicEntry GetCommentById(int? commentId);
         void DeleteTopic(int topicId);
+        void EditTopic(Topic topic);
     }
 }

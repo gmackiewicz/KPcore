@@ -1,0 +1,51 @@
+﻿@model EditTopicViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edytuj temat</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.SubjectId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.TeacherId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
+
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MeetingsDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="MeetingsDate" type="datetime-local" class="form-control" />
+                <span asp-validation-for="MeetingsDate" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <div class="col-sm-8 col-sm-offset-1 text-right">
+                <input type="submit" value="Zatwierdź" class="btn btn-success" />
+                @Html.ActionLink("Wróć", "Details", new { id = Model.TopicId }, new { @class = "btn btn-grey" })
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

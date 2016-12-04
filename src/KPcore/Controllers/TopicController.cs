@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using KPcore.Interfaces;
 using KPcore.Models;
-using KPcore.ViewModels.GroupViewModels;
 using KPcore.ViewModels.TopicViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +38,7 @@ namespace KPcore.Controllers
                 : message == TopicMessageId.Error ? "Wystąpił błąd."
                 : message == TopicMessageId.TopicDeleted ? "Temat został pomyślnie usunięty."
                 : message == TopicMessageId.AddDeadlineError ? "Wystąpił błąd podczas dodawania terminu."
+                : message == TopicMessageId.NoTopicToEdit ? "Brak tematu do edycji."
                 : "";
 
             var user = await GetCurrentUserAsync();
@@ -135,7 +132,64 @@ namespace KPcore.Controllers
 
             return View(model);
         }
-        
+
+        // GET: /Topic/Edit
+        public async Task<IActionResult> Edit(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            var topic = _topicRepository.GetTopicById(id);
+
+            if (user == null || topic == null || topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Index), new { Message = TopicMessageId.NoTopicToEdit });
+            }
+
+            var model = new EditTopicViewModel
+            {
+                TopicId = topic.Id,
+                SubjectId = topic.SubjectId,
+                CreationDate = topic.CreationDate,
+                TeacherId = topic.TeacherId,
+                Title = topic.Title,
+                Description = topic.Description,
+                MeetingsDate = topic.MeetingsDate
+            };
+
+            return View(model);
+        }
+
+        // POST: /Topic/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditTopicViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Akcja zakończyła się niepowodzeniem.");
+                return View(model);
+            }
+
+            var topic = new Topic
+            {
+                Id = model.TopicId,
+                SubjectId = model.SubjectId,
+                TeacherId = model.TeacherId,
+                CreationDate = model.CreationDate,
+                Title = model.Title,
+                Description = model.Description,
+                MeetingsDate = model.MeetingsDate
+            };
+
+            _topicRepository.EditTopic(topic);
+            return RedirectToAction(nameof(Details), new { id = model.TopicId });
+        }
+
         public async Task<IActionResult> DeleteTopic(int id)
         {
             var user = await GetCurrentUserAsync();
@@ -178,7 +232,7 @@ namespace KPcore.Controllers
 
             return View(model);
         }
-        
+
         // POST: /Topic/Entry
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -218,7 +272,7 @@ namespace KPcore.Controllers
 
             return RedirectToAction(nameof(Details), new { id = comment.TopicId });
         }
-        
+
         public async Task<IActionResult> DeleteComment(int id)
         {
             var comment = _topicRepository.GetCommentById(id);
@@ -230,7 +284,7 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Details), new { id = comment.TopicId });
         }
-        
+
         #endregion
 
         #region Helpers
@@ -242,7 +296,8 @@ namespace KPcore.Controllers
             NoTopicToView,
             ErrorAddingCommentToTopic,
             TopicDeleted,
-            AddDeadlineError
+            AddDeadlineError,
+            NoTopicToEdit
         }
 
         #endregion
