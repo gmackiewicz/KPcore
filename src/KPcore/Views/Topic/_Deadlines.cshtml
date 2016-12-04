@@ -1,0 +1,50 @@
+﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
+
+@{
+    var teacher = (Model.Teacher.Id == Model.CurrentUser.Id);
+}
+<div class="text-center group-list-sm border-transparent">
+    <h3>Terminy:</h3>
+    <hr class="molten-core" />
+    <ul class="list-unstyled">
+        @if (Model.Deadlines != null && Model.Deadlines.Count() != 0)
+        {
+            foreach (var d in Model.Deadlines)
+            {
+                <li>
+                    <div class="list-item-info">
+                        <a href="#">
+                            @d.GetDateAndTime - ocena: @if (d.Mark == null)
+                            {
+                                <span>-</span>
+                            }
+                            else
+                            {
+                                @d.Mark
+                            }
+                            <br />
+                            @d.Comment
+                        </a>
+                        <div class="pull-right">
+                            @if (teacher)
+                            {
+                                @Html.ActionLink("oceń", "MarkDeadline", "Group", new { id = d.Id }, new { @class = "btn-small-grey" })
+                            }
+
+                        </div>
+
+                        <hr class="hr-narrow" />
+                    </div>
+                </li>
+            }
+        }
+        else
+        {
+            <div class="list-item-info">
+                Brak terminów do wyświetlenia.
+                <hr class="hr-narrow" />
+            </div>
+        }
+    </ul>
+</div>
+

@@ -1,55 +1,48 @@
 ﻿@model TeacherTopicsIndexViewModel
 @{
-    ViewData["Title"] = "Twoje tematy";
+    ViewData["Title"] = "Twoje tematy:";
 }
 
-<h2>@ViewData["Title"].</h2>
+<h2>@ViewData["Title"]</h2>
 <p class="text-success">@ViewData["StatusMessage"]</p>
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>Your topic:</dt>
-        <dd>
-            <a asp-controller="Topic" asp-action="Create" class="btn-bracketed">Stwórz nowy temat</a>
-            <hr />
-            <div class="table-responsive">
-                <table class="table table-condensed">
-                    <tr>
-                        <th>Nazwa</th>
-                        <th>Opis</th>
-                        <th>Przedmiot</th>
-                        <th>Data utworzenia</th>
-                        <th>Termin spotkań</th>
-                        <th>Akcje</th>
-                    </tr>
-
-                    @foreach (var t in Model.Topics)
-                    {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(t.Title, "Details", new { id = t.Id })
-                            </td>
-                            <td>@t.Description</td>
-                            <td>@t.Subject.Name</td>
-                            <td>@t.CreationDate</td>
-                            <td>
-                                @if (t.MeetingsDate != null)
-                                {
-                                    <span>
-                                        @t.MeetingsDate.Value.DayOfWeek @t.MeetingsDate.Value.Hour:@t.MeetingsDate.Value.Minute
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span>nie ustalono</span>
-                                }
-                            </td>
-                            <td>edytuj/ @Html.ActionLink("Usuń", "DeleteTopic", new { id = t.Id}, new {@class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</td>
-                        </tr>
-                    }
-                </table>
+<a asp-controller="Topic" asp-action="Create" class="btn btn-grey">Stwórz nowy temat</a>
+<div class="row">
+    <div class="table-wrapper-custom text-center col-sm-10 col-sm-offset-2">
+        <table class="table-custom">
+            <div class="row-custom header-custom">
+                <div class="cell-custom">Nazwa</div>
+                <div class="cell-custom">Opis</div>
+                <div class="cell-custom">Przedmiot</div>
+                <div class="cell-custom">Data utworzenia</div>
+                <div class="cell-custom">Termin spotkań</div>
+                <div class="cell-custom" th>Akcje</div>
             </div>
 
-        </dd>
-    </dl>
+            @foreach (var t in Model.Topics)
+            {
+                <div class="row-custom">
+                    <div class="cell-custom">
+                        @Html.ActionLink(t.Title, "Details", new { id = t.Id })
+                    </div>
+                    <div class="cell-custom">@t.Description</div>
+                    <div class="cell-custom">@t.Subject.Name</div>
+                    <div class="cell-custom">@t.CreationDate</div>
+                    <div class="cell-custom">
+                        @if (t.MeetingsDate != null)
+                        {
+                            <span>
+                                @t.MeetingsDate.Value.DayOfWeek @t.MeetingsDate.Value.Hour:@t.MeetingsDate.Value.Minute
+                            </span>
+                        }
+                        else
+                        {
+                            <span>nie ustalono</span>
+                        }
+                    </div>
+                    <div class="cell-custom">@Html.ActionLink("Usuń", "DeleteTopic", new { id = t.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</div>
+                </div>
+            }
+        </table>
+    </div>
 </div>

@@ -1,5 +1,7 @@
 ﻿//Colors
 @default-bg-color: #181818;
+@color-table-darkrow: #303030;
+@color-table-lightrow: #404040;
 @color-light-grey: #cccccc;
 @color-darker-grey: #999999;
 @color-white: #ffffff;
@@ -519,4 +521,51 @@ div[class*=col]{
     .small-screen-invisible{
         display:none;
     }
+}
+
+
+
+// TABLE
+.table-wrapper-custom {
+  margin: 0 auto;
+  padding: 10px;
+}
+.table-custom {
+  margin: 0 0 40px 0;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: table;
+}
+@media screen and (max-width: 767px) {
+  .table-custom {
+  }
+}
+
+.row-custom {
+  display: table-row;
+  background: @color-table-darkrow;
+}
+.row-custom:nth-of-type(odd) {
+  background: @color-table-lightrow;
+}
+.row-custom.header-custom {
+  font-weight: @bold-font-weight;
+  color: @color-white;
+  background: @color-molten-core;
+}
+@media screen and (max-width: 580px) {
+  .row {
+    padding: 8px 0;
+    display: block;
+  }
+}
+
+.cell-custom {
+  padding: 6px 12px;
+  display: table-cell;
+}
+@media screen and (max-width: 767px) {
+  .cell-custom {
+    padding: 2px 12px;
+  }
 }
