@@ -28,9 +28,8 @@
                         <tr>
                             <td>@s.Name</td>
                             <td>@s.Description</td>
-                            <td>
-                                edytuj/usuń
-                            </td>
+                            <td>edytuj/@Html.ActionLink("Usuń", "RemoveSubject", new { subjectId = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</td>
+
                         </tr>
                     }
                 </table>
