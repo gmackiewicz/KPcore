@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using KPcore.Interfaces;
@@ -118,6 +119,36 @@ namespace KPcore.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> EditGroupName(GroupDetailsViewModel model)
+        {
+            var user = await GetCurrentUserAsync();
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction(nameof(Index), new { message = GroupMessageId.NameChangeError });
+            }
+            if (user.Status == 2)
+            {
+                var group = _groupRepository.GetGroupById(model.Id);
+                group.Name = model.Name;
+                _groupRepository.EditGroup(group);
+                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NameChanged });
+            }
+            return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
+        }
+
+        public async Task<IActionResult> DeleteGroup(int id)
+        {
+            var group = _groupRepository.GetGroupById(id);
+            var user = await GetCurrentUserAsync();
+
+            var groupLeader = _groupRepository.GetLeader(id);
+            if (user != null && groupLeader.Id == user.Id)
+            {
+                _groupRepository.DeleteGroup(id);
+            }
+            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.DeleteGroupSuccess });
+        }
+
         #region GroupComments 
 
         // GET: /Group/Comment
@@ -189,7 +220,7 @@ namespace KPcore.Controllers
 
             return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
-        
+
         public async Task<IActionResult> DeleteComment(int id)
         {
             var comment = _groupRepository.GetCommentById(id);
@@ -201,7 +232,7 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
-        
+
         #endregion
 
         #region GroupMembers
@@ -276,37 +307,9 @@ namespace KPcore.Controllers
 
         #endregion
 
+        #region GroupTopic
 
-        public async Task<IActionResult> EditGroupName(GroupDetailsViewModel model)
-        {
-            var user = await GetCurrentUserAsync();
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction(nameof(Index), new { message = GroupMessageId.NameChangeError });
-            }
-            if (user.Status == 2)
-            {
-                var group = _groupRepository.GetGroupById(model.Id);
-                group.Name = model.Name;
-                _groupRepository.EditGroup(group);
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NameChanged });
-            }
-            return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
-        }
-        
-        public async Task<IActionResult> DeleteGroup(int id)
-        {
-            var group = _groupRepository.GetGroupById(id);
-            var user = await GetCurrentUserAsync();
-
-            var groupLeader = _groupRepository.GetLeader(id);
-            if (user != null && groupLeader.Id == user.Id)
-            {
-                _groupRepository.DeleteGroup(id);
-            }
-            return RedirectToAction(nameof(Index), new { Message = GroupMessageId.DeleteGroupSuccess });
-        }
-
+        // GET: /Group/ChooseTopicForGroup
         public IActionResult ChooseTopicForGroup(int id)
         {
             var group = _groupRepository.GetGroupById(id);
@@ -347,6 +350,8 @@ namespace KPcore.Controllers
             _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
+
+        #endregion
 
         #region Deadlines
 
@@ -397,6 +402,65 @@ namespace KPcore.Controllers
 
             _deadlineRepository.AddDeadline(deadline);
             return RedirectToAction(nameof(Details), "Topic", new { id = model.TopicId });
+        }
+
+        // GET: /Group/MarkDeadline
+        public async Task<IActionResult> MarkDeadline(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            var deadline = _deadlineRepository.GetDeadlineById(id);
+
+            if (user == null || deadline.Group.Topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Details), new { id = deadline.Group.TopicId });
+            }
+
+            var model = new MarkDeadlineViewModel
+            {
+                Id = deadline.Id,
+                TopicId = (int)deadline.Group.TopicId,
+                GroupId = deadline.GroupId,
+                DeadlineDate = deadline.DeadlineDate,
+                DateAndTime = deadline.GetDateAndTime,
+                Mark = deadline.Mark.ToString(),
+                Comment = deadline.Comment
+            };
+
+            return View(model);
+        }
+
+        // POST: /Group/MarkDeadline
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarkDeadline(MarkDeadlineViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się ocenić terminu.");
+                return View(model);
+            }
+
+            float mark;
+            Single.TryParse(model.Mark, NumberStyles.Float, CultureInfo.InvariantCulture, out mark);
+
+            var deadline = new Deadline
+            {
+                Id = model.Id,
+                GroupId = model.GroupId,
+                DeadlineDate = model.DeadlineDate,
+                Mark = mark,
+                Comment = model.Comment
+            };
+
+            _deadlineRepository.UpdateDeadline(deadline);
+
+            return RedirectToAction(nameof(Details), new { id = model.TopicId });
         }
 
         #endregion

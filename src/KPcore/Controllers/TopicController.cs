@@ -135,12 +135,7 @@ namespace KPcore.Controllers
 
             return View(model);
         }
-
-        public IActionResult EditTopic(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public async Task<IActionResult> DeleteTopic(int id)
         {
             var user = await GetCurrentUserAsync();
@@ -151,6 +146,92 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Index), new { Message = TopicMessageId.TopicDeleted });
         }
+
+        #region TopicEntries
+
+        // GET: /Topic/Entry
+        public IActionResult Entry(int topicid, int? commentid)
+        {
+            var topic = _topicRepository.GetTopicById(topicid);
+            if (topic == null)
+            {
+                return RedirectToAction(nameof(Index), new { Message = TopicMessageId.ErrorAddingCommentToTopic });
+            }
+            var model = new TopicCommentViewModel
+            {
+                Topic = topic,
+                TopicId = topicid
+            };
+
+            var comment = _topicRepository.GetCommentById(commentid);
+            if (comment != null)
+            {
+                model.CommentId = commentid;
+                model.Content = comment.Content;
+                model.CreationDate = comment.CreationDate;
+                ViewData["Title"] = "Edytuj komentarz";
+            }
+            else
+            {
+                ViewData["Title"] = "Dodaj komentarz";
+            }
+
+            return View(model);
+        }
+        
+        // POST: /Topic/Entry
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Entry(TopicCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Akcja zakończyła się niepowodzeniem.");
+                return View(model);
+            }
+
+            var comment = new TopicEntry
+            {
+                TopicId = model.TopicId,
+                AuthorId = user.Id,
+                Content = model.Content,
+            };
+
+            if (model.CommentId == null)
+            {
+                comment.CreationDate = DateTime.Now;
+                _topicRepository.AddComment(comment);
+            }
+            else
+            {
+                comment.Id = model.CommentId.Value;
+                comment.CreationDate = model.CreationDate;
+                comment.ModificationDate = DateTime.Now;
+                _topicRepository.EditComment(comment);
+            }
+
+            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
+        }
+        
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = _topicRepository.GetCommentById(id);
+            var user = await GetCurrentUserAsync();
+
+            if (comment.AuthorId == user.Id)
+            {
+                _topicRepository.DeleteComment(id);
+            }
+            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
+        }
+        
+        #endregion
 
         #region Helpers
 
@@ -165,171 +246,5 @@ namespace KPcore.Controllers
         }
 
         #endregion
-
-        public IActionResult AddComment(int id)
-        {
-            var topic = _topicRepository.GetTopicById(id);
-
-            if (topic == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = TopicMessageId.ErrorAddingCommentToTopic });
-            }
-
-            return View(new TopicCommentViewModel { Topic = topic, TopicId = topic.Id });
-        }
-
-        // POST: /Topic/AddComment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddComment(TopicCommentViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się dodać komentarza.");
-                return View(model);
-            }
-
-            var comment = new TopicEntry
-            {
-                TopicId = model.TopicId,
-                AuthorId = user.Id,
-                Content = model.Content,
-                CreationDate = DateTime.Now
-            };
-
-            _topicRepository.AddComment(comment);
-            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
-        }
-
-
-        // GET: /Topic/EditComment
-        public IActionResult EditComment(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = TopicMessageId.Error });
-            }
-
-            var comment = _topicRepository.GetCommentById(id);
-
-            var model = new TopicCommentViewModel
-            {
-                CommentId = comment.Id,
-                Topic = comment.Topic,
-                TopicId = comment.TopicId,
-                Content = comment.Content,
-                CreationDate = comment.CreationDate
-            };
-
-            return View(model);
-        }
-
-        // POST: /Topic/EditComment
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditComment(TopicCommentViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się edytować komentarza.");
-                return View(model);
-            }
-
-            var comment = new TopicEntry
-            {
-                Id = model.CommentId.Value,
-                TopicId = model.TopicId,
-                AuthorId = user.Id,
-                Content = model.Content,
-                CreationDate = model.CreationDate,
-                ModificationDate = DateTime.Now
-            };
-
-            _topicRepository.EditComment(comment);
-
-            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
-        }
-
-        public async Task<IActionResult> DeleteComment(int id)
-        {
-            var comment = _topicRepository.GetCommentById(id);
-            var user = await GetCurrentUserAsync();
-
-            if (comment.AuthorId == user.Id)
-            {
-                _topicRepository.DeleteComment(id);
-            }
-            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
-        }
-
-        public async Task<IActionResult> MarkDeadline(int id)
-        {
-            var user = await GetCurrentUserAsync();
-            var deadline = _deadlineRepository.GetDeadlineById(id);
-
-            if (user == null || deadline.Group.Topic.TeacherId != user.Id)
-            {
-                return RedirectToAction(nameof(Details), new { id = deadline.Group.TopicId });
-            }
-
-            var model = new MarkDeadlineViewModel
-            {
-                Id = deadline.Id,
-                TopicId = (int)deadline.Group.TopicId,
-                GroupId = deadline.GroupId,
-                DeadlineDate = deadline.DeadlineDate,
-                DateAndTime = deadline.GetDateAndTime,
-                Mark = deadline.Mark.ToString(),
-                Comment = deadline.Comment
-            };
-
-            return View(model);
-        }
-
-        // POST: /Topic/MarkDeadline
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MarkDeadline(MarkDeadlineViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się ocenić terminu.");
-                return View(model);
-            }
-
-            float mark;
-            Single.TryParse(model.Mark, NumberStyles.Float, CultureInfo.InvariantCulture, out mark);
-
-            var deadline = new Deadline
-            {
-                Id = model.Id,
-                GroupId = model.GroupId,
-                DeadlineDate = model.DeadlineDate,
-                Mark = mark,
-                Comment = model.Comment
-            };
-
-            _deadlineRepository.UpdateDeadline(deadline);
-
-            return RedirectToAction(nameof(Details), new { id = model.TopicId });
-        }
     }
 }
