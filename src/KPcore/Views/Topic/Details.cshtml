@@ -64,7 +64,7 @@
                 <!-- Add comment button -->
                 <div class="col-sm-3 text-center">
                     <span class="text-center add-comment">
-                        @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Topic", new { topicId = Model.Id, }, new { @class = "btn btn-grey" })
+                        @Html.ActionLink("DODAJ KOMENTARZ", "AddComment", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
                     </span>
                 </div>
                 <!-- Add comment button end-->
@@ -91,8 +91,8 @@
                             <div class="col-sm-4 text-right inblock">
                                 @if (Model.CurrentUser.Id == c.AuthorId)
                                 {
-                                    @Html.ActionLink("Edytuj", "EditComment", new { topicid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
-                                    @Html.ActionLink("Usuń", "DeleteComment", new { commentid = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
+                                    @Html.ActionLink("Edytuj", "EditComment", new { id = c.Id }, new { @class = "btn-small-grey" })
+                                    @Html.ActionLink("Usuń", "DeleteComment", new { id = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
                                 }
                             </div>
                         </div>
@@ -153,31 +153,31 @@
                 <h3>Członkowie:</h3>
                 <hr class="molten-core" />
                 <ul class="list-unstyled">
-                    
+
                     @if (Model.Group != null)
                     {
                         <li>
                             <div class="list-item-info">
                                 Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
-                                <hr class="hr-narrow"/>
+                                <hr class="hr-narrow" />
                             </div>
                         </li>
                         foreach (var s in Model.GroupMembers)
-                         {
-                             <li>
-                                 <div class="list-item-info">
-                                     <a href="#">@s.FirstName @s.LastName</a>
-                                     <hr class="hr-narrow"/>
-                                 </div>
-                             </li>
-                         }
+                        {
+                            <li>
+                                <div class="list-item-info">
+                                    <a href="#">@s.FirstName @s.LastName</a>
+                                    <hr class="hr-narrow" />
+                                </div>
+                            </li>
+                        }
                     }
                     else
                     {
                         <li>
                             <div class="list-item-info">
                                 Brak członków do wyświetlenia.
-                                <hr class="hr-narrow"/>
+                                <hr class="hr-narrow" />
                             </div>
                         </li>
                     }

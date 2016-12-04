@@ -138,13 +138,13 @@ namespace KPcore.Controllers
             throw new NotImplementedException();
         }
 
-        public async Task<IActionResult> DeleteTopic(int topicid)
+        public async Task<IActionResult> DeleteTopic(int id)
         {
             var user = await GetCurrentUserAsync();
-            var topic = _topicRepository.GetTopicById(topicid);
+            var topic = _topicRepository.GetTopicById(id);
             if (topic.TeacherId == user.Id)
             {
-                _topicRepository.DeleteTopic(topicid);
+                _topicRepository.DeleteTopic(id);
             }
             return RedirectToAction(nameof(Index), new { Message = TopicMessageId.TopicDeleted });
         }
@@ -162,9 +162,9 @@ namespace KPcore.Controllers
 
         #endregion
 
-        public IActionResult AddComment(int topicId)
+        public IActionResult AddComment(int id)
         {
-            var topic = _topicRepository.GetTopicById(topicId);
+            var topic = _topicRepository.GetTopicById(id);
 
             if (topic == null)
             {
@@ -200,19 +200,19 @@ namespace KPcore.Controllers
             };
 
             _topicRepository.AddComment(comment);
-            return RedirectToAction(nameof(Details), new { topicId = comment.TopicId });
+            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
         }
 
 
         // GET: /Topic/EditComment
-        public IActionResult EditComment(int? commentId)
+        public IActionResult EditComment(int? id)
         {
-            if (commentId == null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = TopicMessageId.Error });
             }
 
-            var comment = _topicRepository.GetCommentById(commentId);
+            var comment = _topicRepository.GetCommentById(id);
 
             var model = new TopicCommentViewModel
             {
@@ -255,19 +255,19 @@ namespace KPcore.Controllers
 
             _topicRepository.EditComment(comment);
 
-            return RedirectToAction(nameof(Details), new { topicId = comment.TopicId });
+            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
         }
 
-        public async Task<IActionResult> DeleteComment(int commentid)
+        public async Task<IActionResult> DeleteComment(int id)
         {
-            var comment = _topicRepository.GetCommentById(commentid);
+            var comment = _topicRepository.GetCommentById(id);
             var user = await GetCurrentUserAsync();
 
             if (comment.AuthorId == user.Id)
             {
-                _topicRepository.DeleteComment(commentid);
+                _topicRepository.DeleteComment(id);
             }
-            return RedirectToAction(nameof(Details), new { topicId = comment.TopicId });
+            return RedirectToAction(nameof(Details), new { id = comment.TopicId });
         }
     }
 }

@@ -239,14 +239,14 @@ namespace KPcore.Controllers
 
 
         // GET: /Group/EditComment
-        public IActionResult EditComment(int? commentId)
+        public IActionResult EditComment(int? id)
         {
-            if (commentId == null)
+            if (id == null)
             {
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
             }
 
-            var comment = _groupRepository.GetCommentById(commentId);
+            var comment = _groupRepository.GetCommentById(id);
 
             var model = new GroupCommentViewModel
             {
@@ -309,24 +309,24 @@ namespace KPcore.Controllers
             return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
 
-        public async Task<IActionResult> DeleteComment(int commentid)
+        public async Task<IActionResult> DeleteComment(int id)
         {
-            var comment = _groupRepository.GetCommentById(commentid);
+            var comment = _groupRepository.GetCommentById(id);
             var user = await GetCurrentUserAsync();
 
             if (comment.AuthorId == user.Id)
             {
-                _groupRepository.DeleteComment(commentid);
+                _groupRepository.DeleteComment(id);
             }
             return RedirectToAction(nameof(Details), new { id = comment.GroupId });
         }
 
-        public async Task<IActionResult> LeaveGroup(int groupid)
+        public async Task<IActionResult> LeaveGroup(int id)
         {
             var user = await GetCurrentUserAsync();
             if (user != null)
             {
-                _groupRepository.RemoveMemberFromGroup(groupid, user.Id);
+                _groupRepository.RemoveMemberFromGroup(id, user.Id);
                 return RedirectToAction(nameof(Index), new { Message = GroupMessageId.LeaveGroupSuccess });
             }
             return RedirectToAction(nameof(Index), new { Message = GroupMessageId.Error });
