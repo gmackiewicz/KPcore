@@ -3,46 +3,49 @@
     ViewData["Title"] = "Twoje tematy:";
 }
 
-<h2>@ViewData["Title"]</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
-
-<a asp-controller="Topic" asp-action="Create" class="btn btn-grey">Stwórz nowy temat</a>
-<div class="row">
-    <div class="table-wrapper-custom text-center col-sm-10 col-sm-offset-2">
-        <table class="table-custom">
-            <div class="row-custom header-custom">
-                <div class="cell-custom">Nazwa</div>
-                <div class="cell-custom">Opis</div>
-                <div class="cell-custom">Przedmiot</div>
-                <div class="cell-custom">Data utworzenia</div>
-                <div class="cell-custom">Termin spotkań</div>
-                <div class="cell-custom" th>Akcje</div>
-            </div>
-
-            @foreach (var t in Model.Topics)
-            {
-                <div class="row-custom">
-                    <div class="cell-custom">
-                        @Html.ActionLink(t.Title, "Details", new { id = t.Id })
-                    </div>
-                    <div class="cell-custom">@t.Description</div>
-                    <div class="cell-custom">@t.Subject.Name</div>
-                    <div class="cell-custom">@t.CreationDate</div>
-                    <div class="cell-custom">
-                        @if (t.MeetingsDate != null)
-                        {
-                            <span>
-                                @t.MeetingsDate.Value.DayOfWeek @t.MeetingsDate.Value.Hour:@t.MeetingsDate.Value.Minute
-                            </span>
-                        }
-                        else
-                        {
-                            <span>nie ustalono</span>
-                        }
-                    </div>
-                    <div class="cell-custom">@Html.ActionLink("Usuń", "DeleteTopic", new { id = t.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</div>
+<div class="container-fluid">
+    <div class="row text-center">
+        <h2>@ViewData["Title"]</h2>
+        <p class="text-success">@ViewData["StatusMessage"]</p>
+        <a asp-controller="Topic" asp-action="Create" class="btn btn-grey space-after">Stwórz nowy temat</a>
+    </div>
+    <div class="row text-center">
+        <div class="text-center table-wrapper-custom">
+            <table class="table-custom">
+                <div class="row-custom header-custom">
+                    <div class="cell-custom">Nazwa</div>
+                    <div class="cell-custom">Opis</div>
+                    <div class="cell-custom">Przedmiot</div>
+                    <div class="cell-custom">Data utworzenia</div>
+                    <div class="cell-custom">Termin spotkań</div>
+                    <div class="cell-custom" th>Akcje</div>
                 </div>
-            }
-        </table>
+
+                @foreach (var t in Model.Topics)
+            {
+                    <div class="row-custom">
+                        <div class="cell-custom">
+                            @Html.ActionLink(t.Title, "Details", new { id = t.Id })
+                        </div>
+                        <div class="cell-custom">@t.Description</div>
+                        <div class="cell-custom">@t.Subject.Name</div>
+                        <div class="cell-custom">@t.CreationDate</div>
+                        <div class="cell-custom">
+                            @if (t.MeetingsDate != null)
+                            {
+                                <span>
+                                    @t.MeetingsDate.Value.DayOfWeek @t.MeetingsDate.Value.Hour:@t.MeetingsDate.Value.Minute
+                                </span>
+                            }
+                            else
+                            {
+                                <span>nie ustalono</span>
+                            }
+                        </div>
+                        <div class="cell-custom">@Html.ActionLink("Usuń", "DeleteTopic", new { id = t.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</div>
+                    </div>
+                }
+            </table>
+        </div>
     </div>
 </div>

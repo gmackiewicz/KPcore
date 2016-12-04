@@ -483,7 +483,7 @@ h2 {
     font-size: 10px;
 }
 
-/*.row {
+.row {
     background-color: rgba(255,255,255,0.05);
     border: 2px solid red;
 }
@@ -491,7 +491,7 @@ h2 {
 div[class*=col]{
     background-color: rgba(255,255,255,0.05);
     border: 2px solid green;
-}*/
+}
 
 /* Hide/rearrange for smaller screens */
 
@@ -527,8 +527,7 @@ div[class*=col]{
 
 // TABLE
 .table-wrapper-custom {
-  margin: 0 auto;
-  padding: 10px;
+  display: inline-table
 }
 .table-custom {
   margin: 0 0 40px 0;
@@ -538,6 +537,7 @@ div[class*=col]{
 }
 @media screen and (max-width: 767px) {
   .table-custom {
+      width: 50%;
   }
 }
 
@@ -566,6 +566,7 @@ div[class*=col]{
 }
 @media screen and (max-width: 767px) {
   .cell-custom {
-    padding: 2px 12px;
+      font-size: 75%;
+    padding: 2px 5px;
   }
 }

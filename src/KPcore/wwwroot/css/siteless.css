@@ -341,15 +341,14 @@ h2 {
 .text-small {
   font-size: 10px;
 }
-/*.row {
-    background-color: rgba(255,255,255,0.05);
-    border: 2px solid red;
+.row {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid red;
 }
-
-div[class*=col]{
-    background-color: rgba(255,255,255,0.05);
-    border: 2px solid green;
-}*/
+div[class*=col] {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid green;
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
   /* Hide captions */
@@ -374,14 +373,18 @@ div[class*=col]{
   }
 }
 .table-wrapper-custom {
-  margin: 0 auto;
-  padding: 10px;
+  display: inline-table;
 }
 .table-custom {
   margin: 0 0 40px 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
+}
+@media screen and (max-width: 767px) {
+  .table-custom {
+    width: 50%;
+  }
 }
 .row-custom {
   display: table-row;
@@ -407,6 +410,7 @@ div[class*=col]{
 }
 @media screen and (max-width: 767px) {
   .cell-custom {
-    padding: 2px 12px;
+    font-size: 75%;
+    padding: 2px 5px;
   }
 }
