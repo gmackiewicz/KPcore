@@ -8,32 +8,28 @@
 
 <div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt class="text-center">
+    <dt class="text-center">
+        <div class="row">
             <h2>Przedmioty:</h2>
             <a asp-controller="Admin" asp-action="Subject" class="btn btn-grey btn-bracketed">Dodaj nowy</a>
+        </div>
+        <div class="row table-responsive table-wrapper-custom">
+            <table class="table-custom">
+                <div class="row-custom header-custom">
+                    <div class="cell-custom">Nazwa przedmiotu</div>
+                    <div class="cell-custom">Opis</div>
+                    <thdiv class="cell-custom">Akcje</thdiv>
+                </div>
 
-        </dt>
-        <dd>
-            <div class="table-responsive">
-                <table class="table table-condensed">
-                    <tr class="color-molten-core">
-                        <th>Nazwa przedmiotu</th>
-                        <th>Opis</th>
-                        <th>Akcje</th>
-                    </tr>
+                @foreach (var s in Model.Subjects)
+                {
+                    <div class="row-custom">
+                        <div class="cell-custom">@s.Name</div>
+                        <div class="cell-custom">@s.Description</div>
+                        <div class="cell-custom">@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })/@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</div>
+                    </div>
+                }
+            </table>
+        </div>
 
-                    @foreach (var s in Model.Subjects)
-                    {
-                        <tr>
-                            <td>@s.Name</td>
-                            <td>@s.Description</td>
-                            <td>@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })/@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</td>
-                        </tr>
-                    }
-                </table>
-            </div>
-
-        </dd>
-    </dl>
 </div>

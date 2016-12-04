@@ -1,4 +1,13 @@
-﻿.border-transparent {
+﻿/*.row {
+    background-color: rgba(255,255,255,0.05);
+    border: 2px solid red;
+}
+
+div[class*=col]{
+    background-color: rgba(255,255,255,0.05);
+    border: 2px solid green;
+}*/
+.border-transparent {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 3px;
   background-color: rgba(255, 255, 255, 0.05);
@@ -9,15 +18,50 @@
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 190, 20, 0.5), rgba(0, 0, 0, 0));
 }
+.group-name-input {
+  min-width: 400px;
+  text-align: center;
+}
+.group-name-input label {
+  display: block;
+  text-align: center;
+}
+@media screen and (max-width: 767px) {
+  .group-name-input {
+    min-width: 200px;
+  }
+}
 .color-molten-core {
   color: #f6492b !important;
 }
 @media screen and (min-width: 767px) {
+  .space-after {
+    margin-bottom: 5px;
+  }
   .user-list {
     padding-right: 0;
   }
   .small-screen-visible {
     display: none;
+  }
+}
+@media screen and (max-width: 767px) {
+  .comment-section {
+    margin: 0 15px 15px 15px;
+  }
+  .table-custom {
+    width: 50%;
+  }
+  .topic-description {
+    text-align: center;
+  }
+}
+.topic-description-header {
+  text-align: right;
+}
+@media screen and (max-width: 767px) {
+  .topic-description-header {
+    text-align: center;
   }
 }
 .comment-section {
@@ -341,14 +385,6 @@ h2 {
 .text-small {
   font-size: 10px;
 }
-.row {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 2px solid red;
-}
-div[class*=col] {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 2px solid green;
-}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
   /* Hide captions */
@@ -374,21 +410,21 @@ div[class*=col] {
 }
 .table-wrapper-custom {
   display: inline-table;
+  margin: 0;
 }
 .table-custom {
-  margin: 0 0 40px 0;
+  margin: 0 0 20px 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
 }
-@media screen and (max-width: 767px) {
-  .table-custom {
-    width: 50%;
-  }
-}
 .row-custom {
   display: table-row;
   background: #303030;
+}
+.row-custom:hover,
+.row-custom:nth-of-type(odd):hover {
+  background: rgba(246, 73, 43, 0.1);
 }
 .row-custom:nth-of-type(odd) {
   background: #404040;

@@ -1,4 +1,15 @@
-﻿//Colors
+﻿//Debug mode:
+/*.row {
+    background-color: rgba(255,255,255,0.05);
+    border: 2px solid red;
+}
+
+div[class*=col]{
+    background-color: rgba(255,255,255,0.05);
+    border: 2px solid green;
+}*/
+
+//Colors
 @default-bg-color: #181818;
 @color-table-darkrow: #303030;
 @color-table-lightrow: #404040;
@@ -63,11 +74,25 @@
     background-image: @color-molten-core-light-alpha-gradient;
 }
 
+.group-name-input {
+    label{
+        display:block;
+        text-align:center;
+    }
+    min-width: 400px;
+    text-align:center;
+    @media screen and (max-width: 767px){
+        min-width: 200px;
+    }
+}
 .color-molten-core {
     color: @color-molten-core !important;
 }
 
 @media screen and (min-width: 767px) {
+    .space-after{
+        margin-bottom: 5px;
+    }
     .user-list {
         padding-right: 0;
     }
@@ -76,6 +101,25 @@
     }
 }
 
+
+@media screen and (max-width: 767px) {
+    .comment-section{
+        margin: 0 15px 15px 15px;
+    }
+  .table-custom {
+      width: 50%;
+  }
+  .topic-description{
+      text-align:center;
+  }
+}
+
+.topic-description-header{
+    text-align: right;
+    @media screen and (max-width: 767px){
+        text-align: center;
+    }
+}
 .comment-section {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -483,15 +527,7 @@ h2 {
     font-size: 10px;
 }
 
-.row {
-    background-color: rgba(255,255,255,0.05);
-    border: 2px solid red;
-}
 
-div[class*=col]{
-    background-color: rgba(255,255,255,0.05);
-    border: 2px solid green;
-}
 
 /* Hide/rearrange for smaller screens */
 
@@ -527,23 +563,22 @@ div[class*=col]{
 
 // TABLE
 .table-wrapper-custom {
-  display: inline-table
+  display: inline-table;
+  margin: 0;
 }
 .table-custom {
-  margin: 0 0 40px 0;
+  margin: 0 0 20px 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
-}
-@media screen and (max-width: 767px) {
-  .table-custom {
-      width: 50%;
-  }
 }
 
 .row-custom {
   display: table-row;
   background: @color-table-darkrow;
+  &:hover, &:nth-of-type(odd):hover{
+      background: @color-molten-core-alpha;
+  }
 }
 .row-custom:nth-of-type(odd) {
   background: @color-table-lightrow;
