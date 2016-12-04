@@ -1,24 +1,26 @@
-﻿@model DeadlineViewModel
+﻿@model MarkDeadlineViewModel
 
 @{
-    ViewData["Title"] = "Dodaj termin";
+    ViewData["Title"] = "MarkDeadline";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2>MarkDeadline</h2>
 
-<form asp-action="AddDeadline">
+<form asp-action="MarkDeadline">
     <div class="form-horizontal">
-        <h4>Grupa: @Model.Group.Name</h4>
+        <h4>Termin: @Model.DateAndTime.</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.TextBoxFor(m => m.Id, new { type = "hidden" })
         @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
         @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.DeadlineDate, new { type = "hidden" })
 
         <div class="form-group">
-            <label asp-for="DeadlineDate" class="col-md-2 control-label"></label>
+            <label asp-for="Mark" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="DeadlineDate" type="datetime-local" class="form-control" />
-                <span asp-validation-for="DeadlineDate" class="text-danger" />
+                <input asp-for="Mark" class="form-control" />
+                <span asp-validation-for="Mark" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -36,6 +38,10 @@
         </div>
     </div>
 </form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

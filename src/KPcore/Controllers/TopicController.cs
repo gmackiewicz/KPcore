@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using KPcore.Interfaces;
@@ -271,6 +272,64 @@ namespace KPcore.Controllers
                 _topicRepository.DeleteComment(id);
             }
             return RedirectToAction(nameof(Details), new { id = comment.TopicId });
+        }
+
+        public async Task<IActionResult> MarkDeadline(int id)
+        {
+            var user = await GetCurrentUserAsync();
+            var deadline = _deadlineRepository.GetDeadlineById(id);
+
+            if (user == null || deadline.Group.Topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Details), new { id = deadline.Group.TopicId });
+            }
+
+            var model = new MarkDeadlineViewModel
+            {
+                Id = deadline.Id,
+                TopicId = (int)deadline.Group.TopicId,
+                GroupId = deadline.GroupId,
+                DeadlineDate = deadline.DeadlineDate,
+                DateAndTime = deadline.GetDateAndTime,
+                Mark = deadline.Mark.ToString(),
+                Comment = deadline.Comment
+            };
+
+            return View(model);
+        }
+
+        // POST: /Topic/MarkDeadline
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarkDeadline(MarkDeadlineViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await GetCurrentUserAsync();
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Nie udało się ocenić terminu.");
+                return View(model);
+            }
+
+            float mark;
+            Single.TryParse(model.Mark, NumberStyles.Float, CultureInfo.InvariantCulture, out mark);
+
+            var deadline = new Deadline
+            {
+                Id = model.Id,
+                GroupId = model.GroupId,
+                DeadlineDate = model.DeadlineDate,
+                Mark = mark,
+                Comment = model.Comment
+            };
+
+            _deadlineRepository.UpdateDeadline(deadline);
+
+            return RedirectToAction(nameof(Details), new { id = model.TopicId });
         }
     }
 }

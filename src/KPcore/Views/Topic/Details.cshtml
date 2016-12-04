@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Szczegóły";
+    var teacher = (Model.Teacher.Id == Model.CurrentUser.Id);
 }
 
 <div>
@@ -33,7 +34,6 @@
                 @if (Model.Group != null)
                 {
                     @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
-                    <button class="btn btn-grey">Oceń termin</button>
                 }
             </div>
         </div>
@@ -54,7 +54,14 @@
         <div class="col-md-12 text-center">
             <h2>NAJBLIŻSZY TERMIN CZĄSTKOWY:</h2>
             <h2 class="bold">
-                @Model.CurrentDeadline.GetDateAndTime
+                @if (Model.CurrentDeadline == null)
+                {
+                    <span>sBrak terminu do wyświetlenia.</span>
+                }
+                else
+                {
+                    @Model.CurrentDeadline.GetDateAndTime
+                }
             </h2>
         </div>
     </div>
@@ -147,6 +154,14 @@
                                         <br />
                                         @d.Comment
                                     </a>
+                                    <div class="pull-right">
+                                        @if (teacher)
+                                        {
+                                            @Html.ActionLink("oceń", "MarkDeadline", new { id = d.Id }, new { @class = "btn-small-grey" })
+                                        }
+
+                                    </div>
+
                                     <hr class="hr-narrow" />
                                 </div>
                             </li>
@@ -160,6 +175,7 @@
                         </div>
                     }
                 </ul>
+
             </div>
 
             <div class="text-center group-list-sm space-before border-transparent">

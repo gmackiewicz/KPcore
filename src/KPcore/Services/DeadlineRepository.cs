@@ -33,5 +33,19 @@ namespace KPcore.Services
         {
             return _dbContext.Deadlines.First(d => d.DeadlineDate > DateTime.Now);
         }
+
+        public Deadline GetDeadlineById(int id)
+        {
+            return _dbContext.Deadlines
+                .Include(d => d.Group)
+                .Include(d => d.Group.Topic)
+                .FirstOrDefault(d => d.Id == id);
+        }
+
+        public void UpdateDeadline(Deadline deadline)
+        {
+            _dbContext.Deadlines.Update(deadline);
+            _dbContext.SaveChanges();
+        }
     }
 }
