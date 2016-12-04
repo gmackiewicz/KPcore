@@ -2,16 +2,13 @@
 @{
     ViewData["Title"] = "Twoje grupy";
 }
-
-
-<div class=row>
-    <div class="col-xs-6 col-xs-offset-3 text-center ">
-        <h2>@ViewData["Title"]:</h2>
-    </div>
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
 </div>
 <div class="row">
     <ul class="list-unstyled  text-center">
-        <p class="text-success">@ViewData["StatusMessage"]</p>
         @foreach (var g in Model.StudentGroups)
         {
             <li>

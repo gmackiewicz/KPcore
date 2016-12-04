@@ -1,12 +1,14 @@
 ﻿@model TeacherTopicsIndexViewModel
 @{
-    ViewData["Title"] = "Twoje tematy:";
+    ViewData["Title"] = "Twoje tematy.";
 }
-
+<div class="title">
+    <h2>@ViewData["Title"]</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
 <div class="container-fluid">
     <div class="row text-center">
-        <h2>@ViewData["Title"]</h2>
-        <p class="text-success">@ViewData["StatusMessage"]</p>
         <a asp-controller="Topic" asp-action="Create" class="btn btn-grey space-after">Stwórz nowy temat</a>
     </div>
     <div class="row text-center">
