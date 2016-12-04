@@ -293,36 +293,7 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Index), new { message = GroupMessageId.Error });
         }
-
-        // POST: /Group/EditGroup
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditGroup(GroupViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var user = await GetCurrentUserAsync();
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Nie udało się edytować grupy.");
-                return View(model);
-            }
-
-            var group = new Group
-            {
-                Id = model.Id,
-                Name = model.Name,
-                TopicId = model.TopicId
-            };
-
-            _groupRepository.EditGroup(group);
-
-            return RedirectToAction(nameof(Details), new { id = group.Id });
-        }
-
+        
         public async Task<IActionResult> DeleteGroup(int id)
         {
             var group = _groupRepository.GetGroupById(id);
