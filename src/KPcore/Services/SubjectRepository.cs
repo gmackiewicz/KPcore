@@ -26,13 +26,20 @@ namespace KPcore.Services
             return _dbContext.Subjects
                 .FirstOrDefault(sid => sid.Id == subjectId);
         }
-        public void Add(Subject subject)
+
+        public void EditSubject(Subject subject)
+        {
+            _dbContext.Subjects.Update(subject);
+            _dbContext.SaveChanges();
+        }
+
+        public void AddSubject(Subject subject)
         {
             _dbContext.Subjects.Add(subject);
             _dbContext.SaveChanges();
         }
 
-        public void Remove(Subject subject)
+        public void RemoveSubject(Subject subject)
         {
             _dbContext.Subjects.Remove(subject);
             _dbContext.SaveChanges();

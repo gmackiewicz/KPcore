@@ -11,7 +11,7 @@
     <dl class="dl-horizontal">
         <dt class="text-center">
             <h2>Przedmioty:</h2>
-            <a asp-controller="Admin" asp-action="AddSubject" class="btn btn-grey btn-bracketed">Dodaj nowy</a>
+            <a asp-controller="Admin" asp-action="Subject" class="btn btn-grey btn-bracketed">Dodaj nowy</a>
 
         </dt>
         <dd>
@@ -28,8 +28,7 @@
                         <tr>
                             <td>@s.Name</td>
                             <td>@s.Description</td>
-                            <td>edytuj/@Html.ActionLink("Usuń", "RemoveSubject", new { subjectId = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</td>
-
+                            <td>@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })/@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</td>
                         </tr>
                     }
                 </table>

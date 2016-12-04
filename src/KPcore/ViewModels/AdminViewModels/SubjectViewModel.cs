@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace KPcore.ViewModels.AdminViewModels
 {
-    public class AddSubjectViewModel : BaseViewModel
+    public class SubjectViewModel : BaseViewModel
     {
+        public int? SubjectId { get; set; }
+
         [Required]
         [StringLength(100)]
-        [Display(Name = "Subject name")]
+        [Display(Name = "Nazwa przedmiotu")]
         public string Name { get; set; }
 
         [Required]
         [StringLength(255)]
-        [Display(Name = "Description")]
+        [Display(Name = "Opis")]
         public string Description { get; set; }
     }
 }

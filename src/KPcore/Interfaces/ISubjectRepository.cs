@@ -6,8 +6,9 @@ namespace KPcore.Interfaces
     public interface ISubjectRepository
     {
         IEnumerable<Subject> ListAll();
-        void Add(Subject subject);
-        void Remove(Subject subject);
+        void AddSubject(Subject subject);
+        void RemoveSubject(Subject subject);
         Subject FindSubjectById(int? subjectId);
+        void EditSubject(Subject subject);
     }
 }

@@ -46,17 +46,35 @@ namespace KPcore.Controllers
             };
             return View(model);
         }
-        
-        // GET: /Admin/AddSubject
-        public IActionResult AddSubject()
+
+        // GET: /Admin/Subject
+        public async Task<IActionResult> Subject(int? id)
         {
-            return View(new AddSubjectViewModel());
+            var user = await GetCurrentUserAsync();
+            if (user == null || user.Status != 2)
+            {
+                return RedirectToAction(nameof(Index), "Home", new { AdminMessageId.Error });
+            }
+
+            var subject = _subjectRepository.FindSubjectById(id);
+            var model = new SubjectViewModel();
+
+            ViewData["Title"] = "Dodaj przedmiot";
+            if (subject != null)
+            {
+                model.SubjectId = subject.Id;
+                model.Name = subject.Name;
+                model.Description = subject.Description;
+                ViewData["Title"] = "Edytuj przedmiot";
+            }
+            return View(model);
         }
 
-        // POST: /Admin/AddSubject
+
+        // POST: /Group/Subject
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddSubject(AddSubjectViewModel model)
+        public async Task<IActionResult> Subject(SubjectViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -64,33 +82,43 @@ namespace KPcore.Controllers
             }
 
             var user = await GetCurrentUserAsync();
-            if (user == null || user.Status != 2)
+            if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Nie udało się utworzyć przedmiotu.");
+                ModelState.AddModelError(string.Empty, "Akcja zakończyła się niepowodzeniem.");
                 return View(model);
             }
 
             var subject = new Subject
             {
                 Name = model.Name,
-                Description = model.Description
+                Description = model.Description,
             };
-            _subjectRepository.Add(subject);
-            return RedirectToAction(nameof(Index), new { Message = AdminMessageId.AddSubjectSuccess });
+
+            if (model.SubjectId == null)
+            {
+                _subjectRepository.AddSubject(subject);
+            }
+            else
+            {
+                subject.Id = model.SubjectId.Value;
+                _subjectRepository.EditSubject(subject);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
-        
-        public async Task<IActionResult> RemoveSubject(int subjectId)
+
+        public async Task<IActionResult> RemoveSubject(int id)
         {
             var user = await GetCurrentUserAsync();
             if (user == null || user.Status != 2)
             {
-                return RedirectToAction(nameof(Index), new {Message = AdminMessageId.RemoveSubjectFailed});
+                return RedirectToAction(nameof(Index), new { Message = AdminMessageId.RemoveSubjectFailed });
             }
-            var subject = _subjectRepository.FindSubjectById(subjectId);
-            _subjectRepository.Remove(subject);
-            return RedirectToAction(nameof(Index), new {Message = AdminMessageId.RemoveSubjectSuccess});
+            var subject = _subjectRepository.FindSubjectById(id);
+            _subjectRepository.RemoveSubject(subject);
+            return RedirectToAction(nameof(Index), new { Message = AdminMessageId.RemoveSubjectSuccess });
         }
-        
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)
@@ -108,7 +136,7 @@ namespace KPcore.Controllers
             RemoveSubjectSuccess,
             RemoveSubjectFailed
         }
-        
+
         #endregion
     }
 }
