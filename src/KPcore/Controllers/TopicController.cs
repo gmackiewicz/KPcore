@@ -129,6 +129,7 @@ namespace KPcore.Controllers
                 model.GroupLeader = _groupRepository.GetLeader(@group.Id);
                 model.GroupMembers = _groupRepository.GetStudentsOfGroup(@group.Id);
                 model.Deadlines = _deadlineRepository.GetDeadlinesByGroup(@group.Id);
+                model.CurrentDeadline = _deadlineRepository.GetCurrentDeadline(@group.Id);
             }
 
             return View(model);

@@ -53,7 +53,9 @@
     <div class="row space-after ">
         <div class="col-md-12 text-center">
             <h2>NAJBLIŻSZY TERMIN CZĄSTKOWY:</h2>
-            <h2 class="bold">TUTAJ temat -> grupa -> terminy -> z listy pobrać najnowszą</h2>
+            <h2 class="bold">
+                @Model.CurrentDeadline.GetDateAndTime
+            </h2>
         </div>
     </div>
     <div class="row space-before">
@@ -134,8 +136,7 @@
                             <li>
                                 <div class="list-item-info">
                                     <a href="#">
-                                        @d.DeadlineDate.Day.@d.DeadlineDate.Month.@d.DeadlineDate.Year,
-                                        @d.DeadlineDate.Hour:@d.DeadlineDate.Minute - ocena: @if (d.Mark == null)
+                                        @d.GetDateAndTime - ocena: @if (d.Mark == null)
                                         {
                                             <span>-</span>
                                         }

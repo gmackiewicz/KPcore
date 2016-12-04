@@ -18,5 +18,6 @@ namespace KPcore.ViewModels.TopicViewModels
         public ApplicationUser GroupLeader { get; set; }
         public IEnumerable<ApplicationUser> GroupMembers { get; set; }
         public IEnumerable<Deadline> Deadlines { get; set; }
+        public Deadline CurrentDeadline { get; set; }
     }
 }

@@ -20,5 +20,7 @@ namespace KPcore.Models
 
         [StringLength(500)]
         public string Comment { get; set; }
+
+        public string GetDateAndTime => DeadlineDate.Day + "." + DeadlineDate.Month + "." + DeadlineDate.Year + ", " + DeadlineDate.Hour + ":" + DeadlineDate.Minute;
     }
 }

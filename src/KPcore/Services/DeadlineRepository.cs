@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using KPcore.Data;
@@ -26,6 +27,11 @@ namespace KPcore.Services
         {
             _dbContext.Deadlines.Add(deadline);
             _dbContext.SaveChanges();
+        }
+
+        public Deadline GetCurrentDeadline(int groupId)
+        {
+            return _dbContext.Deadlines.First(d => d.DeadlineDate > DateTime.Now);
         }
     }
 }

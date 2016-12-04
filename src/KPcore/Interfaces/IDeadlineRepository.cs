@@ -7,5 +7,6 @@ namespace KPcore.Interfaces
     {
         IEnumerable<Deadline> GetDeadlinesByGroup(int groupId);
         void AddDeadline(Deadline deadline);
+        Deadline GetCurrentDeadline(int groupId);
     }
 }
