@@ -15,7 +15,14 @@
                     <h1>
                         @if (Model.Group != null)
                         {
-                            @Html.ActionLink(Model.Group.Name, "Details", "Group", new { id = Model.Group.Id })
+                            if (!teacher)
+                            {
+                                @Html.ActionLink(Model.Group.Name, "Details", "Group", new { id = Model.Group.Id })
+                            }
+                            else
+                            {
+                                @Model.Group.Name
+                            }
                         }
                         else
                         {
