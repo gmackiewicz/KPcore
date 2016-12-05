@@ -1,30 +1,30 @@
 ﻿@model GroupCommentViewModel
 
-<h2>@ViewData["Title"]</h2>
-
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <hr />
+</div>
 <div class="container-fluid">
     <form asp-action="Comment">
-        <div class="form-horizontal">
-            <h4>Grupa: @Model.Group.Name</h4>
-            <hr class="hr-narrow" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
-            @Html.TextBoxFor(m => m.CommentId, new { type = "hidden" })
-            @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
+        <h4>Grupa: @Model.Group.Name</h4>
+        <hr class="hr-narrow" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.CommentId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
 
-            <div class="form-group">
-                <div class="col-sm-8 col-sm-offset-1">
-                    <label asp-for="Content"></label>
-                    <textarea asp-for="Content" rows="7" id="comment" class="form-control"></textarea>
-                    <span asp-validation-for="Content" class="text-danger" />
-                </div>
+        <div class="form-group text-center">
+            <div class="col-sm-8 col-sm-offset-2">
+                <label asp-for="Content"></label>
+                <textarea asp-for="Content" rows="5" id="comment" class="form-control comment-input"></textarea>
+                <span asp-validation-for="Content" class="text-danger" />
             </div>
+        </div>
 
-            <div class="form-group ">
-                <div class="col-sm-8 col-sm-offset-1 text-right">
-                    <input type="submit" value="Zatwierdź" class="btn btn-success" />
-                    @Html.ActionLink("Wróć", "Details", new { id = Model.GroupId }, new { @class = "btn btn-grey" })
-                </div>
+        <div class="form-group ">
+            <div class="col-sm-8 col-sm-offset-2 text-right space-before">
+                <input type="submit" value="Zatwierdź" class="btn btn-success" />
+                @Html.ActionLink("Wróć", "Details", new { id = Model.GroupId }, new { @class = "btn btn-grey" })
             </div>
         </div>
     </form>

@@ -8,9 +8,11 @@ div[class*=col]{
     border: 2px solid green;
 }*/
 .border-transparent {
+  padding-top: 3px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
+  border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
 }
 .hr-narrow-main {
   margin: 0px;
@@ -24,7 +26,8 @@ div[class*=col]{
     margin-right: 15px;
   }
 }
-#group-name-input {
+#group-name-input,
+.comment-input {
   color: whitesmoke;
   background: black;
 }
@@ -280,6 +283,7 @@ h2 {
 }
 .description {
   margin: 20px 0 20px 0;
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
 }
 .description div > h1 {
   margin-right: 10px;
@@ -414,6 +418,18 @@ h2 {
   height: 2px;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
 }
+.hr-narrow-black {
+  margin: 0px;
+  height: 2px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+  margin: 5px 2px 2px 2px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), black, rgba(0, 0, 0, 0));
+}
+.hr-black {
+  margin: 5px 2px 2px 2px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), black, rgba(0, 0, 0, 0));
+  height: 4px;
+}
 .text-small {
   font-size: 10px;
 }
@@ -443,9 +459,10 @@ h2 {
 .table-wrapper-custom {
   display: inline-table;
   margin: 0;
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
 }
 .table-custom {
-  margin: 0 0 20px 0;
+  margin: 0;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: table;
@@ -463,8 +480,10 @@ h2 {
 }
 .row-custom.header-custom {
   font-weight: 800;
-  color: #ffffff;
+  font-size: 110%;
+  color: rgba(255, 255, 255, 0.9);
   background: #f6492b;
+  text-align: center;
 }
 @media screen and (max-width: 580px) {
   .row {
@@ -475,6 +494,7 @@ h2 {
 .cell-custom {
   padding: 6px 12px;
   display: table-cell;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 @media screen and (max-width: 767px) {
   .cell-custom {

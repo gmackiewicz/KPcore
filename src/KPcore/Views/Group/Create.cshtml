@@ -4,28 +4,29 @@
     ViewData["Title"] = "Tworzenie grupy";
 }
 
-<div class="row text-center">
-    <h2>@ViewData["Title"]</h2>
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
 </div>
-@ViewData["Message"]
-    <div>
-        <form asp-action="Create">
-            <div class="form-horizontal">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="row text-center form-group">
-                    <label class="control-label">Nazwa:</label>
-                    <div class="text-center  group-name-input">
-                        <input asp-for="Name" class="form-control inblock text-center" placeholder="Nazwa grupy"/>
-                        <span asp-validation-for="Name" class="text-danger"/>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-sm-6 col-sm-offset-3 text-center">
-                        <input type="submit" value="Stwórz" class="btn btn-success" />
-                        <a asp-action="Index" class="btn btn-danger">Anuluj</a>
-                    </div>
+<div>
+    <form asp-action="Create">
+        <div class="form-horizontal">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row text-center form-group">
+                <label class="control-label">Nazwa:</label>
+                <div class="text-center  group-name-input">
+                    <input asp-for="Name" class="form-control inblock text-center" placeholder="Nazwa grupy" />
+                    <span asp-validation-for="Name" class="text-danger" />
                 </div>
             </div>
-        </form>
-    </div>
+            <div class="row form-group">
+                <div class="col-sm-6 col-sm-offset-3 text-center">
+                    <input type="submit" value="Stwórz" class="btn btn-success" />
+                    <a asp-action="Index" class="btn btn-danger">Anuluj</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 

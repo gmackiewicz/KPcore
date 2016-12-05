@@ -43,9 +43,11 @@ div[class*=col]{
 
 //Border
 .border-transparent {
+    padding-top: 3px;
     border: 1px solid @transparent-white;
-    border-radius: 3px;
+    border-radius: 10px;
     background-color: @transparent-whiter;
+    box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
 }
 
 //Gradients
@@ -82,7 +84,7 @@ div[class*=col]{
     }
 }
 
-#group-name-input {
+#group-name-input, .comment-input {
     color: whitesmoke;
     background: black;
 }
@@ -405,7 +407,7 @@ h2 {
 
 .description {
     margin: 20px 0 20px 0;
-
+    box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
     div > h1 {
         margin-right: 10px;
     }
@@ -565,6 +567,16 @@ h2 {
     background-image: @color-molten-core-gradient;
 }
 
+.hr-narrow-black{
+    .hr-narrow;
+    margin:5px 2px 2px 2px;
+    background: @default-gradient;
+}
+.hr-black{
+    margin: 5px 2px 2px 2px;
+    background: @default-gradient;
+    height: 4px;
+}
 .text-small {
     font-size: 10px;
 }
@@ -607,10 +619,11 @@ h2 {
 .table-wrapper-custom {
     display: inline-table;
     margin: 0;
+    box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
 }
 
 .table-custom {
-    margin: 0 0 20px 0;
+    margin: 0;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     display: table;
@@ -631,8 +644,10 @@ h2 {
 
 .row-custom.header-custom {
     font-weight: @bold-font-weight;
-    color: @color-white;
+    font-size:110%;
+    color: rgba(255,255,255,0.9);
     background: @color-molten-core;
+    text-align:center;
 }
 
 @media screen and (max-width: 580px) {
@@ -645,6 +660,7 @@ h2 {
 .cell-custom {
     padding: 6px 12px;
     display: table-cell;
+    border: 1px solid rgba(0,0,0,0.5);
 }
 
 @media screen and (max-width: 767px) {

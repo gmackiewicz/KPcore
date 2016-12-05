@@ -7,20 +7,23 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="border-transparent space-after">
+        <div class="border-transparent space-after space-before">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center group-title">
+                    @Html.TextBoxFor(m => m.Group.Name, new { type = "hidden" })
+
+                    
                     <h1>
                         @if (Model.Group != null)
                         {
-                            @Html.DisplayFor(m => m.Group.Name)
+                            @Html.ActionLink(Model.Group.Name, "Details", "Group", new {id = Model.Group.Id})
                         }
                         else
                         {
                             <span>BRAK GRUPY</span>
                         }
                     </h1>
-                    <hr />
+                    <hr class="hr-black"/>
                     <h2>@Html.DisplayFor(model => model.Subject.Name)</h2>
                 </div>
             </div>
