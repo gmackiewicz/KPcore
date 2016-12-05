@@ -1,8 +1,12 @@
 ﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
-<div class="text-center group-list-sm space-before border-transparent">
-    <h3>Członkowie:</h3>
+
+
+
+
+<div class="text-center group-list-sm space-before border-transparent user-list-main">
+    <h3>Członkowie:<i class="fa fa-minus-square-o"></i></h3>
     <hr class="molten-core" />
-    <ul class="list-unstyled">
+    <ul class="list-unstyled user-list">
 
         @if (Model.Group != null)
         {

@@ -12,9 +12,6 @@ div[class*=col]{
 @default-bg-color: #151515;
 
 .body-content{
-    a{
-        color:white;
-    }
     border: 1px solid rgba(255,255,255,0.1);
     .shadow;
 }
@@ -39,6 +36,12 @@ body {
     .shadow;
 }
 
+.side-panel{
+    padding-right:0;
+    @media screen and (max-width: 767px){
+        padding-right: 15px;
+    }
+}
 .sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white) {
     border: @arguments;
     border-radius: 5px;
@@ -569,7 +572,33 @@ h3{
     }
 }
 
+.user-list-main{
+    h3{
+        position:relative;
+    }
+
+    i{
+        position:absolute;
+        right: 5px;
+        top: 0;
+        bottom:0;
+    }
+}
+.deadline-list-main{
+    h3{
+        position:relative;
+    }
+
+    i{
+        position:absolute;
+        right: 5px;
+        top: 0;
+        bottom:0;
+    }
+}
 .user-list {
+    
+
     li {
         position: relative;
     }

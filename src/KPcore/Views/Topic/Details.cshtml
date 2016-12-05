@@ -11,18 +11,18 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center group-title">
                     @Html.TextBoxFor(m => m.Group.Name, new { type = "hidden" })
-                    
+
                     <h1>
                         @if (Model.Group != null)
                         {
-                            @Html.ActionLink(Model.Group.Name, "Details", "Group", new {id = Model.Group.Id})
+                            @Html.ActionLink(Model.Group.Name, "Details", "Group", new { id = Model.Group.Id })
                         }
                         else
                         {
                             <span>BRAK GRUPY</span>
                         }
                     </h1>
-                    <hr class="hr-black"/>
+                    <hr class="hr-black" />
                     <h2>Przedmiot: <b>@Html.DisplayFor(model => model.Subject.Name)</b></h2>
                 </div>
             </div>
@@ -85,10 +85,10 @@
         </div>
         <!-- COMMENT SECIONT END -->
         <!-- LIST -->
-        <div class="col-sm-4 space-after user-list">
+        <div class="col-sm-4 space-after side-panel">
             @await Html.PartialAsync("_Deadlines")
             @await Html.PartialAsync("_UserList")
         </div>
-        <!-- USER LIST END -->
     </div>
+    <!-- USER LIST END -->
 </div>
