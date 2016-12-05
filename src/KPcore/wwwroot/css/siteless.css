@@ -240,6 +240,12 @@ h1 {
   font-family: 'Lato', sans-serif;
   margin: 3px;
 }
+h2 {
+  margin: 5px;
+  font-weight: 300;
+  font-size: 150%;
+  font-family: 'Lato', sans-serif;
+}
 .btn-small-grey {
   margin: 1px;
   background-color: rgba(0, 0, 0, 0.6);
@@ -258,12 +264,6 @@ h1 {
 }
 .btn-small-grey:visited {
   color: #f6492b !important;
-}
-h2 {
-  margin: 5px;
-  font-weight: 300;
-  font-size: 150%;
-  font-family: 'Lato', sans-serif;
 }
 .remove-space {
   padding: 0;
