@@ -9,37 +9,8 @@ div[class*=col]{
     border: 2px solid green;
 }*/
 
-//Colors
-@default-bg-color: #181818;
-@color-table-darkrow: #303030;
-@color-table-lightrow: #404040;
-@color-light-grey: #cccccc;
-@color-darker-grey: #999999;
-@color-white: #ffffff;
-@color-white-alpha09: rgba(255, 255, 255, .9);
-@color-molten-core-light: rgb(255, 190, 20);
-@color-molten-core-alpha: rgba(246, 73, 43, .1);
-@color-molten-core-light-alpha: rgba(255, 190, 20, .5);
-@color-molten-core: rgba(246, 73, 43, 1);
-@transparent: rgba(0, 0, 0, 0);
-@transparent-white: rgba(255, 255, 255, 0.2);
-@transparent-whiter: rgba(255, 255, 255, 0.05);
-@half-transparent: rgba(0, 0, 0, 0.6);
-@core-2300: rgb(252, 154, 7);
-
-//Small button
-@sm-btn-padding: 3px;
-@sm-btn-margin: 1px;
-@sm-btn-background: @half-transparent;
-@sm-btn-font-size: 75%;
-
-.sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white) {
-    border: @arguments;
-    border-radius: 5px;
-}
-
-@sm-btn-hover-color: white;
-@sm-btn-hover-bg: @transparent-white;
+@import "mixins";
+@import "media";
 
 //Border
 .border-transparent {
@@ -50,27 +21,10 @@ div[class*=col]{
     box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
 }
 
-//Gradients
-@color-molten-core-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-alpha, @transparent);
-@color-molten-core-light-alpha-gradient: linear-gradient(to right, @transparent, @color-molten-core-light-alpha, @transparent);
-@color-molten-core-gradient: linear-gradient(to right, @transparent, @color-molten-core, @transparent);
-@comment-line-gradient: linear-gradient(to right, @color-white-alpha09, @transparent, @transparent);
-@default-gradient: linear-gradient(to right, @transparent, black, @transparent);
-
-//Font settings
-@bold-font-weight: 800;
-@thin-font-weight: 300;
-@h1-font-size: 200%;
-@h2-font-size: 150%;
-@h1-small: 150%;
-@h2-small: 120%;
-@btn-padding: 5px;
-
-//Spacing rules
-@space-after: 18px;
-@space-after-767: 5px;
-@negative-margin: -15px;
-@space-before: 18px;
+.sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white) {
+    border: @arguments;
+    border-radius: 5px;
+}
 
 .shadow {
     box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
@@ -159,31 +113,6 @@ div[class*=col]{
     color: @color-molten-core !important;
 }
 
-@media screen and (min-width: 767px) {
-
-    .user-list {
-        padding-right: 0;
-    }
-
-    .small-screen-visible {
-        display: none;
-    }
-}
-
-
-@media screen and (max-width: 767px) {
-    .comment-section {
-        margin: 0 15px 15px 15px;
-    }
-
-    .table-custom {
-        width: 50%;
-    }
-
-    .topic-description {
-        text-align: center;
-    }
-}
 
 .topic-description-header {
     text-align: right;
@@ -668,40 +597,6 @@ h2 {
     font-size: 10px;
 }
 
-
-
-/* Hide/rearrange for smaller screens */
-
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
-
-    .logo {
-        height: 100%;
-    }
-
-    h1 {
-        font-size: @h1-small;
-    }
-
-    h2 {
-        font-size: @h2-small;
-    }
-
-    .btn {
-        padding: 3px;
-        margin: 5px;
-    }
-
-    .small-screen-invisible {
-        display: none;
-    }
-}
-
-
-
 // TABLE
 .table-wrapper-custom {
     display: inline-table;
@@ -737,24 +632,11 @@ h2 {
     text-align: center;
 }
 
-@media screen and (max-width: 580px) {
-    .row {
-        padding: 3px 0;
-        display: block;
-    }
-}
 
 .cell-custom {
     padding: 6px 12px;
     display: table-cell;
     border: 1px solid rgba(0,0,0,0.5);
-}
-
-@media screen and (max-width: 767px) {
-    .cell-custom {
-        font-size: 75%;
-        padding: 2px 5px;
-    }
 }
 
 .tooltip-cst {
