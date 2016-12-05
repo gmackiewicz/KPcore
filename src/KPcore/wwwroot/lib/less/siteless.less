@@ -72,7 +72,7 @@ div[class*=col]{
 @negative-margin: -15px;
 @space-before: 18px;
 
-.shadow{
+.shadow {
     box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
 }
 
@@ -87,48 +87,56 @@ div[class*=col]{
         margin-right: 15px;
     }
 }
-.inline{
-    display:inline;
+
+.inline {
+    display: inline;
 }
 
-.text-area-input{
-    max-width:280px;
-    text-align:left;
+.text-area-input {
+    max-width: 280px;
+    text-align: left;
 }
+
 #group-name-input, .comment-input, .black-input {
     color: whitesmoke;
     background: black;
-    border-top-left-radius:0px;
-    border-top-right-radius:0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
     .shadow;
 }
-.width100{
-    width:100% !important;
+
+.width100 {
+    width: 100% !important;
 }
-.deadline-list{
-    li{
-        a{
-            display:inline-block;
+
+.deadline-list {
+    li {
+        a {
+            display: inline-block;
         }
-        div{
-            position:relative;
+
+        div {
+            position: relative;
         }
-        div div{
-            display:inline-flex;
+
+        div div {
+            display: inline-flex;
             position: absolute;
-            top:0;
-            right:0;
+            top: 0;
+            right: 0;
         }
     }
 }
-.custom-lbl{
-    text-align:center !important;
+
+.custom-lbl {
+    text-align: center !important;
     width: 280px;
     background: @color-molten-core;
-    margin-bottom:0px;
+    margin-bottom: 0px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
 .group-name-input, #group-name-input {
     input {
         #group-name-input;
@@ -448,6 +456,7 @@ h2 {
 .description {
     margin: 20px 0 20px 0;
     box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
+
     div > h1 {
         margin-right: 10px;
     }
@@ -504,8 +513,9 @@ h2 {
     @media screen and (max-width: 767px) {
         position: absolute;
         right: 0;
-        &.main{
-            top:0;
+
+        &.main {
+            top: 0;
         }
     }
 }
@@ -585,18 +595,21 @@ h2 {
 
 .group-list-sm {
     .group-list;
+
     & li {
         font-size: 15px;
     }
 }
-.user-list{
-    li{
+
+.user-list {
+    li {
         position: relative;
     }
-    .remove-user{
+
+    .remove-user {
         position: absolute;
-        top:0;
-        right:0;
+        top: 0;
+        right: 0;
     }
 }
 
@@ -619,16 +632,18 @@ h2 {
     background-image: @color-molten-core-gradient;
 }
 
-.hr-narrow-black{
+.hr-narrow-black {
     .hr-narrow;
-    margin:5px 2px 2px 2px;
+    margin: 5px 2px 2px 2px;
     background: @default-gradient;
 }
-.hr-black{
+
+.hr-black {
     margin: 5px 2px 2px 2px;
     background: @default-gradient;
     height: 4px;
 }
+
 .text-small {
     font-size: 10px;
 }
@@ -696,10 +711,10 @@ h2 {
 
 .row-custom.header-custom {
     font-weight: @bold-font-weight;
-    font-size:110%;
+    font-size: 110%;
     color: rgba(255,255,255,0.9);
     background: @color-molten-core;
-    text-align:center;
+    text-align: center;
 }
 
 @media screen and (max-width: 580px) {
