@@ -3,13 +3,15 @@
     ViewData["Title"] = "Panel admina";
 }
 
-<h2>@ViewData["Title"].</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
-<hr />
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
 <div class="text-center container-fluid">
     <h2>Przedmioty:</h2>
     <div class="row table-responsive table-wrapper-custom">
-        <table class="table-custom">
+        <div class="table-custom">
             <div class="row-custom header-custom">
                 <div class="cell-custom">Nazwa przedmiotu</div>
                 <div class="cell-custom">Opis</div>
@@ -23,7 +25,7 @@
                     <div class="cell-custom">@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })/@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</div>
                 </div>
             }
-        </table>
+        </div>
     </div>
     <div class="row space-before">
         <a asp-controller="Admin" asp-action="Subject" class="btn btn-grey">Dodaj nowy</a>

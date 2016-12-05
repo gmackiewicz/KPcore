@@ -9,29 +9,28 @@
     <hr />
 </div>
 <form asp-action="AddDeadline">
-    <div class="form-horizontal text-center">
+    <div class="form-horizontal custom-form">
         <h4>Grupa: @Model.Group.Name</h4>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         @Html.TextBoxFor(m => m.GroupId, new { type = "hidden" })
         @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
 
         <span asp-validation-for="DeadlineDate" class="text-danger"></span>
-        <div class="form-group text-center">
-            <label asp-for="DeadlineDate" class="control-label custom-lbl"></label>
-            <div class="col-md-12">
-                <input asp-for="DeadlineDate" type="datetime-local" class="form-control text-center black-input inline" />
+        <div class="form-group">
+            <label asp-for="DeadlineDate" class="control-label"></label>
+            <div>
+                <input asp-for="DeadlineDate" type="datetime-local" class="form-control text-center " />
             </div>
-
         </div>
-        <div class="form-group text-center">
-            <label asp-for="Comment" class="control-label custom-lbl"></label>
-            <div class="col-md-12">
-                <textarea asp-for="Comment" rows="5" class="form-control text-area-input black-input inline">
+        <span asp-validation-for="Comment" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Comment" class="control-label"></label>
+            <div>
+                <textarea asp-for="Comment" rows="5" class="form-control text-area-input ">
                 </textarea>
-                <span asp-validation-for="Comment" class="text-danger" />
             </div>
         </div>
-        <div class="form-group text-center">
+        <div class="form-group">
             <div class="text-center">
                 <input type="submit" value="Zatwierdź" class="btn btn-success" />
                 @Html.ActionLink("Anuluj", "Details", "Topic", new { id = Model.TopicId }, new { @class = "btn btn-grey" })

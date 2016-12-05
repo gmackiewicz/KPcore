@@ -12,7 +12,7 @@
             foreach (var d in Model.Deadlines)
             {
                 <li>
-                    <div class="list-item-info">
+                    <div class="list-item-info tooltip-cst">
                         <a href="#">
                             @d.GetDateAndTime - ocena: @if (d.Mark == null)
                             {
@@ -23,7 +23,7 @@
                                 @d.Mark
                             }
                             <br />
-                            @d.Comment
+
                         </a>
                         <div>
                             @if (teacher)
@@ -32,19 +32,32 @@
                             }
 
                         </div>
-
+                        <span class="tooltiptext">
+                            Komentarz:
+                            @{
+                                if (d.Comment !=null && d.Comment.Length > 0)
+                                {
+                                    @d.Comment
+                                }
+                                else
+                                {
+                                    @:(Brak komentarza)
+                                }
+                            }
+                        </span>
                         <hr class="hr-narrow" />
                     </div>
                 </li>
-            }
-        }
-        else
-        {
-            <div class="list-item-info">
-                Brak terminów do wyświetlenia.
-                <hr class="hr-narrow" />
-            </div>
-        }
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="list-item-info">
+                                        Brak terminów do wyświetlenia.
+                                        <hr class="hr-narrow" />
+                                    </div>
+                                }
     </ul>
+
 </div>
 

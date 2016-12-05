@@ -553,3 +553,68 @@ h2 {
     padding: 2px 5px;
   }
 }
+.tooltip-cst {
+  position: relative;
+}
+.tooltip-cst .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 3px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.tooltip-cst .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+.tooltip-cst:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+.custom-form {
+  text-align: center;
+}
+.custom-form div,
+.custom-form div div,
+.custom-form label {
+  text-align: center;
+}
+.custom-form textarea {
+  max-width: 280px;
+  text-align: left;
+}
+.custom-form input:not([type="submit"]),
+.custom-form textarea,
+.custom-form select {
+  color: whitesmoke;
+  background: black;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
+  display: inline;
+  text-align: center;
+  border-top-color: black;
+}
+.custom-form label {
+  text-align: center !important;
+  width: 280px;
+  background: #f6492b;
+  margin-bottom: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}

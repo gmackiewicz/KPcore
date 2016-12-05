@@ -11,7 +11,7 @@
     
     <div class="row text-center">
         <div class="text-center table-wrapper-custom">
-            <table class="table-custom">
+            <div class="table-custom">
                 <div class="row-custom header-custom">
                     <div class="cell-custom">Nazwa</div>
                     <div class="cell-custom">Opis</div>
@@ -45,7 +45,7 @@
                         <div class="cell-custom">@Html.ActionLink("Usuń", "DeleteTopic", new { id = t.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</div>
                     </div>
                 }
-            </table>
+            </div>
         </div>
     </div>
     <div class="row text-center space-before">

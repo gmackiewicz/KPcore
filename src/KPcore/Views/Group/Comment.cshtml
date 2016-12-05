@@ -4,8 +4,8 @@
     <h2>@ViewData["Title"].</h2>
     <hr />
 </div>
-<div class="container-fluid">
-    <form asp-action="Comment">
+<form asp-action="Comment">
+    <div class="container-fluid custom-form">
         <h4>Grupa: @Model.Group.Name</h4>
         <hr class="hr-narrow" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -13,11 +13,11 @@
         @Html.TextBoxFor(m => m.CommentId, new { type = "hidden" })
         @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
 
-        <div class="form-group text-center">
-            <div class="col-sm-8 col-sm-offset-2">
-                <label asp-for="Content" class="custom-lbl space-before width100"></label>
-                <textarea asp-for="Content" rows="5" id="comment" class="form-control comment-input" placeholder="Tutaj wpisz treść komentarza"></textarea>
-                <span asp-validation-for="Content" class="text-danger" />
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Content" class="space-before"></label>
+            <div>
+                <textarea asp-for="Content" rows="5" id="comment" class="form-control" placeholder="Tutaj wpisz treść komentarza"></textarea>
             </div>
         </div>
 
@@ -27,8 +27,8 @@
                 @Html.ActionLink("Wróć", "Details", new { id = Model.GroupId }, new { @class = "btn btn-grey" })
             </div>
         </div>
-    </form>
-</div>
+    </div>
+</form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

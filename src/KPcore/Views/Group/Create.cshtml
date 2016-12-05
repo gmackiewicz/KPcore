@@ -9,24 +9,18 @@
     <p class="text-success">@ViewData["StatusMessage"]</p>
     <hr />
 </div>
-<div>
-    <form asp-action="Create">
-        <div class="form-horizontal">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row text-center form-group">
-                <label class="control-label custom-lbl">Nazwa:</label>
-                <div class="text-center  group-name-input">
-                    <input asp-for="Name" class="form-control inblock text-center" placeholder="Nazwa grupy" />
-                    <span asp-validation-for="Name" class="text-danger" />
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-sm-6 col-sm-offset-3 text-center">
-                    <input type="submit" value="Stwórz" class="btn btn-success" />
-                    <a asp-action="Index" class="btn btn-danger">Anuluj</a>
-                </div>
+<form asp-action="Create">
+    <div class="form-horizontal custom-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="form-group">
+            <label class="control-label">Nazwa:</label>
+            <div>
+                <input asp-for="Name" class="form-control" placeholder="Nazwa grupy" />
             </div>
         </div>
-    </form>
-</div>
-
+            <input type="submit" value="Stwórz" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-danger">Anuluj</a>
+    </div>
+</form>
