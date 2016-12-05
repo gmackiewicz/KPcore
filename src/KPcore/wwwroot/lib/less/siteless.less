@@ -220,6 +220,7 @@ a {
 }
 
 .inblock {
+    -ms-word-wrap: break-word;
     word-wrap: break-word;
     display: inline;
 }
@@ -399,6 +400,7 @@ h2 {
 }
 
 .group-title {
+    -ms-word-wrap: break-word;
     word-wrap: break-word;
 }
 
@@ -483,9 +485,11 @@ h2 {
     padding-top: 10px;
     padding-bottom: 10px;
     background: black;
+    -ms-word-wrap: break-word;
     word-wrap: break-word;
 
     * {
+        -ms-word-wrap: break-word;
         word-wrap: break-word;
     }
 
@@ -538,11 +542,17 @@ h2 {
     opacity: 1;
 
     .showthis {
+        -moz-transition: opacity .5s ease-in-out;
+        -o-transition: opacity .5s ease-in-out;
+        -webkit-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
         opacity: 0;
     }
 
     .hidethis {
+        -moz-transition: opacity .5s ease-in-out;
+        -o-transition: opacity .5s ease-in-out;
+        -webkit-transition: opacity .5s ease-in-out;
         transition: opacity .5s ease-in-out;
         opacity: 1;
     }
@@ -577,6 +587,7 @@ h2 {
 }
 
 .list-item-info {
+    -ms-word-wrap: break-word;
     word-wrap: break-word;
     padding: 5px 0 5px 0;
     font-size: 15px;
@@ -591,7 +602,13 @@ h2 {
             }
         }
 
+        -moz-animation: rgb 0.5s;
+        -o-animation: rgb 0.5s;
+        -webkit-animation: rgb 0.5s;
         animation: rgb 0.5s;
+        -moz-animation-fill-mode: forwards;
+        -o-animation-fill-mode: forwards;
+        -webkit-animation-fill-mode: forwards;
         animation-fill-mode: forwards;
     }
 }
@@ -758,6 +775,9 @@ h2 {
     left: 50%;
     margin-left: -60px;
     opacity: 0;
+    -moz-transition: opacity 0.5s;
+    -o-transition: opacity 0.5s;
+    -webkit-transition: opacity 0.5s;
     transition: opacity 0.5s;
 }
 
@@ -774,24 +794,28 @@ h2 {
 
 .tooltip-cst:hover .tooltiptext {
     visibility: visible;
-    opacity:1;
+    opacity: 1;
 }
 
-.custom-form{
-    text-align:center;
-    div, div div, label{
-        text-align:center;
+.custom-form {
+    text-align: center;
+
+    div, div div, label {
+        text-align: center;
     }
-    textarea{
+
+    textarea {
         .text-area-input;
     }
+
     input:not([type="submit"]), textarea, select {
         .black-input;
         .inline;
-        text-align:center;
-        border-top-color:black;
+        text-align: center;
+        border-top-color: black;
     }
-    label{
+
+    label {
         .custom-lbl;
     }
 }

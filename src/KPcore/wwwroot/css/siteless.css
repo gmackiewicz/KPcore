@@ -141,6 +141,7 @@ a:active {
   color: #ffbe14;
 }
 .inblock {
+  -ms-word-wrap: break-word;
   word-wrap: break-word;
   display: inline;
 }
@@ -276,6 +277,7 @@ h2 {
   margin-bottom: -15px;
 }
 .group-title {
+  -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
 .space-after {
@@ -344,9 +346,11 @@ h2 {
   padding-top: 10px;
   padding-bottom: 10px;
   background: black;
+  -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
 .single-comment * {
+  -ms-word-wrap: break-word;
   word-wrap: break-word;
 }
 .single-comment hr {
@@ -389,10 +393,16 @@ h2 {
   opacity: 1;
 }
 .fade .showthis {
+  -moz-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
   opacity: 0;
 }
 .fade .hidethis {
+  -moz-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
 }
@@ -415,13 +425,20 @@ h2 {
   color: #ffffff;
 }
 .list-item-info {
+  -ms-word-wrap: break-word;
   word-wrap: break-word;
   padding: 5px 0 5px 0;
   font-size: 15px;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
 }
 .list-item-info:hover {
+  -moz-animation: rgb 0.5s;
+  -o-animation: rgb 0.5s;
+  -webkit-animation: rgb 0.5s;
   animation: rgb 0.5s;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 @keyframes rgb {
@@ -570,6 +587,9 @@ h2 {
   left: 50%;
   margin-left: -60px;
   opacity: 0;
+  -moz-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
   transition: opacity 0.5s;
 }
 .tooltip-cst .tooltiptext::after {
