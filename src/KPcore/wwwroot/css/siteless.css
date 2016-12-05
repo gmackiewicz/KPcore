@@ -7,6 +7,20 @@ div[class*=col]{
     background-color: rgba(255,255,255,0.05);
     border: 2px solid green;
 }*/
+.body-content {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
+}
+.body-content a {
+  color: white;
+}
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background: #151515;
+  color: #ffffff;
+  font-family: 'Lato', sans-serif;
+}
 @media screen and (min-width: 767px) {
   .user-list {
     padding-right: 0;
@@ -174,13 +188,6 @@ a:active {
   -ms-word-wrap: break-word;
   word-wrap: break-word;
   display: inline;
-}
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-  background: #181818;
-  color: #ffffff;
-  font-family: 'Lato', sans-serif;
 }
 .bg-transparent {
   background: rgba(0, 0, 0, 0);
