@@ -10,6 +10,13 @@
     <div class="row space-after ">
         <div class="col-sm-12 group-top border-transparent space-before">
             <div class="col-sm-8 col-sm-offset-2 text-center group-title">
+                <div class="text-right group-control-buttons main">
+                    @if (leader)
+                    {
+                        <a id="btn-edit" href="#" class="btn-small-grey">Edytuj</a>
+                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę grupę?');" })
+                    }
+                </div>
                 <div class="col-sm-8 col-sm-offset-2">
                     <h1 id="group-name-display">
                         @Html.DisplayFor(model => model.Name)
@@ -18,31 +25,25 @@
                     {
                         <form asp-action="EditGroupName">
                             <div id="group-name-edit" class="form-group space-before hidden">
-                                @Html.TextBoxFor(model => model.Name, new { @id = "group-name-input", @class = "form-control inblock" })
-                                <input id="grp-name-submit" type="submit" value="Zmień" class="btn btn-grey inblock" />
+                                @Html.TextBoxFor(model => model.Name, new {@id = "group-name-input", @class = "form-control inblock"})
+                                <input id="grp-name-submit" type="submit" value="Zmień" class="btn btn-grey inblock"/>
                                 <a id="btn-cancel" href="#" class="btn btn-danger inblock">Anuluj</a>
                             </div>
                             <span id="group-name-validation-error" class="hidden color-molten-core">Nieprawidłowa nazwa grupy.</span>
-                            @Html.TextBoxFor(model => model.Id, new { type = "hidden" })
+                            @Html.TextBoxFor(model => model.Id, new {type = "hidden"})
                         </form>
                     }
 
                 </div>
-                <div class="col-sm-2 text-right group-control-buttons main">
-                    @if (leader)
-                    {
-                        <a id="btn-edit" href="#" class="btn-small-grey">Edytuj</a>
-                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę grupę?');" })
-                    }
-                </div>
+
 
                 <div class="col-sm-12">
-                    <hr class="hr-black" />
+                    <hr class="hr-black"/>
                     @{
                         if (Model.Topic != null)
                         {
                             <a href="#">
-                                <h1>@Html.ActionLink(@Model.Topic.Title, "Details", "Topic", new { id = @Model.Topic.Id })</h1>
+                                <h1>@Html.ActionLink(@Model.Topic.Title, "Details", "Topic", new {id = @Model.Topic.Id})</h1>
                             </a>
                             <h2>@Model.Topic.Subject.Name</h2>
                         }

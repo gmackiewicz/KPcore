@@ -415,9 +415,16 @@ h3 {
   background: black;
   text-align: center;
 }
+.group-control-buttons {
+  position: absolute;
+  right: 0;
+}
+.group-control-buttons.main a {
+  display: block;
+  text-align: center;
+}
 @media screen and (max-width: 767px) {
   .group-control-buttons {
-    position: absolute;
     right: 0;
   }
   .group-control-buttons.main {

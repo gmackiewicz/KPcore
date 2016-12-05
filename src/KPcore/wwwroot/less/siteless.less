@@ -11,7 +11,7 @@ div[class*=col]{
 
 @default-bg-color: #151515;
 
-.body-content{
+.body-content {
     border: 1px solid rgba(255,255,255,0.1);
     .shadow;
 }
@@ -36,12 +36,14 @@ body {
     .shadow;
 }
 
-.side-panel{
-    padding-right:0;
-    @media screen and (max-width: 767px){
+.side-panel {
+    padding-right: 0;
+
+    @media screen and (max-width: 767px) {
         padding-right: 15px;
     }
 }
+
 .sm-btn-border(@size: 1px; @type: solid; @color: @transparent-white) {
     border: @arguments;
     border-radius: 5px;
@@ -258,8 +260,8 @@ select {
     text-align: center;
 }
 
-.closest-deadline-title{
-    background-image:@color-molten-core-gradient;
+.closest-deadline-title {
+    background-image: @color-molten-core-gradient;
 }
 
 .login-button {
@@ -309,7 +311,7 @@ h2 {
     .font-lato;
 }
 
-h3{
+h3 {
     background-image: @color-molten-core-gradient;
 }
 
@@ -467,8 +469,17 @@ h3{
 }
 
 .group-control-buttons {
+    position: absolute;
+    right: 0;
+
+    &.main {
+        a {
+            display: block;
+            text-align: center;
+        }
+    }
+
     @media screen and (max-width: 767px) {
-        position: absolute;
         right: 0;
 
         &.main {
@@ -572,32 +583,34 @@ h3{
     }
 }
 
-.user-list-main{
-    h3{
-        position:relative;
+.user-list-main {
+    h3 {
+        position: relative;
     }
 
-    i{
-        position:absolute;
+    i {
+        position: absolute;
         right: 5px;
         top: 0;
-        bottom:0;
+        bottom: 0;
     }
 }
-.deadline-list-main{
-    h3{
-        position:relative;
+
+.deadline-list-main {
+    h3 {
+        position: relative;
     }
 
-    i{
-        position:absolute;
+    i {
+        position: absolute;
         right: 5px;
         top: 0;
-        bottom:0;
+        bottom: 0;
     }
 }
+
 .user-list {
-    
+
 
     li {
         position: relative;
