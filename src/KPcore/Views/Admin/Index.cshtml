@@ -22,7 +22,7 @@
                 <div class="row-custom">
                     <div class="cell-custom">@s.Name</div>
                     <div class="cell-custom">@s.Description</div>
-                    <div class="cell-custom">@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })/@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</div>
+                    <div class="cell-custom">@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })|@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</div>
                 </div>
             }
         </div>
