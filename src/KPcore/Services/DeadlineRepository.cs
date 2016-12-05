@@ -31,7 +31,7 @@ namespace KPcore.Services
 
         public Deadline GetCurrentDeadline(int groupId)
         {
-            return _dbContext.Deadlines.First(d => d.DeadlineDate > DateTime.Now);
+            return _dbContext.Deadlines.FirstOrDefault(d => d.DeadlineDate > DateTime.Now);
         }
 
         public Deadline GetDeadlineById(int id)

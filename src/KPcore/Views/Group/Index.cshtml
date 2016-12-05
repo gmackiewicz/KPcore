@@ -2,33 +2,32 @@
 @{
     ViewData["Title"] = "Twoje grupy";
 }
-
-
-<div class=row>
-    <div class="col-xs-6 col-xs-offset-3 text-center ">
-        <h2>@ViewData["Title"]:</h2>
-        <hr class="molten-core" />
-    </div>
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
 </div>
 <div class="row">
     <ul class="list-unstyled  text-center">
-        <p class="text-success">@ViewData["StatusMessage"]</p>
-        @foreach (var g in Model.StudentGroups)
-        {
-            <li>
-                <div class="group-list-sm col-sm-6 col-sm-offset-3 list-item-info">
+        @{
+            foreach (var g in Model.StudentGroups)
+            {
+                <li>
+                    <div class="group-list-sm col-sm-6 col-sm-offset-3 list-item-info">
 
-                    @Html.ActionLink(g.Group.Name, "Details", new { id = g.GroupId })
+                        @Html.ActionLink(g.Group.Name, "Details", new { id = g.GroupId })
 
-                    <hr class="hr-narrow" />
-                </div>
-            </li>
+                        <hr class="hr-narrow" />
+                    </div>
+                </li>
 
+            }
         }
-        <li>
-
-        </li>
     </ul>
+    @if (!Model.StudentGroups.Any())
+    {
+        <h2 class="text-center">Nie dopisałeś się do żadnej grupy.</h2>
+    }
     <div class="col-sm-6 col-sm-offset-3 text-center space-before">
         @Html.ActionLink("Stwórz nową grupę", "Create", "Group", null, new { @class = "btn btn-grey" })
     </div>

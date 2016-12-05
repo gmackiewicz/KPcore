@@ -7,18 +7,10 @@ div[class*=col]{
     background-color: rgba(255,255,255,0.05);
     border: 2px solid green;
 }*/
-.body-content {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
-}
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-  background: #151515;
-  color: #ffffff;
-  font-family: 'Lato', sans-serif;
-}
 @media screen and (min-width: 767px) {
+  .user-list {
+    padding-right: 0;
+  }
   .small-screen-visible {
     display: none;
   }
@@ -70,14 +62,6 @@ body {
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
-}
-.side-panel {
-  padding-right: 0;
-}
-@media screen and (max-width: 767px) {
-  .side-panel {
-    padding-right: 15px;
-  }
 }
 .shadow {
   box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
@@ -191,6 +175,13 @@ a:active {
   word-wrap: break-word;
   display: inline;
 }
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background: #181818;
+  color: #ffffff;
+  font-family: 'Lato', sans-serif;
+}
 .bg-transparent {
   background: rgba(0, 0, 0, 0);
 }
@@ -248,9 +239,6 @@ select {
   right: 0;
   text-align: center;
 }
-.closest-deadline-title {
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
-}
 .login-button {
   margin: 10px 0 10px 0;
 }
@@ -288,9 +276,6 @@ h2 {
   font-weight: 300;
   font-size: 150%;
   font-family: 'Lato', sans-serif;
-}
-h3 {
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
 }
 .btn-small-grey {
   margin: 1px;
@@ -415,16 +400,9 @@ h3 {
   background: black;
   text-align: center;
 }
-.group-control-buttons {
-  position: absolute;
-  right: 0;
-}
-.group-control-buttons.main a {
-  display: block;
-  text-align: center;
-}
 @media screen and (max-width: 767px) {
   .group-control-buttons {
+    position: absolute;
     right: 0;
   }
   .group-control-buttons.main {
@@ -514,24 +492,6 @@ h3 {
 }
 .group-list-sm li {
   font-size: 15px;
-}
-.user-list-main h3 {
-  position: relative;
-}
-.user-list-main i {
-  position: absolute;
-  right: 5px;
-  top: 0;
-  bottom: 0;
-}
-.deadline-list-main h3 {
-  position: relative;
-}
-.deadline-list-main i {
-  position: absolute;
-  right: 5px;
-  top: 0;
-  bottom: 0;
 }
 .user-list li {
   position: relative;

@@ -1,10 +1,10 @@
-﻿@model KPcore.ViewModels.GroupViewModels.GroupDetailsViewModel
+﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
 
 <div class="row">
     <!-- Add comment button -->
     <div class="col-sm-4 text-center col-sm-offset-2 add-comment ">
         <span class="text-center ">
-            @Html.ActionLink("DODAJ KOMENTARZ", "Comment", "Group", new { groupid = Model.Id, }, new { @class = "btn btn-grey" })
+            @Html.ActionLink("DODAJ KOMENTARZ", "Entry", "Topic", new { topicid = Model.Id, }, new { @class = "btn btn-grey" })
         </span>
     </div>
     <!-- Add comment button end-->
@@ -12,28 +12,28 @@
     <div class="col-md-4 text-center small-screen-invisible">
         <h2 class="inblock">KOMENTARZE</h2>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-sm-2"></div>
     <!-- Comments title end-->
     <!-- Coherence -->
 </div>
-<hr class="hr-narrow-black"/>
 
+<hr class="hr-narrow-black" />
 <!-- COMMENT START -->
-@if (Model.GroupComments.Any())
+@if (Model.TopicComments.Any())
 {
-    foreach (var c in Model.GroupComments)
+    foreach (var c in Model.TopicComments)
     {
         <div class="row">
-            <div class="col-sm-offset-1 col-sm-10 single-comment">
+            <div class="col-sm-12 single-comment">
                 <div class="row">
                     <div class="col-sm-8 bold inblock">
                         @c.Author.FirstName @c.Author.LastName
                     </div>
 
-                    <div class="col-sm-4 text-right group-control-buttons inblock">
+                    <div class="col-sm-4 text-right inblock">
                         @if (Model.CurrentUser.Id == c.AuthorId)
                         {
-                            @Html.ActionLink("Edytuj", "Comment", new { groupid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
+                            @Html.ActionLink("Edytuj", "Entry", new { topicid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })
                             @Html.ActionLink("Usuń", "DeleteComment", new { id = c.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten komentarz?');" })
                         }
                     </div>
@@ -64,7 +64,9 @@
 else
 {
     <div class="col-sm-12 text-center">
-        <h2>Na chwilę obecną brak komentarzy.</h2>
+        <h2>
+            Na chwilę obecną brak komentarzy.
+        </h2>
     </div>
 }
 <!-- COMMENT END -->

@@ -1,32 +1,34 @@
 ﻿@model SubjectViewModel
 
-<h2>@ViewData["Title"]</h2>
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
 
 <form asp-action="Subject">
-    <div class="form-horizontal">
-        <hr />
+    <div class="form-horizontal custom-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         @Html.TextBoxFor(m => m.SubjectId, new { type = "hidden" })
 
+        <span asp-validation-for="Name" class="text-danger"></span>
         <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger" />
+            <label asp-for="Name" class="control-label"></label>
+            <div>
+                <input asp-for="Name" class="form-control" placeholder="Nazwa przedmiotu"/>
             </div>
         </div>
+        <span asp-validation-for="Description" class="text-danger"></span>
         <div class="form-group">
-            <label asp-for="Description" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger" />
+            <label asp-for="Description" class="control-label"></label>
+            <div>
+                <textarea asp-for="Description" rows="5" class="form-control" placeholder="Krótki opis przedmiotu" >
+                </textarea>
             </div>
         </div>
         <div class="form-group ">
-            <div class="col-sm-8 col-sm-offset-1 text-right">
-                <input type="submit" value="Zatwierdź" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-grey">Wróć</a>
-            </div>
+            <input type="submit" value="Zatwierdź" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-grey">Anuluj</a>
         </div>
     </div>
 </form>

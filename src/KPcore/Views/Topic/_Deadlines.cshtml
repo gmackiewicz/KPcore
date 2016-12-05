@@ -1,0 +1,72 @@
+﻿@model KPcore.ViewModels.TopicViewModels.TopicDetailsViewModel
+
+@{
+    var teacher = (Model.Teacher.Id == Model.CurrentUser.Id);
+}
+<div class="text-center group-list-sm border-transparent deadline-list-main">
+    <h3>Terminy:<i class="fa fa-minus-square-o"></i></h3>
+    <hr class="molten-core" />
+    <ul class="list-unstyled deadline-list">
+        @{
+            if (Model.Deadlines != null && Model.Deadlines.Count() != 0)
+            {
+                foreach (var d in Model.Deadlines)
+                {
+                    <li>
+                        <div class="list-item-info tooltip-cst">
+                            <a href="#">
+                                @d.GetDateAndTime | ocena:
+                                @{
+                                    if (d.Mark == null)
+                                    {
+                                        @:-
+                                    }
+                                    else
+                                    {
+                                        @d.Mark
+                                    }
+                                }
+                                <br />
+
+                            </a>
+                            <div>
+                                @{
+                                    if (teacher)
+                                    {
+                                        @Html.ActionLink("oceń", "MarkDeadline", "Group", new { id = d.Id }, new { @class = "btn-small-grey" })
+                                    }
+                                }
+                            </div>
+                            <span class="tooltiptext">
+                                Komentarz:
+                                @{
+                                    if (d.Comment != null && d.Comment.Length > 0)
+                                    {
+                                        @d.Comment
+                                    }
+                                    else
+                                    {
+                                        @:(Brak komentarza)
+                                    }
+                                }
+                            </span>
+                            <hr class="hr-narrow" />
+                        </div>
+                    </li>
+                }
+            }
+            else
+            {
+                <li>
+                    <div class="list-item-info">
+                        Brak terminów do wyświetlenia. <hr class="hr-narrow" />
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+    @if (Model.Group != null && teacher)
+    {
+        @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey space-after" })
+    }
+</div>

@@ -1,38 +1,38 @@
 ﻿@model TeacherTopicsIndexViewModel
 @{
-    ViewData["Title"] = "Twoje tematy";
+    ViewData["Title"] = "Twoje tematy.";
 }
+<div class="title">
+    <h2>@ViewData["Title"]</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
+<div class="container-fluid">
 
-<h2>@ViewData["Title"].</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
-
-<div>
-    <dl class="dl-horizontal">
-        <dt>Your topic:</dt>
-        <dd>
-            <a asp-controller="Topic" asp-action="Create" class="btn-bracketed">Stwórz nowy temat</a>
-            <hr />
-            <div class="table-responsive">
-                <table class="table table-condensed">
-                    <tr>
-                        <th>Nazwa</th>
-                        <th>Opis</th>
-                        <th>Przedmiot</th>
-                        <th>Data utworzenia</th>
-                        <th>Termin spotkań</th>
-                        <th>Akcje</th>
-                    </tr>
+    <div class="row text-center">
+        <div class="text-center table-wrapper-custom">
+            @if (Model.Topics.Any())
+            {
+                <div class="table-custom">
+                    <div class="row-custom header-custom">
+                        <div class="cell-custom">Nazwa</div>
+                        <div class="cell-custom">Opis</div>
+                        <div class="cell-custom">Przedmiot</div>
+                        <div class="cell-custom">Data utworzenia</div>
+                        <div class="cell-custom">Termin spotkań</div>
+                        <div class="cell-custom" th>Akcje</div>
+                    </div>
 
                     @foreach (var t in Model.Topics)
                     {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(t.Title, "Details", new { id = t.Id })
-                            </td>
-                            <td>@t.Description</td>
-                            <td>@t.Subject.Name</td>
-                            <td>@t.CreationDate</td>
-                            <td>
+                        <div class="row-custom">
+                            <div class="cell-custom">
+                                @Html.ActionLink(t.Title, "Details", new {id = t.Id})
+                            </div>
+                            <div class="cell-custom">@t.Description</div>
+                            <div class="cell-custom">@t.Subject.Name</div>
+                            <div class="cell-custom">@t.CreationDate</div>
+                            <div class="cell-custom">
                                 @if (t.MeetingsDate != null)
                                 {
                                     <span>
@@ -43,13 +43,19 @@
                                 {
                                     <span>nie ustalono</span>
                                 }
-                            </td>
-                            <td>edytuj/ @Html.ActionLink("Usuń", "DeleteTopic", new { topicId = t.Id}, new {@class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');" })</td>
-                        </tr>
+                            </div>
+                            <div class="cell-custom">@Html.ActionLink("Usuń", "DeleteTopic", new {id = t.Id}, new {@class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten temat?');"})</div>
+                        </div>
                     }
-                </table>
-            </div>
-
-        </dd>
-    </dl>
+                </div>
+            }
+            else
+            {
+                <h2 class="text-center">Nie dodałeś żadnych tematów.</h2>
+            }
+        </div>
+    </div>
+    <div class="row text-center space-before">
+        <a asp-controller="Topic" asp-action="Create" class="btn btn-grey space-after">Stwórz nowy temat</a>
+    </div>
 </div>

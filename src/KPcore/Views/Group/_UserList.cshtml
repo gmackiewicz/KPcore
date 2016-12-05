@@ -3,11 +3,10 @@
 @{
     var leader = (Model.GroupLeader.Id == Model.CurrentUser.Id);
 }
-<div class="text-center group-list-sm border-transparent">
-    <h3>Członkowie:</h3>
+<div class="text-center group-list-sm border-transparent user-list-main">
+    <h3>Członkowie: <i class="fa fa-minus-square-o"></i></h3>
     <hr class="molten-core" />
-    <ul class="list-unstyled">
-
+    <ul class="list-unstyled user-list">
         <li>
             <div class="list-item-info">
                 Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
@@ -19,7 +18,7 @@
             <li>
                 <div class="list-item-info">
                     <a href="#">@s.FirstName @s.LastName</a>
-                    <div class="pull-right">
+                    <div class="remove-user">
                         @if (leader)
                         {
                             @Html.ActionLink("usuń", "RemoveMember", new { groupId = Model.Id, memberId = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę osobę?');" })

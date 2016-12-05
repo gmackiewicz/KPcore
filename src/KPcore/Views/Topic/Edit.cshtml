@@ -1,47 +1,49 @@
 ﻿@model EditTopicViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edytuj temat";
 }
-
-<h2>Edytuj temat</h2>
+<div class="title">
+    <h2>@ViewData["Title"]</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
 
 <form asp-action="Edit">
-    <div class="form-horizontal">
-        <hr />
+    <div class="form-horizontal custom-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
         @Html.TextBoxFor(m => m.SubjectId, new { type = "hidden" })
         @Html.TextBoxFor(m => m.TeacherId, new { type = "hidden" })
         @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
 
+        <span asp-validation-for="Title" class="text-danger"></span>
         <div class="form-group">
-            <label asp-for="Title" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger" />
+            <label class="control-label">Nazwa tematu:</label>
+            <div>
+                <input asp-for="Title" class="form-control" placeholder="Nazwa tematu" />
             </div>
         </div>
+
+        <span asp-validation-for="Description" class="text-danger"></span>
         <div class="form-group">
-            <label asp-for="Description" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger" />
+            <label class="control-label">Opis:</label>
+            <div>
+                <textarea asp-for="Description" rows="5" class="form-control"></textarea>
             </div>
         </div>
+
+        <span asp-validation-for="MeetingsDate" class="text-danger"></span>
         <div class="form-group">
-            <label asp-for="MeetingsDate" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
+            <label class="control-label">Data spotkań:</label>
+            <div>
                 <input asp-for="MeetingsDate" type="datetime-local" class="form-control" />
-                <span asp-validation-for="MeetingsDate" class="text-danger" />
             </div>
         </div>
 
         <div class="form-group ">
-            <div class="col-sm-8 col-sm-offset-1 text-right">
-                <input type="submit" value="Zatwierdź" class="btn btn-success" />
-                @Html.ActionLink("Wróć", "Details", new { id = Model.TopicId }, new { @class = "btn btn-grey" })
-            </div>
+            <input type="submit" value="Zatwierdź" class="btn btn-success" />
+            @Html.ActionLink("Wróć", "Details", new { id = Model.TopicId }, new { @class = "btn btn-grey" })
         </div>
     </div>
 </form>

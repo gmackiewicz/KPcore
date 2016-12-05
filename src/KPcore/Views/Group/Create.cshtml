@@ -1,30 +1,26 @@
-@model GroupViewModel
+﻿@model GroupViewModel
 
 @{
     ViewData["Title"] = "Tworzenie grupy";
 }
 
-<h2>@ViewData["Title"]</h2>
-
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
 <form asp-action="Create">
-    <div class="form-horizontal">
-        <hr />
+    <div class="form-horizontal custom-form">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <span asp-validation-for="Name" class="text-danger"></span>
         <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger" />
+            <label class="control-label">Nazwa:</label>
+            <div>
+                <input asp-for="Name" class="form-control" placeholder="Nazwa grupy" />
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+            <input type="submit" value="Stwórz" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-danger">Anuluj</a>
     </div>
 </form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>

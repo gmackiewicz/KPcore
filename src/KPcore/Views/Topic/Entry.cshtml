@@ -1,34 +1,33 @@
 ﻿@model TopicCommentViewModel
 
-<h2>@ViewData["Title"]</h2>
+<div class="title">
+    <h2>@ViewData["Title"]</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
+    <hr />
+</div>
 
-<div class="container-fluid">
-    <form asp-action="Entry">
-        <div class="form-horizontal">
-            <h4>Temat: @Model.Topic.Title</h4>
-            <hr class="hr-narrow" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
-            @Html.TextBoxFor(m => m.CommentId, new { type = "hidden" })
-            @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
+<form asp-action="Entry">
+    <div class="form-horizontal custom-form">
+        <h4>Temat: @Model.Topic.Title</h4>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.TextBoxFor(m => m.TopicId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.CommentId, new { type = "hidden" })
+        @Html.TextBoxFor(m => m.CreationDate, new { type = "hidden" })
 
-            <div class="form-group">
-                <div class="col-sm-8 col-sm-offset-1">
-                    <label asp-for="Content"></label>
-                    <textarea asp-for="Content" rows="7" id="comment" class="form-control"></textarea>
-                    <span asp-validation-for="Content" class="text-danger" />
-                </div>
-            </div>
-
-            <div class="form-group ">
-                <div class="col-sm-8 col-sm-offset-1 text-right">
-                    <input type="submit" value="Zatwierdź" class="btn btn-success" />
-                    @Html.ActionLink("Wróć", "Details", new { id = Model.TopicId }, new { @class = "btn btn-grey" })
-                </div>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <div class="form-group">
+            <label asp-for="Content"></label>
+            <div>
+                <textarea asp-for="Content" rows="7" id="comment" class="form-control"></textarea>
             </div>
         </div>
-    </form>
-</div>
+
+        <div class="form-group ">
+            <input type="submit" value="Zatwierdź" class="btn btn-success" />
+            @Html.ActionLink("Wróć", "Details", new { id = Model.TopicId }, new { @class = "btn btn-grey" })
+        </div>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

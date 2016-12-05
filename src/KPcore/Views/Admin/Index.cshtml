@@ -3,37 +3,31 @@
     ViewData["Title"] = "Panel admina";
 }
 
-<h2>@ViewData["Title"].</h2>
-<p class="text-success">@ViewData["StatusMessage"]</p>
-
-<div>
+<div class="title">
+    <h2>@ViewData["Title"].</h2>
+    <p class="text-success">@ViewData["StatusMessage"]</p>
     <hr />
-    <dl class="dl-horizontal">
-        <dt class="text-center">
-            <h2>Przedmioty:</h2>
-            <a asp-controller="Admin" asp-action="Subject" class="btn btn-grey btn-bracketed">Dodaj nowy</a>
-
-        </dt>
-        <dd>
-            <div class="table-responsive">
-                <table class="table table-condensed">
-                    <tr class="color-molten-core">
-                        <th>Nazwa przedmiotu</th>
-                        <th>Opis</th>
-                        <th>Akcje</th>
-                    </tr>
-
-                    @foreach (var s in Model.Subjects)
-                    {
-                        <tr>
-                            <td>@s.Name</td>
-                            <td>@s.Description</td>
-                            <td>@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })/@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</td>
-                        </tr>
-                    }
-                </table>
+</div>
+<div class="text-center container-fluid">
+    <h2>Przedmioty:</h2>
+    <div class="row table-responsive table-wrapper-custom">
+        <div class="table-custom">
+            <div class="row-custom header-custom">
+                <div class="cell-custom">Nazwa przedmiotu</div>
+                <div class="cell-custom">Opis</div>
+                <div class="cell-custom">Akcje</div>
             </div>
-
-        </dd>
-    </dl>
+            @foreach (var s in Model.Subjects)
+            {
+                <div class="row-custom">
+                    <div class="cell-custom">@s.Name</div>
+                    <div class="cell-custom">@s.Description</div>
+                    <div class="cell-custom">@Html.ActionLink("Edytuj", "Subject", new { id = s.Id }, new { @class = "btn-small-grey" })|@Html.ActionLink("Usuń", "RemoveSubject", new { id = s.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć ten przedmiot?');" })</div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row space-before">
+        <a asp-controller="Admin" asp-action="Subject" class="btn btn-grey">Dodaj nowy</a>
+    </div>
 </div>

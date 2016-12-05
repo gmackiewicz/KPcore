@@ -15,4 +15,14 @@ $(document).ready(function () {
             $("#group-name-validation-error").removeClass("hidden");
         }
     });
+
+    $(".user-list-main > h3").click(function() {
+        $(".user-list").slideToggle("fast");
+        $(".user-list-main > h3 > i").toggleClass("fa-plus-square-o").toggleClass("fa-minus-square-o");
+    });
+
+    $(".deadline-list-main > h3").click(function() {
+        $(".deadline-list").slideToggle("fast");
+        $(".deadline-list-main > h3 > i").toggleClass("fa-plus-square-o").toggleClass("fa-minus-square-o");
+    });
 });
