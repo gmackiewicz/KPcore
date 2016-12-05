@@ -30,7 +30,7 @@
                         @c.Author.FirstName @c.Author.LastName
                     </div>
 
-                    <div class="col-sm-4 text-right inblock">
+                    <div class="col-sm-4 text-right group-control-buttons inblock">
                         @if (Model.CurrentUser.Id == c.AuthorId)
                         {
                             @Html.ActionLink("Edytuj", "Comment", new { groupid = Model.Id, commentid = c.Id }, new { @class = "btn-small-grey" })

@@ -6,7 +6,7 @@
 <div class="text-center group-list-sm border-transparent">
     <h3>Terminy:</h3>
     <hr class="molten-core" />
-    <ul class="list-unstyled">
+    <ul class="list-unstyled deadline-list">
         @if (Model.Deadlines != null && Model.Deadlines.Count() != 0)
         {
             foreach (var d in Model.Deadlines)
@@ -25,7 +25,7 @@
                             <br />
                             @d.Comment
                         </a>
-                        <div class="pull-right">
+                        <div>
                             @if (teacher)
                             {
                                 @Html.ActionLink("oceń", "MarkDeadline", "Group", new { id = d.Id }, new { @class = "btn-small-grey" })

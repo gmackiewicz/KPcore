@@ -46,9 +46,9 @@
             </table>
         </div>
         <div class="form-group text-center">
-            <label asp-for="SelectedTopic" class="control-label"></label>
+            <label asp-for="SelectedTopic" class="control-label custom-lbl space-before"></label>
             <div class="col-sm-12 text-center">
-                <select asp-for="SelectedTopic" asp-items="@Model.TopicsList" class="form-control text-center"></select>
+                <select asp-for="SelectedTopic" asp-items="@Model.TopicsList" class="form-control black-input text-center"></select>
                 <span asp-validation-for="SelectedTopic" class="text-danger" />
             </div>
         </div>

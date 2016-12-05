@@ -72,6 +72,10 @@ div[class*=col]{
 @negative-margin: -15px;
 @space-before: 18px;
 
+.shadow{
+    box-shadow: 0px 10px 26px -9px rgba(0,0,0,0.75);
+}
+
 .hr-narrow-main {
     .hr-narrow;
     background-image: @color-molten-core-light-alpha-gradient;
@@ -83,12 +87,48 @@ div[class*=col]{
         margin-right: 15px;
     }
 }
-
-#group-name-input, .comment-input {
-    color: whitesmoke;
-    background: black;
+.inline{
+    display:inline;
 }
 
+.text-area-input{
+    max-width:280px;
+    text-align:left;
+}
+#group-name-input, .comment-input, .black-input {
+    color: whitesmoke;
+    background: black;
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+    .shadow;
+}
+.width100{
+    width:100% !important;
+}
+.deadline-list{
+    li{
+        a{
+            display:inline-block;
+        }
+        div{
+            position:relative;
+        }
+        div div{
+            display:inline-flex;
+            position: absolute;
+            top:0;
+            right:0;
+        }
+    }
+}
+.custom-lbl{
+    text-align:center !important;
+    width: 280px;
+    background: @color-molten-core;
+    margin-bottom:0px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
 .group-name-input, #group-name-input {
     input {
         #group-name-input;
@@ -462,8 +502,11 @@ h2 {
 
 .group-control-buttons {
     @media screen and (max-width: 767px) {
-        position: fixed;
-        right: 20px;
+        position: absolute;
+        right: 0;
+        &.main{
+            top:0;
+        }
     }
 }
 
@@ -542,9 +585,18 @@ h2 {
 
 .group-list-sm {
     .group-list;
-
     & li {
         font-size: 15px;
+    }
+}
+.user-list{
+    li{
+        position: relative;
+    }
+    .remove-user{
+        position: absolute;
+        top:0;
+        right:0;
     }
 }
 

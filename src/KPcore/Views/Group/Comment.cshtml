@@ -15,8 +15,8 @@
 
         <div class="form-group text-center">
             <div class="col-sm-8 col-sm-offset-2">
-                <label asp-for="Content"></label>
-                <textarea asp-for="Content" rows="5" id="comment" class="form-control comment-input"></textarea>
+                <label asp-for="Content" class="custom-lbl space-before width100"></label>
+                <textarea asp-for="Content" rows="5" id="comment" class="form-control comment-input" placeholder="Tutaj wpisz treść komentarza"></textarea>
                 <span asp-validation-for="Content" class="text-danger" />
             </div>
         </div>

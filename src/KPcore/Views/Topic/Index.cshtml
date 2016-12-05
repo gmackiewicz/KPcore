@@ -8,9 +8,7 @@
     <hr />
 </div>
 <div class="container-fluid">
-    <div class="row text-center">
-        <a asp-controller="Topic" asp-action="Create" class="btn btn-grey space-after">Stwórz nowy temat</a>
-    </div>
+    
     <div class="row text-center">
         <div class="text-center table-wrapper-custom">
             <table class="table-custom">
@@ -24,7 +22,7 @@
                 </div>
 
                 @foreach (var t in Model.Topics)
-            {
+                {
                     <div class="row-custom">
                         <div class="cell-custom">
                             @Html.ActionLink(t.Title, "Details", new { id = t.Id })
@@ -49,5 +47,8 @@
                 }
             </table>
         </div>
+    </div>
+    <div class="row text-center space-before">
+        <a asp-controller="Topic" asp-action="Create" class="btn btn-grey space-after">Stwórz nowy temat</a>
     </div>
 </div>

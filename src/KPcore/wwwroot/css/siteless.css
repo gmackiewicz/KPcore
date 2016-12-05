@@ -14,6 +14,9 @@ div[class*=col]{
   background-color: rgba(255, 255, 255, 0.05);
   box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
 }
+.shadow {
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
+}
 .hr-narrow-main {
   margin: 0px;
   height: 2px;
@@ -26,10 +29,44 @@ div[class*=col]{
     margin-right: 15px;
   }
 }
+.inline {
+  display: inline;
+}
+.text-area-input {
+  max-width: 280px;
+  text-align: left;
+}
 #group-name-input,
-.comment-input {
+.comment-input,
+.black-input {
   color: whitesmoke;
   background: black;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
+}
+.width100 {
+  width: 100% !important;
+}
+.deadline-list li a {
+  display: inline-block;
+}
+.deadline-list li div {
+  position: relative;
+}
+.deadline-list li div div {
+  display: inline-flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.custom-lbl {
+  text-align: center !important;
+  width: 280px;
+  background: #f6492b;
+  margin-bottom: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 .group-name-input,
 #group-name-input {
@@ -40,6 +77,9 @@ div[class*=col]{
 #group-name-input input {
   color: whitesmoke;
   background: black;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
 }
 .group-name-input label,
 #group-name-input label {
@@ -328,8 +368,11 @@ h2 {
 }
 @media screen and (max-width: 767px) {
   .group-control-buttons {
-    position: fixed;
-    right: 20px;
+    position: absolute;
+    right: 0;
+  }
+  .group-control-buttons.main {
+    top: 0;
   }
 }
 .molten-core-bold {
@@ -402,6 +445,14 @@ h2 {
 }
 .group-list-sm li {
   font-size: 15px;
+}
+.user-list li {
+  position: relative;
+}
+.user-list .remove-user {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .list-item-options {
   padding: 5px;
