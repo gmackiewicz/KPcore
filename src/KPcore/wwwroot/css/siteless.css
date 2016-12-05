@@ -239,6 +239,9 @@ select {
   right: 0;
   text-align: center;
 }
+.closest-deadline-title {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+}
 .login-button {
   margin: 10px 0 10px 0;
 }
@@ -276,6 +279,9 @@ h2 {
   font-weight: 300;
   font-size: 150%;
   font-family: 'Lato', sans-serif;
+}
+h3 {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
 }
 .btn-small-grey {
   margin: 1px;

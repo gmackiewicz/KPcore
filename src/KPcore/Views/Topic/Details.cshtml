@@ -11,7 +11,6 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center group-title">
                     @Html.TextBoxFor(m => m.Group.Name, new { type = "hidden" })
-
                     
                     <h1>
                         @if (Model.Group != null)
@@ -64,7 +63,7 @@
     </div>
     <!-- CONTENT -->
     <div class="row space-after ">
-        <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center closest-deadline-title">
             <h2>NAJBLIŻSZY TERMIN CZĄSTKOWY:</h2>
             <h2 class="bold">
                 @if (Model.CurrentDeadline == null)
