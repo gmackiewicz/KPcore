@@ -1,4 +1,5 @@
-﻿@{
+﻿@model KPcore.ViewModels.BaseViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 @inject SignInManager<ApplicationUser> SignInManager
@@ -11,18 +12,21 @@
         </div>
         <div class="col-sm-5 index-page-content text-center login-button">
             <div class="welcome-text">
-                <h1>Witaj,</h1>
+                
                 @if (!SignInManager.IsSignedIn(User))
-            {
-                <p>celem naszego projektu jest stworzenie aplikacji bazodanowej pozwalającej na zarządzanie projektami grupowymi z poszczególnych przedmiotów na Wydziale Informatyki Politechniki Białostockiej.
-</p>
-                <p>Na początek...</p>
+                {
+                    <h1>Witaj,</h1>
+                    <p>
+                        celem naszego projektu jest stworzenie aplikacji bazodanowej pozwalającej na zarządzanie projektami grupowymi z poszczególnych przedmiotów na Wydziale Informatyki Politechniki Białostockiej.
+                    </p>
+                    <p>Na początek...</p>
                     @Html.ActionLink("Zarejestruj się", "Register", "Account", null, new { @class = "btn btn-lg btn-grey" })
                     @:lub też
                     @Html.ActionLink("Zaloguj się", "Login", "Account", null, new { @class = "btn btn-lg btn-grey" })
                 }
                 else
                 {
+                    <h1>Hej @Model.CurrentUser.FirstName,</h1>
                     <p>jesteś już zalogowany, możesz więc przejść już dalej:</p>
                     if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
                     {
