@@ -28,6 +28,7 @@ namespace KPcore.Services
         {
             return _dbContext.StudentGroups
                 .Include(sg => sg.Group)
+                .OrderBy(g => g.Group.Name)
                 .Where(sg => sg.StudentId == userid).ToList();
         }
 

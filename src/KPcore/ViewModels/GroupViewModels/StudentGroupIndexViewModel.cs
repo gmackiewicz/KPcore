@@ -5,6 +5,6 @@ namespace KPcore.ViewModels.GroupViewModels
 {
     public class StudentGroupIndexViewModel : BaseViewModel
     {
-        public SortedDictionary<StudentGroup, GroupComment> StudentGroups { get; set; }
+        public Dictionary<StudentGroup, GroupComment> StudentGroups { get; set; }
     }
 }
