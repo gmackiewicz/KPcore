@@ -1,16 +1,19 @@
-﻿@model KPcore.ViewModels.GroupViewModels.GroupDetailsViewModel
+﻿@model GroupDetailsViewModel
 
 @{
-    var leader = (Model.GroupLeader.Id == Model.CurrentUser.Id);
+    var leader = Model.GroupLeader.Id == Model.CurrentUser.Id;
 }
 <div class="text-center group-list-sm border-transparent user-list-main">
-    <h3>Członkowie: <i class="fa fa-minus-square-o"></i></h3>
-    <hr class="molten-core" />
+    <h3>
+        Członkowie: <i class="fa fa-minus-square-o"></i>
+    </h3>
+    <hr class="molten-core"/>
     <ul class="list-unstyled user-list">
+
         <li>
             <div class="list-item-info">
                 Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
-                <hr class="hr-narrow" />
+                <hr/>
             </div>
         </li>
         @foreach (var s in Model.StudentsList)
@@ -25,7 +28,7 @@
                         }
 
                     </div>
-                    <hr class="hr-narrow" />
+                    <hr/>
                 </div>
             </li>
         }
@@ -36,11 +39,11 @@
             @{
                 if (leader)
                 {
-                    @Html.ActionLink("Dodaj osobę", "AddMember", new { id = Model.Id }, new { @class = "btn btn-grey" })
+                    @Html.ActionLink("Dodaj osobę", "AddMember", new {id = Model.Id}, new {@class = "btn btn-grey"})
                 }
                 else
                 {
-                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new { id = Model.Id }, new { @class = "btn btn-grey", onclick = "return confirm('Na pewno chcesz opuścić tę grupę?');" })
+                    @Html.ActionLink("Opuść grupę", "LeaveGroup", new {id = Model.Id}, new {@class = "btn btn-grey", onclick = "return confirm('Na pewno chcesz opuścić tę grupę?');"})
                 }
             }
         </div>
