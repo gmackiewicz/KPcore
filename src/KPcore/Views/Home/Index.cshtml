@@ -27,7 +27,7 @@
                 else
                 {
                     <h1>Hej @Model.CurrentUser.FirstName,</h1>
-                    <p>jesteś już zalogowany, możesz więc przejść już dalej:</p>
+                    <p>jesteś już zalogowany, możesz więc przejść dalej:</p>
                     if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
                     {
                         @Html.ActionLink("Twoje grupy", "Index", "Group", null, new { @class = "btn btn-lg btn-grey" })
