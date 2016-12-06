@@ -6,41 +6,68 @@
 
 <div class="row">
     <div class="col-sm-12 index-page-content">
-        <div class="index-page-image col-sm-7">
-            <img src="~/images/background.jpg" />
-            <object data="~/images/LogoImpact.svg" type="image/svg+xml"></object>
+        <div class="row">
+            <div class="index-page-image col-sm-7">
+                <img src="~/images/background.jpg" />
+                <object data="~/images/LogoImpact.svg" type="image/svg+xml"></object>
+            </div>
+            <div class="col-sm-5 index-page-content text-center login-button">
+                <div class="welcome-text">
+
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <h1>Witaj,</h1>
+                        <p>
+                            celem naszego projektu jest stworzenie aplikacji bazodanowej pozwalającej na zarządzanie projektami grupowymi z poszczególnych przedmiotów na Wydziale Informatyki Politechniki Białostockiej.
+                        </p>
+                        <p>Na początek...</p>
+                        @Html.ActionLink("Zarejestruj się", "Register", "Account", null, new { @class = "btn btn-lg btn-grey" })
+                        @:lub też
+                        @Html.ActionLink("Zaloguj się", "Login", "Account", null, new { @class = "btn btn-lg btn-grey" })
+                    }
+                    else
+                    {
+                        <h1>Hej @Model.CurrentUser.FirstName,</h1>
+                        <p>jesteś już zalogowany, możesz więc przejść dalej:</p>
+                        if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
+                        {
+                            @Html.ActionLink("Twoje grupy", "Index", "Group", null, new { @class = "btn btn-lg btn-grey" })
+                        }
+                        if (Model.CurrentUser.Status == 1 || Model.CurrentUser.Status == 2)
+                        {
+                            @Html.ActionLink("Twoje tematy", "Index", "Topic", null, new { @class = "btn btn-lg btn-grey" })
+                        }
+                        if (Model.CurrentUser.Status == 2)
+                        {
+                            @Html.ActionLink("Admin panel", "Index", "Admin", null, new { @class = "btn btn-lg btn-grey" })
+                        }
+                    }
+                </div>
+            </div>
         </div>
-        <div class="col-sm-5 index-page-content text-center login-button">
-            <div class="welcome-text">
-                
-                @if (!SignInManager.IsSignedIn(User))
-                {
-                    <h1>Witaj,</h1>
-                    <p>
-                        celem naszego projektu jest stworzenie aplikacji bazodanowej pozwalającej na zarządzanie projektami grupowymi z poszczególnych przedmiotów na Wydziale Informatyki Politechniki Białostockiej.
-                    </p>
-                    <p>Na początek...</p>
-                    @Html.ActionLink("Zarejestruj się", "Register", "Account", null, new { @class = "btn btn-lg btn-grey" })
-                    @:lub też
-                    @Html.ActionLink("Zaloguj się", "Login", "Account", null, new { @class = "btn btn-lg btn-grey" })
-                }
-                else
-                {
-                    <h1>Hej @Model.CurrentUser.FirstName,</h1>
-                    <p>jesteś już zalogowany, możesz więc przejść dalej:</p>
-                    if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
-                    {
-                        @Html.ActionLink("Twoje grupy", "Index", "Group", null, new { @class = "btn btn-lg btn-grey" })
-                    }
-                    if (Model.CurrentUser.Status == 1 || Model.CurrentUser.Status == 2)
-                    {
-                        @Html.ActionLink("Twoje tematy", "Index", "Topic", null, new { @class = "btn btn-lg btn-grey" })
-                    }
-                    if (Model.CurrentUser.Status == 2)
-                    {
-                        @Html.ActionLink("Admin panel", "Index", "Admin", null, new { @class = "btn btn-lg btn-grey" })
-                    }
-                }
+        <div class="row">
+            <div class="col-sm-5 welcome-text">
+                <div class="welcome-text">
+                    <h1>Twórcy projektu:</h1>
+                    <h2>Gabriel Mackiewicz</h2>
+                    <h2>Tomasz Osipiak</h2>
+                </div>
+            </div>
+            <div class="col-sm-7 index-page-image">
+
+                <img src="~/images/pexels-photo-90807.jpeg" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7
+                  index-page-image">
+                <img src="~/images/pexels-photo-192273.jpeg" />
+            </div>
+            <div class="col-sm-5">
+                <div class="welcome-text">
+                    <h1>Użyte obrazy:</h1>
+                    <h2><a href="pexels.com">www.pexels.com</a></h2>
+                </div>
             </div>
         </div>
     </div>
