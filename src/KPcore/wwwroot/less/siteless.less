@@ -19,6 +19,26 @@ div[class*=col]{
 .index-page-content {
     text-align: center;
 
+    @shape-before-odd: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
+    @shape-after-odd: polygon(0 0, 90% 0, 82% 100%, 0% 100%);
+
+    @shape-before-even: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    @shape-after-even: polygon(17% 0, 100% 0, 100% 100%, 10% 100%);
+
+    .common-settings {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        margin: auto;
+    }
+
+    .image {
+        .common-settings;
+        width: 100%;
+    }
+
     h1 {
         background: rgba(255,255,255,0.1);
         line-height: @h1-font-size;
@@ -38,15 +58,7 @@ div[class*=col]{
         }
     }
 
-    .row {
-        margin-top: 50px;
-        background: rgba(255, 255, 255, .1);
-    }
-
     margin-top: 20px;
-
-    &:first-of-type {
-    }
 
     .welcome-text {
         margin-top: 20px;
@@ -61,47 +73,66 @@ div[class*=col]{
         margin: 10px;
     }
 
+    .row {
+        margin-top: 50px;
+        background: rgba(255, 255, 255, .1);
+
+        .index-page-image:nth-of-type(odd) {
+
+
+            @media screen and (min-width: 767px) {
+                -webkit-clip-path: @shape-before-odd;
+                clip-path: @shape-before-odd;
+            }
+        }
+
+        .index-page-image:nth-of-type(even) {
+            @media screen and (min-width: 767px) {
+                -webkit-clip-path: @shape-before-even;
+                clip-path: @shape-before-even;
+            }
+        }
+    }
+
+
+    .row:hover {
+        .index-page-image:nth-of-type(odd) {
+            @media screen and (min-width: 767px) {
+                -webkit-clip-path: @shape-after-odd;
+                clip-path: @shape-after-odd;
+            }
+        }
+
+        .index-page-image:nth-of-type(even) {
+            @media screen and (min-width: 767px) {
+                -webkit-clip-path: @shape-after-even;
+                clip-path: @shape-after-even;
+            }
+        }
+    }
+
     .index-page-image {
         position: relative;
         height: 280px;
+
+        @media screen and (max-width: 767px) {
+            height: 100px;
+
+            object {
+                height: 50%;
+            }
+        }
+
         overflow: hidden;
+        transition: all ease 0.5s;
 
-        .common{
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            position: absolute;
-            margin: auto;
-        }
-        .image {
-           .common;
-            width: 100%;
-            
-        }
-
-        &:nth-of-type(odd) {
-            img:first-of-type {
-                .image;
-                @media screen and (min-width: 767px) {
-                    -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
-                    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
-                }
-            }
-        }
-
-        &:nth-of-type(even) {
-            img:first-of-type {
-                .image;
-                @media screen and (min-width: 767px) {
-                    -webkit-clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-                    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-                }
-            }
+        img {
+            .image;
         }
 
         object {
-            .common;
+            .common-settings;
+            height: 50%;
         }
     }
 }

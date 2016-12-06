@@ -15,6 +15,23 @@ div[class*=col]{
   text-align: center;
   margin-top: 20px;
 }
+.index-page-content .common-settings {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  margin: auto;
+}
+.index-page-content .image {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  margin: auto;
+  width: 100%;
+}
 .index-page-content h1 {
   background: rgba(255, 255, 255, 0.1);
   line-height: 200%;
@@ -32,10 +49,6 @@ div[class*=col]{
     margin-top: 15px;
   }
 }
-.index-page-content .row {
-  margin-top: 50px;
-  background: rgba(255, 255, 255, 0.1);
-}
 .index-page-content .welcome-text {
   margin-top: 20px;
   padding: 10px;
@@ -47,44 +60,49 @@ div[class*=col]{
 .index-page-content .btn-grey {
   margin: 10px;
 }
+.index-page-content .row {
+  margin-top: 50px;
+  background: rgba(255, 255, 255, 0.1);
+}
+@media screen and (min-width: 767px) {
+  .index-page-content .row .index-page-image:nth-of-type(odd) {
+    -webkit-clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
+    clip-path: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
+  }
+}
+@media screen and (min-width: 767px) {
+  .index-page-content .row .index-page-image:nth-of-type(even) {
+    -webkit-clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+}
+@media screen and (min-width: 767px) {
+  .index-page-content .row:hover .index-page-image:nth-of-type(odd) {
+    -webkit-clip-path: polygon(0 0, 90% 0, 82% 100%, 0% 100%);
+    clip-path: polygon(0 0, 90% 0, 82% 100%, 0% 100%);
+  }
+}
+@media screen and (min-width: 767px) {
+  .index-page-content .row:hover .index-page-image:nth-of-type(even) {
+    -webkit-clip-path: polygon(17% 0, 100% 0, 100% 100%, 10% 100%);
+    clip-path: polygon(17% 0, 100% 0, 100% 100%, 10% 100%);
+  }
+}
 .index-page-content .index-page-image {
   position: relative;
   height: 280px;
   overflow: hidden;
+  transition: all ease 0.5s;
 }
-.index-page-content .index-page-image .common {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: absolute;
-  margin: auto;
-}
-.index-page-content .index-page-image .image {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: absolute;
-  margin: auto;
-  width: 100%;
-}
-.index-page-content .index-page-image:nth-of-type(odd) img:first-of-type {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: absolute;
-  margin: auto;
-  width: 100%;
-}
-@media screen and (min-width: 767px) {
-  .index-page-content .index-page-image:nth-of-type(odd) img:first-of-type {
-    -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
-    clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+@media screen and (max-width: 767px) {
+  .index-page-content .index-page-image {
+    height: 100px;
+  }
+  .index-page-content .index-page-image object {
+    height: 50%;
   }
 }
-.index-page-content .index-page-image:nth-of-type(even) img:first-of-type {
+.index-page-content .index-page-image img {
   top: 0;
   left: 0;
   right: 0;
@@ -92,12 +110,6 @@ div[class*=col]{
   position: absolute;
   margin: auto;
   width: 100%;
-}
-@media screen and (min-width: 767px) {
-  .index-page-content .index-page-image:nth-of-type(even) img:first-of-type {
-    -webkit-clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
-  }
 }
 .index-page-content .index-page-image object {
   top: 0;
@@ -106,6 +118,7 @@ div[class*=col]{
   bottom: 0;
   position: absolute;
   margin: auto;
+  height: 50%;
 }
 body {
   padding-top: 50px;
