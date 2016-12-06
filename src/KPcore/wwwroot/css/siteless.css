@@ -11,6 +11,15 @@ div[class*=col]{
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0px 10px 26px -9px rgba(0, 0, 0, 0.75);
 }
+.navbar li {
+  border-right: 1px dashed white;
+}
+.navbar li:first-of-type {
+  border-left: 1px dashed white;
+}
+.navbar li:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
 .index-page-content {
   color: black;
   text-align: center;
@@ -132,6 +141,14 @@ body {
   background: #151515;
   color: #ffffff;
   font-family: 'Lato', sans-serif;
+}
+body a:hover {
+  color: #f6492b;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
+}
+body a:active {
+  text-decoration: none;
+  color: #ffbe14;
 }
 @media screen and (min-width: 767px) {
   .small-screen-visible {
@@ -292,14 +309,6 @@ body {
 }
 .date {
   margin-left: 5px;
-}
-a:hover {
-  color: #f6492b;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.1), rgba(0, 0, 0, 0));
-}
-a:active {
-  text-decoration: none;
-  color: #ffbe14;
 }
 .inblock {
   -ms-word-wrap: break-word;
@@ -473,6 +482,7 @@ h3 {
   background: #444444;
   color: #cccccc;
   border: 1px solid black;
+  transition: all ease 0.2s;
 }
 .btn-grey:hover {
   background: #f6492b;

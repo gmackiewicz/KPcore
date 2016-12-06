@@ -16,6 +16,18 @@ div[class*=col]{
     .shadow;
 }
 
+.navbar{
+    li{
+        border-right: 1px dashed white;
+        &:first-of-type{
+            border-left: 1px dashed white;
+        }
+        &:hover{
+            background: rgba(255,255,255,0.1);
+        }
+    }
+}
+
 .index-page-content {
     color:black;
     text-align: center;
@@ -81,7 +93,6 @@ div[class*=col]{
     .row {
         margin-top: 50px;
         background: rgba(255, 255, 255, .8);
-
         .index-page-image:nth-of-type(odd) {
 
 
@@ -153,6 +164,18 @@ body {
     background: @default-bg-color;
     color: @color-white;
     .font-lato;
+
+    a {
+    &:hover {
+        color: @color-molten-core;
+        background-image: @color-molten-core-alpha-gradient;
+    }
+
+    &:active {
+        text-decoration: none;
+        color: @color-molten-core-light;
+    }
+}
 }
 
 @import "mixins";
@@ -289,18 +312,7 @@ body {
     margin-left: 5px;
 }
 
-a {
 
-    &:hover {
-        color: @color-molten-core;
-        background-image: @color-molten-core-alpha-gradient;
-    }
-
-    &:active {
-        text-decoration: none;
-        color: @color-molten-core-light;
-    }
-}
 
 .inblock {
     -ms-word-wrap: break-word;
@@ -528,6 +540,7 @@ h3 {
     background: #444444;
     color: @color-light-grey;
     border: 1px solid black;
+    transition: all ease 0.2s;
 
     &:hover {
         background: @color-molten-core;
