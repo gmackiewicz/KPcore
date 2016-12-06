@@ -3,31 +3,41 @@
 }
 @inject SignInManager<ApplicationUser> SignInManager
 
-<div class="row bg-transparent">
-    <div class="col-md-10 col-md-offset-1 bg-half-transparent">
-        <header class="image-bg-fluid-height small-screen-invisible">
-            <img class="img-responsive img-center" src="~/images/KuzniaProjektowLogoImpact.png" alt="">
-        </header>
-        <div class="text-center text-capitalize login-button">
-            @if (!SignInManager.IsSignedIn(User))
+<div class="row">
+    <div class="col-sm-12 index-page-content">
+        <div class="index-page-image col-sm-7">
+            <img src="~/images/background.jpg" />
+            <object data="~/images/LogoImpact.svg" type="image/svg+xml"></object>
+        </div>
+        <div class="col-sm-5 index-page-content text-center login-button">
+            <div class="welcome-text">
+                <h1>Witaj,</h1>
+                @if (!SignInManager.IsSignedIn(User))
             {
-                @Html.ActionLink("Log in", "Login", "Account", null, new { @class = "btn btn-lg btn-grey" })
-            }
-            else
-            {
-                if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
-                {
-                    @Html.ActionLink("Twoje grupy", "Index", "Group", null, new { @class = "btn btn-lg btn-grey" })
+                <p>celem naszego projektu jest stworzenie aplikacji bazodanowej pozwalającej na zarządzanie projektami grupowymi z poszczególnych przedmiotów na Wydziale Informatyki Politechniki Białostockiej.
+</p>
+                <p>Na początek...</p>
+                    @Html.ActionLink("Zarejestruj się", "Register", "Account", null, new { @class = "btn btn-lg btn-grey" })
+                    @:lub też
+                    @Html.ActionLink("Zaloguj się", "Login", "Account", null, new { @class = "btn btn-lg btn-grey" })
                 }
-                if (Model.CurrentUser.Status == 1 || Model.CurrentUser.Status == 2)
+                else
                 {
-                    @Html.ActionLink("Twoje tematy", "Index", "Topic", null, new { @class = "btn btn-lg btn-grey" })
+                    <p>jesteś już zalogowany, możesz więc przejść już dalej:</p>
+                    if (Model.CurrentUser.Status == 0 || Model.CurrentUser.Status == 2)
+                    {
+                        @Html.ActionLink("Twoje grupy", "Index", "Group", null, new { @class = "btn btn-lg btn-grey" })
+                    }
+                    if (Model.CurrentUser.Status == 1 || Model.CurrentUser.Status == 2)
+                    {
+                        @Html.ActionLink("Twoje tematy", "Index", "Topic", null, new { @class = "btn btn-lg btn-grey" })
+                    }
+                    if (Model.CurrentUser.Status == 2)
+                    {
+                        @Html.ActionLink("Admin panel", "Index", "Admin", null, new { @class = "btn btn-lg btn-grey" })
+                    }
                 }
-                if (Model.CurrentUser.Status == 2)
-                {
-                    @Html.ActionLink("Admin panel", "Index", "Admin", null, new { @class = "btn btn-lg btn-grey" })
-                }
-            }
+            </div>
         </div>
     </div>
 </div>
