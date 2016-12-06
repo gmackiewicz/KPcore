@@ -1,28 +1,28 @@
 ﻿@model IndexViewModel
 @{
-    ViewData["Title"] = "Manage your account";
+    ViewData["Title"] = "Zarządzanie kontem";
 }
 
 <h2>@ViewData["Title"].</h2>
 <p class="text-success">@ViewData["StatusMessage"]</p>
 
 <div>
-    <h4>Change your account settings</h4>
+    <h4>Ustawienia konta.</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>Teacher's privileges:</dt>
+        <dt>Konto prowadzącego:</dt>
         <dd>
-            <a asp-controller="Manage" asp-action="VerifyTeacher" class="btn-bracketed">Verify</a>
+            <a asp-controller="Manage" asp-action="VerifyTeacher" class="btn-bracketed">Potwierdź konto.</a>
         </dd>
-        <dt>Password:</dt>
+        <dt>Hasło:</dt>
         <dd>
             @if (Model.HasPassword)
             {
-                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Zmień</a>
             }
             else
             {
-                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
+                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Utwórz</a>
             }
         </dd>
     </dl>
