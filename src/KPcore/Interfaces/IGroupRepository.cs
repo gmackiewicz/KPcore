@@ -21,5 +21,6 @@ namespace KPcore.Interfaces
         void DeleteGroup(int id);
         void AddTopicToGroup(int modelGroupId, int modelSelectedTopic);
         Group GetGroupByTopicId(int? topicId);
+        GroupComment GetLatestComment(int? groupId);
     }
 }

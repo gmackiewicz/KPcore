@@ -15,8 +15,11 @@
                 <li>
                     <div class="group-list-sm col-sm-6 col-sm-offset-3 list-item-info">
 
-                        @Html.ActionLink(g.Group.Name, "Details", new { id = g.GroupId })
-
+                        @Html.ActionLink(g.Key.Group.Name, "Details", new { id = g.Key.GroupId })
+                        <p>
+                            Najnowszy komentarz:
+                            @g.Value.Content
+                        </p>
                         <hr class="hr-narrow" />
                     </div>
                 </li>
@@ -32,3 +35,4 @@
         @Html.ActionLink("Stwórz nową grupę", "Create", "Group", null, new { @class = "btn btn-grey" })
     </div>
 </div>
+

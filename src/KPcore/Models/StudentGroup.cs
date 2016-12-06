@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KPcore.Models
 {
-    public class StudentGroup
+    public class StudentGroup : IComparable
     {
         [Required]
         [StringLength(450)]
@@ -19,5 +19,10 @@ namespace KPcore.Models
         public Group Group { get; set; }
 
         public bool Leader { get; set; }
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is StudentGroup)) return 1;
+            else return this.Group.Name.CompareTo(((StudentGroup) obj).Group.Name);
+        }
     }
 }

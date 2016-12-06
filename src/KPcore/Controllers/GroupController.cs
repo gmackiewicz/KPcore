@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,9 +48,19 @@ namespace KPcore.Controllers
                 : "";
 
             var user = await GetCurrentUserAsync();
+            var _StudentGroups = _groupRepository.GetAllUsersGroup(user.Id);
+            SortedDictionary<StudentGroup, GroupComment> dict = new SortedDictionary<StudentGroup, GroupComment>();
+            foreach (var group in _StudentGroups)
+            {
+                var comment = _groupRepository.GetLatestComment(group.GroupId) ?? new GroupComment
+                {
+                    Content = "Brak"
+                };
+                dict.Add(group, comment);
+            }
             var model = new StudentGroupIndexViewModel
             {
-                StudentGroups = _groupRepository.GetAllUsersGroup(user.Id)
+                StudentGroups = dict
             };
 
             return View(model);

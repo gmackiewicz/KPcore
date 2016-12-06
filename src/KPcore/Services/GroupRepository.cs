@@ -137,5 +137,10 @@ namespace KPcore.Services
         {
             return _dbContext.Groups.FirstOrDefault(g => g.TopicId == topicId);
         }
+
+        public GroupComment GetLatestComment(int? groupId)
+        {
+            return _dbContext.GroupComments.LastOrDefault(g => g.GroupId == groupId);
+        }
     }
 }
