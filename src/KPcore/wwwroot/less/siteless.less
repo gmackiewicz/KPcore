@@ -37,6 +37,7 @@ body {
     .font-lato;
 
     a {
+        color: @color-molten-core-light;
         &:hover {
             color: @color-molten-core;
         }
@@ -81,9 +82,12 @@ label {
 /*#region Main index page styles */
 
 .index-page-content {
-    color: black;
+    color: white;
     text-align: center;
 
+    a{
+        color:white;
+    }
     @shape-before-odd: polygon(0 0, 0% 0, 0% 100%, 0% 100%);
     @shape-after-odd: polygon(0 0, 90% 0, 82% 100%, 0% 100%);
 
@@ -109,7 +113,7 @@ label {
 
     h1 {
         transition: all ease 1s;
-        background: rgba(0,0,0,0.2);
+        background: rgba(0,0,0,0.5);
         line-height: @h1-font-size;
         -webkit-clip-path: @h1-shape-before;
         clip-path: @h1-shape-before;
@@ -144,7 +148,7 @@ label {
 
     .row {
         margin-top: 50px;
-        background: rgba(255, 255, 255, .8);
+        background: rgba(255, 255, 255, .2);
 
         .index-page-image:nth-of-type(odd) {
 
@@ -466,6 +470,7 @@ h3 {
 .btn-small-grey {
     margin: @sm-btn-margin;
     background-color: @sm-btn-background;
+    color: @sm-btn-color;
 
     &:hover {
         color: @sm-btn-hover-color;
@@ -475,16 +480,6 @@ h3 {
     padding: @sm-btn-padding;
     font-size: @sm-btn-font-size;
     .sm-btn-border;
-
-    &:link {
-        color: @color-molten-core !important;
-    }
-
-    &:visited {
-        color: @color-molten-core !important;
-    }
-
-    color: @color-molten-core !important;
 }
 
 .remove-space {
@@ -643,10 +638,12 @@ h3 {
 
 .group-list {
     text-align: center;
+
     a {
         color: @core-2300;
         text-decoration: none;
         font-size: @h2-font-size;
+
         &:hover {
             color: @color-white;
         }
@@ -690,13 +687,13 @@ h3 {
 
 /*#region User / Deadline list */
 .user-list-main, .deadline-list-main {
-    a{
+    a {
         color: @color-molten-core-light;
     }
 
-    hr{
+    hr {
         .hr-narrow;
-        margin-bottom:0;
+        margin-bottom: 0;
     }
 
     h3 {
@@ -725,13 +722,14 @@ h3 {
         word-wrap: break-word;
         padding: 5px 0 0 0;
         font-size: 15px;
-        position:relative;
+        position: relative;
         background-color: @color-molten-core-alpha;
 
         &:hover {
-            a{
+            a {
                 color: white;
             }
+
             @keyframes rgb {
                 /* 0% will fallback to the default background-color of #rgb*/
                 100% {
@@ -752,23 +750,23 @@ h3 {
     }
 
     .deadline-list {
-    li {
-        a {
-            display: inline-block;
-        }
+        li {
+            a {
+                display: inline-block;
+            }
 
-        div {
-            position: relative;
-        }
+            div {
+                position: relative;
+            }
 
-        div div {
-            display: inline-flex;
-            position: absolute;
-            top: 0;
-            right: 0;
+            div div {
+                display: inline-flex;
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
         }
     }
-}
 }
 
 /*#endregion*/
