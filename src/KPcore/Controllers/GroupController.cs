@@ -394,6 +394,8 @@ namespace KPcore.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var group = _groupRepository.GetGroupById(model.GroupId);
+                model.Group = group;
                 return View(model);
             }
 
