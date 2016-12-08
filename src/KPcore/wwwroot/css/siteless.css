@@ -564,7 +564,7 @@ h3 {
 .group-list a:hover {
   color: #ffffff;
 }
-.group-list a:last-of-type {
+.group-list .button a {
   font-size: 100%;
 }
 .group-list li {
