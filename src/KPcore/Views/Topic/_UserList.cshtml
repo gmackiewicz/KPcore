@@ -4,16 +4,17 @@
 
 
 <div class="text-center group-list-sm space-before border-transparent user-list-main">
-    <h3>Członkowie:<i class="fa fa-minus-square-o"></i></h3>
+    <h3>
+        Członkowie: <i class="fa fa-minus-square-o"></i>
+    </h3>
     <hr class="molten-core" />
     <ul class="list-unstyled user-list">
-
         @if (Model.Group != null)
         {
             <li>
                 <div class="list-item-info">
                     Lider: <a href="#">@Model.GroupLeader.FirstName @Model.GroupLeader.LastName</a>
-                    <hr class="hr-narrow" />
+                    <hr/>
                 </div>
             </li>
             foreach (var s in Model.GroupMembers)
@@ -21,7 +22,7 @@
                 <li>
                     <div class="list-item-info">
                         <a href="#">@s.FirstName @s.LastName</a>
-                        <hr class="hr-narrow" />
+                        <hr/>
                     </div>
                 </li>
             }
@@ -31,7 +32,7 @@
             <li>
                 <div class="list-item-info">
                     Brak członków do wyświetlenia.
-                    <hr class="hr-narrow" />
+                    <hr/>
                 </div>
             </li>
         }

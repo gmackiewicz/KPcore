@@ -41,8 +41,10 @@
                     <span class="bold">@Html.DisplayFor(model => model.CreationDate)</span>
                     @if (Model.MeetingsDate != null)
                     {
-                        <span class="date">Termin spotkań: </span>
-                        <span class="bold">@Model.MeetingsDate.Value.DayOfWeek @Model.MeetingsDate.Value.Hour:@Model.MeetingsDate.Value.Minute</span>
+                        <p>
+                            <span class="date">Termin spotkań: </span>
+                            <span class="bold">@Model.MeetingsDate.Value.DayOfWeek @Model.MeetingsDate.Value.Hour:@Model.MeetingsDate.Value.Minute</span>
+                        </p>
                     }
                 </div>
                 <div class="col-md-2 group-options">

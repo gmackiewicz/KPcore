@@ -20,20 +20,6 @@ namespace KPcore.Controllers
             return View(new BaseViewModel());
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View(new BaseViewModel());
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View(new BaseViewModel());
-        }
-
         public IActionResult Error()
         {
             return View(new BaseViewModel());
