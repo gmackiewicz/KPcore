@@ -564,6 +564,9 @@ h3 {
 .group-list a:hover {
   color: #ffffff;
 }
+.group-list a:last-of-type {
+  font-size: 100%;
+}
 .group-list li {
   font-size: 15px;
 }
