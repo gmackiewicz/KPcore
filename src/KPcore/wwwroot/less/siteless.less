@@ -464,7 +464,11 @@ h2 {
 }
 
 h3 {
+    transition: all ease 0.5s;
     background-image: @color-molten-core-gradient;
+    &:hover{
+        background-image: linear-gradient(to right, @transparent, @color-molten-core-05, @transparent);
+    }
 }
 
 .btn-small-grey {

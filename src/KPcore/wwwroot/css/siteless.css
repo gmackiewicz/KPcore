@@ -413,7 +413,11 @@ h2 {
   font-family: 'Lato', sans-serif;
 }
 h3 {
+  transition: all ease 0.5s;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #f6492b, rgba(0, 0, 0, 0));
+}
+h3:hover {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(246, 73, 43, 0.5), rgba(0, 0, 0, 0));
 }
 .btn-small-grey {
   margin: 1px;
