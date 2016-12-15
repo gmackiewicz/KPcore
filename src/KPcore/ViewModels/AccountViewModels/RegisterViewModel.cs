@@ -11,25 +11,29 @@ namespace KPcore.ViewModels.AccountViewModels
 
 
         [Required]
-        [Display(Name = "First name")]
+        [Display(Name = "Imię")]
         public string FirstName { get; set; }
         
         [Required]
-        [Display(Name = "Last name")]
+        [Display(Name = "Nazwisko")]
         public string LastName { get; set; }
-        
-        [Display(Name = "Index number")]
+
+        [Display(Name = "Numer indeksu")]
         public string IndexNumber { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Kod nauczyciela")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        public string SecretTeacherCode { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "{0} musi mieć co najmniej {2} i co najwyżej {1} znaków.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Hasło")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Potwierdź hasło")]
+        [Compare("Password", ErrorMessage = "Hasło i potwierdzenie hasła nie są takie same.")]
         public string ConfirmPassword { get; set; }
     }
 }

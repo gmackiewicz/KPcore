@@ -394,6 +394,8 @@ namespace KPcore.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var group = _groupRepository.GetGroupById(model.GroupId);
+                model.Group = group;
                 return View(model);
             }
 
@@ -492,5 +494,10 @@ namespace KPcore.Controllers
 
         #endregion
 
+        public IActionResult KickGroupFromTopic(int topicid, int groupid)
+        {
+            _groupRepository.RemoveTopicForGroup(groupid);
+            return RedirectToAction(nameof(Details), "Topic", new { id = topicid });
+        }
     }
 }
