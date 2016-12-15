@@ -144,7 +144,7 @@ namespace KPcore.Controllers
                 return View(model);
             }
             var user = await GetCurrentUserAsync();
-            var verificationCode = "tajnykod";
+            var verificationCode = "nauczyciel";
 
             if (user != null)
             {
