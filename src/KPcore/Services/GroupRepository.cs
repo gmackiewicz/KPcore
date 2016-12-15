@@ -143,5 +143,13 @@ namespace KPcore.Services
         {
             return _dbContext.GroupComments.LastOrDefault(g => g.GroupId == groupId);
         }
+
+        public void RemoveTopicForGroup(int id)
+        {
+            var group = _dbContext.Groups.First(g => g.Id == id);
+            group.TopicId = null;
+            _dbContext.Groups.Update(group);
+            _dbContext.SaveChanges();
+        }
     }
 }
