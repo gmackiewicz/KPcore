@@ -133,11 +133,12 @@ namespace KPcore.Controllers
         public async Task<IActionResult> EditGroupName(GroupDetailsViewModel model)
         {
             var user = await GetCurrentUserAsync();
+            var groupLeader = _groupRepository.GetLeader(model.Id);
             if (!ModelState.IsValid)
             {
                 return RedirectToAction(nameof(Index), new { message = GroupMessageId.NameChangeError });
             }
-            if (user.Status == 2)
+            if (user.Id == groupLeader.Id)
             {
                 var group = _groupRepository.GetGroupById(model.Id);
                 group.Name = model.Name;
@@ -473,7 +474,7 @@ namespace KPcore.Controllers
 
             _deadlineRepository.UpdateDeadline(deadline);
 
-            return RedirectToAction(nameof(Details), new { id = model.TopicId });
+            return RedirectToAction(nameof(Details), "Topic", new { id = model.TopicId });
         }
 
         #endregion
