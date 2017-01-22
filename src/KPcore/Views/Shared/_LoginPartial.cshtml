@@ -10,10 +10,10 @@
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj się</button>
             </li>
         </ul>
     </form>
@@ -21,7 +21,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Register">Zarejestruj się</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj się</a></li>
     </ul>
 }

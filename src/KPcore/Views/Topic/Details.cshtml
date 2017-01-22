@@ -50,6 +50,7 @@
                 <div class="col-md-2 group-options">
                     @if (Model.Group != null && teacher)
                     {
+                        @Html.ActionLink("Usuń grupę", "KickGroupFromTopic", "Group", new { topicid = Model.Id, groupid = Model.Group.Id, }, new { @class = "btn btn-danger", onclick = "return confirm('Na pewno chcesz usunąć grupę z tego tematu?');" })
                         @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
                     }
                     @if (teacher)

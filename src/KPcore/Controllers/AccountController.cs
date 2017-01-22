@@ -105,6 +105,10 @@ namespace KPcore.Controllers
                     LastName = model.LastName,
                     IndexNumber = index
                 };
+                if (model.SecretTeacherCode == "nauczyciel")
+                {
+                    user.Status = 1;
+                }
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
