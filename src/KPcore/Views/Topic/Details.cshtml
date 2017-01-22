@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 text-center group-title">
                     @Html.TextBoxFor(m => m.Group.Name, new { type = "hidden" })
-
+                    <h1>TEMAT</h1>
                     <h1>
                         @if (Model.Group != null)
                         {
@@ -47,16 +47,23 @@
                         </p>
                     }
                 </div>
-                <div class="col-md-2 group-options">
-                    @if (Model.Group != null && teacher)
-                    {
-                        @Html.ActionLink("Usuń grupę", "KickGroupFromTopic", "Group", new { topicid = Model.Id, groupid = Model.Group.Id, }, new { @class = "btn btn-danger", onclick = "return confirm('Na pewno chcesz usunąć grupę z tego tematu?');" })
-                        @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id, }, new { @class = "btn btn-grey" })
-                    }
-                    @if (teacher)
-                    {
-                        @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, }, new { @class = "btn btn-grey" })
-                    }
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                        Zarządzaj tematem <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            @if (Model.Group != null && teacher)
+                            {
+                                @Html.ActionLink("Dodaj nowy termin", "AddDeadline", "Group", new { id = Model.Group.Id })
+                                @Html.ActionLink("Usuń grupę", "KickGroupFromTopic", "Group", new { topicid = Model.Id, groupid = Model.Group.Id, }, new { onclick = "return confirm('Na pewno chcesz usunąć grupę z tego tematu?');" })
+                            }
+                            @if (teacher)
+                            {
+                                @Html.ActionLink("Edytuj temat", "Edit", "Topic", new { id = Model.Id, })
+                            }
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="row description border-transparent">

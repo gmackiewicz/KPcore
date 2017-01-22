@@ -15,8 +15,9 @@ $(document).ready(function () {
             $("#group-name-validation-error").removeClass("hidden");
         }
     });
-
-    $(".user-list-main > h3").click(function() {
+    $(".btn-delete").append(" <i style='color:white' class='fa fa-trash-o'></i>");
+    $(".btn-edit").append(" <i style='color:white' class='fa fa-pencil-square-o'></i>");
+    $(".user-list-main > h3").click(function () {
         $(".user-list").slideToggle("fast");
         $(".user-list-main > h3 > i").toggleClass("fa-plus-square-o").toggleClass("fa-minus-square-o");
     });

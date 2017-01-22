@@ -13,11 +13,12 @@
                 <div class="text-right group-control-buttons main">
                     @if (leader)
                     {
-                        <a id="btn-edit" href="#" class="btn-small-grey">Edytuj</a>
-                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę grupę?');" })
+                        <a id="btn-edit" href="#" class="btn-edit btn-small-grey">Edytuj </a>
+                        @Html.ActionLink("Usuń", "DeleteGroup", new { id = Model.Id }, new { @class = "btn-delete btn-small-grey", onclick = "return confirm('Na pewno chcesz usunąć tę grupę?');" })
                     }
                 </div>
                 <div class="col-sm-8 col-sm-offset-2">
+                    <h1>GRUPA</h1>
                     <h1 id="group-name-display">
                         @Html.DisplayFor(model => model.Name)
                     </h1>

@@ -15,6 +15,12 @@ div[class*=col]{
 .inline {
   display: inline;
 }
+.dropdown-menu {
+  background-color: #151515;
+}
+.dropdown-menu li a {
+  color: #ffffff;
+}
 /*#region Imports */
 @media screen and (min-width: 767px) {
   .small-screen-visible {
