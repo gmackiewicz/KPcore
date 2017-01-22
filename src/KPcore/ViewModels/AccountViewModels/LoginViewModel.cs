@@ -12,7 +12,7 @@ namespace KPcore.ViewModels.AccountViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Zapamiętać dane logowania?")]
         public bool RememberMe { get; set; }
     }
 }

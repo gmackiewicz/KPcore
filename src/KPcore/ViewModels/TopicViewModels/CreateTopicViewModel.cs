@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using KPcore.Models;
@@ -22,7 +22,7 @@ namespace KPcore.ViewModels.TopicViewModels
         [Display(Name = "Przedmiot")]
         public int SelectedSubjectId { get; set; }
 
-        [Display(Name = "Termin spotka�")]
+        [Display(Name = "Termin spotkań")]
         [DataType(DataType.DateTime)]
         public DateTime? MeetingsDate { get; set; }
 

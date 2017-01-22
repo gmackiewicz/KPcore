@@ -15,7 +15,7 @@ namespace KPcore.ViewModels.AccountViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Hasła nie zgadzają się.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
