@@ -18,6 +18,8 @@ namespace KPcore.Data
         public DbSet<StudentGroup> StudentGroups { get; set; }
         public DbSet<Deadline> Deadlines { get; set; }
         public DbSet<GroupComment> GroupComments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -76,6 +78,19 @@ namespace KPcore.Data
 
             builder.Entity<GroupComment>()
                 .HasOne(a => a.Author)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserNotification>()
+                .HasKey(un => new { un.UserId, un.NotificationId });
+
+            builder.Entity<UserNotification>()
+                .HasOne(u => u.User)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserNotification>()
+                .HasOne(n => n.Notification)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
 
