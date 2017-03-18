@@ -14,7 +14,7 @@ namespace KPcore.ViewModels.GroupViewModels
 
         [Required]
         [Display(Name = "Użytkownik")]
-        public string SelectedUser { get; set; }
+        public int SelectedUser { get; set; }
 
         public AddMemberToGroupViewModel() { }
 
@@ -34,7 +34,7 @@ namespace KPcore.ViewModels.GroupViewModels
                 UsersList.Add(new SelectListItem
                 {
                     Text = "[" + s.IndexNumber + "] " + s.FirstName + " " + s.LastName,
-                    Value = s.Id
+                    Value = s.Id.ToString()
                 });
             }
         }

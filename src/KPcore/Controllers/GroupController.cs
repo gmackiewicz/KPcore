@@ -249,7 +249,7 @@ namespace KPcore.Controllers
 
         #region GroupMembers
 
-        public async Task<IActionResult> RemoveMember(int groupid, string memberid)
+        public async Task<IActionResult> RemoveMember(int groupid, int memberid)
         {
             var currentUser = await GetCurrentUserAsync();
             var groupLeader = _groupRepository.GetLeader(groupid);

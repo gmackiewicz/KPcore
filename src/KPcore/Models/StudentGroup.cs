@@ -9,8 +9,7 @@ namespace KPcore.Models
     public class StudentGroup
     {
         [Required]
-        [StringLength(450)]
-        public string StudentId { get; set; }
+        public int StudentId { get; set; }
 
         public ApplicationUser Student { get; set; }
 

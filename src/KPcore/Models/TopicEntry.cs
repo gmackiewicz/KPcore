@@ -12,8 +12,7 @@ namespace KPcore.Models
         public Topic Topic { get; set; }
 
         [Required]
-        [StringLength(450)]
-        public string AuthorId { get; set; }
+        public int AuthorId { get; set; }
 
         public ApplicationUser Author { get; set; }
 

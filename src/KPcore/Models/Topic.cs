@@ -11,8 +11,7 @@ namespace KPcore.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(450)]
-        public string TeacherId { get; set; }
+        public int TeacherId { get; set; }
 
         public ApplicationUser Teacher { get; set; }
 
