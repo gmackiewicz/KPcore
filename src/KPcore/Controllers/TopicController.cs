@@ -226,7 +226,7 @@ namespace KPcore.Controllers
             {
                 model.CommentId = commentid;
                 model.Content = comment.Content;
-                model.CreationDate = comment.CreationDate;
+                model.CreationDate = comment.CreationDate.Value;
                 ViewData["Title"] = "Edytuj komentarz";
             }
             else

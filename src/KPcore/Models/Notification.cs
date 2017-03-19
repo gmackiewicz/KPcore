@@ -8,7 +8,7 @@ namespace KPcore.Models
     {
         public int Id { get; set; }
 
-        public DateTime NotificationDate { get; set; }
+        public DateTime? NotificationDate { get; set; }
 
         [StringLength(200)]
         public string Content { get; set; }
