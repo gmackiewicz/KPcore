@@ -17,6 +17,7 @@
   background-color: white;
   transition: 0.3s all ease;
   left: 0;
+  bottom: 0;
 }
 .navbar-collapse li:hover:after {
   width: 100%;
@@ -25,29 +26,26 @@
 #logoutForm .btn:hover {
   text-decoration: none !important;
 }
-#logoutForm .user-name {
-  padding-left: 20px;
-}
-#logoutForm .user-name .notifications__list {
+#logoutForm .notifications__list {
   display: none;
   min-width: 320px;
   position: absolute;
   min-height: 28px;
   border: 1px solid rgba(150, 150, 150, 0.9);
   border-radius: 5px;
-  top: 110%;
+  top: 100%;
   right: -5px;
   background-color: rgba(100, 100, 100, 0.9);
 }
-#logoutForm .user-name .notifications__list ul {
+#logoutForm .notifications__list ul {
   padding: 5px;
   list-style-type: none;
 }
-#logoutForm .user-name .notifications__list ul li {
+#logoutForm .notifications__list ul li {
   padding: 3px;
   position: relative;
 }
-#logoutForm .user-name .notifications__list ul li:not(:last-of-type):after {
+#logoutForm .notifications__list ul li:not(:last-of-type):after {
   content: "";
   width: 80%;
   position: absolute;
@@ -56,12 +54,15 @@
   top: 100%;
   background-color: white;
 }
-#logoutForm .user-name .notifications__list .single-notification:hover {
+#logoutForm .notifications__list .single-notification:hover {
   background: none;
 }
-#logoutForm .user-name:hover .notifications__list {
+#logoutForm:hover .notifications__list {
   display: block;
 }
-#logoutForm .user-name:hover .custom-login__baloon {
+#logoutForm:hover .custom-login__baloon {
   background: rgba(255, 0, 0, 0.7);
+}
+#logoutForm .user-name {
+  padding-left: 20px;
 }
