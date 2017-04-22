@@ -11,7 +11,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" data-balloon-visible data-balloon="I am always visible!" data-balloon-pos="up">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
-                <div class="custom-login__baloon">0</div>
+                <div class="custom-login__baloon">@Model.Notifications.Count</div>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj się</button>

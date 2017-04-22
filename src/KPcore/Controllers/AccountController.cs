@@ -24,7 +24,8 @@ namespace KPcore.Controllers
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILoggerFactory loggerFactory) : base(userManager)
+            INotificationRepository notificationRepository,
+            ILoggerFactory loggerFactory) : base(userManager, notificationRepository)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
