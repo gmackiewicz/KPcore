@@ -12,6 +12,13 @@
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" data-balloon-visible data-balloon="I am always visible!" data-balloon-pos="up">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
                 <div class="custom-login__baloon">@Model.Notifications.Count</div>
+                <div class="notifications__list">
+                    <ul>
+                        <li class="single-notification">JAKIES POWIADMIENIE.</li>
+                        <li class="single-notification">JAKIES POWIADMIENIE.</li>
+                        <li class="single-notification">JAKIES POWIADMIENIE.</li>
+                    </ul>
+                </div>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj się</button>
