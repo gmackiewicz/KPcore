@@ -31,10 +31,12 @@ namespace KPcore.Controllers
             var user = GetCurrentUserAsync().Result;
             var controller = context.Controller as Controller;
             var model = controller?.ViewData.Model as BaseViewModel;
-            if (model != null)
+            if (model == null || user == null) return;
+            model.CurrentUser = user;
+            var notifications = _notificationRepository.GetUsersNotofications(user.Id).ToList();
+            if (notifications != null)
             {
-                model.CurrentUser = user;
-                model.Notifications = _notificationRepository.GetUsersNotofications(user.Id).ToList();
+                model.Notifications = notifications;
             }
         }
 
