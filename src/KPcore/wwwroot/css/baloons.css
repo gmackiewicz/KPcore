@@ -11,7 +11,7 @@
 #logoutForm .user-name {
   padding-left: 20px;
 }
-#logoutForm .notifications__list {
+#logoutForm .user-name .notifications__list {
   display: none;
   min-width: 320px;
   position: absolute;
@@ -19,18 +19,18 @@
   border: 1px solid white;
   border-radius: 5px;
   top: 100%;
-  right: 0;
+  right: -5px;
   background-color: rgba(100, 100, 100, 0.9);
 }
-#logoutForm .notifications__list ul {
+#logoutForm .user-name .notifications__list ul {
   padding: 5px;
   list-style-type: none;
 }
-#logoutForm .notifications__list ul li {
+#logoutForm .user-name .notifications__list ul li {
   padding: 3px;
   position: relative;
 }
-#logoutForm .notifications__list ul li:not(:last-of-type):after {
+#logoutForm .user-name .notifications__list ul li:not(:last-of-type):after {
   content: "";
   width: 80%;
   position: absolute;
@@ -39,9 +39,9 @@
   top: 100%;
   background-color: white;
 }
-#logoutForm .notifications__list .single-notification:hover {
+#logoutForm .user-name .notifications__list .single-notification:hover {
   background: none;
 }
-#logoutForm:hover .notifications__list {
+#logoutForm .user-name:hover .notifications__list {
   display: block;
 }
