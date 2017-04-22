@@ -6,7 +6,7 @@ namespace KPcore.Interfaces
     public interface ITopicRepository
     {
         void CreateTopic(Topic topic);
-        IEnumerable<Topic> GetAllUsersTopics(string userid);
+        IEnumerable<Topic> GetAllUsersTopics(int userid);
         Topic GetTopicById(int? topicId);
         IEnumerable<Topic> GetAvailableTopics();
         IEnumerable<TopicEntry> GetTopicComments(int? topicId);

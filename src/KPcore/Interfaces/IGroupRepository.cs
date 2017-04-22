@@ -5,15 +5,15 @@ namespace KPcore.Interfaces
 {
     public interface IGroupRepository
     {
-        void CreateGroup(Group group, string creator);
-        IEnumerable<StudentGroup> GetAllUsersGroup(string userid);
-        void AddUserToGroup(int groupId, string newMemberId, bool leader);
+        void CreateGroup(Group group, int creator);
+        IEnumerable<StudentGroup> GetAllUsersGroup(int userid);
+        void AddUserToGroup(int groupId, int newMemberId, bool leader);
         Group GetGroupById(int? groupId);
         IEnumerable<ApplicationUser> GetStudentsOfGroup(int? groupId);
         ApplicationUser GetLeader(int? groupId);
         IEnumerable<GroupComment> GetGroupComments(int? groupId);
         void AddComment(GroupComment comment);
-        void RemoveMemberFromGroup(int groupid, string memberid);
+        void RemoveMemberFromGroup(int groupid, int memberid);
         GroupComment GetCommentById(int? commentId);
         void EditComment(GroupComment comment);
         void DeleteComment(int commentid);

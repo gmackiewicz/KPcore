@@ -8,9 +8,10 @@ using KPcore.Data;
 namespace KPcore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170318124913_ChangeUserIdTypeToInteger")]
+    partial class ChangeUserIdTypeToInteger
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -150,7 +151,7 @@ namespace KPcore.Data.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 500);
 
-                    b.Property<DateTime?>("CreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<int>("GroupId");
 
@@ -163,21 +164,6 @@ namespace KPcore.Data.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("GroupComments");
-                });
-
-            modelBuilder.Entity("KPcore.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Content")
-                        .HasAnnotation("MaxLength", 200);
-
-                    b.Property<DateTime?>("NotificationDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("KPcore.Models.StudentGroup", b =>
@@ -256,7 +242,7 @@ namespace KPcore.Data.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 500);
 
-                    b.Property<DateTime?>("CreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<DateTime?>("ModificationDate");
 
@@ -269,23 +255,6 @@ namespace KPcore.Data.Migrations
                     b.HasIndex("TopicId");
 
                     b.ToTable("TopicEntries");
-                });
-
-            modelBuilder.Entity("KPcore.Models.UserNotification", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("NotificationId");
-
-                    b.Property<bool>("Seen");
-
-                    b.HasKey("UserId", "NotificationId");
-
-                    b.HasIndex("NotificationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<int>", b =>
@@ -435,19 +404,6 @@ namespace KPcore.Data.Migrations
                     b.HasOne("KPcore.Models.Topic", "Topic")
                         .WithMany()
                         .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("KPcore.Models.UserNotification", b =>
-                {
-                    b.HasOne("KPcore.Models.Notification", "Notification")
-                        .WithMany()
-                        .HasForeignKey("NotificationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("KPcore.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

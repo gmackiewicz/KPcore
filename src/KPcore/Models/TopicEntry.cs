@@ -12,8 +12,7 @@ namespace KPcore.Models
         public Topic Topic { get; set; }
 
         [Required]
-        [StringLength(450)]
-        public string AuthorId { get; set; }
+        public int AuthorId { get; set; }
 
         public ApplicationUser Author { get; set; }
 
@@ -21,7 +20,7 @@ namespace KPcore.Models
         [StringLength(500)]
         public string Content { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
 
         public DateTime? ModificationDate { get; set; }
     }

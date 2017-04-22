@@ -8,9 +8,10 @@ using KPcore.Data;
 namespace KPcore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170318235219_AddNotificationModels")]
+    partial class AddNotificationModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -150,7 +151,7 @@ namespace KPcore.Data.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 500);
 
-                    b.Property<DateTime?>("CreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<int>("GroupId");
 
@@ -173,7 +174,7 @@ namespace KPcore.Data.Migrations
                     b.Property<string>("Content")
                         .HasAnnotation("MaxLength", 200);
 
-                    b.Property<DateTime?>("NotificationDate");
+                    b.Property<DateTime>("NotificationDate");
 
                     b.HasKey("Id");
 
@@ -256,7 +257,7 @@ namespace KPcore.Data.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 500);
 
-                    b.Property<DateTime?>("CreationDate");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<DateTime?>("ModificationDate");
 

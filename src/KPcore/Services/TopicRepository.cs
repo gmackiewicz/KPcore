@@ -22,7 +22,7 @@ namespace KPcore.Services
             _dbContext.SaveChanges();
         }
 
-        public IEnumerable<Topic> GetAllUsersTopics(string userid)
+        public IEnumerable<Topic> GetAllUsersTopics(int userid)
         {
             return _dbContext.Topics
                 .Include(t => t.Subject)

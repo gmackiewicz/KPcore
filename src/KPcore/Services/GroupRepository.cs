@@ -17,14 +17,14 @@ namespace KPcore.Services
             _dbContext = dbContext;
         }
 
-        public void CreateGroup(Group group, string creatorId)
+        public void CreateGroup(Group group, int creatorId)
         {
             _dbContext.Groups.Add(group);
             _dbContext.SaveChanges();
             AddUserToGroup(group.Id, creatorId, true);
         }
 
-        public IEnumerable<StudentGroup> GetAllUsersGroup(string userid)
+        public IEnumerable<StudentGroup> GetAllUsersGroup(int userid)
         {
             return _dbContext.StudentGroups
                 .Include(sg => sg.Group)
@@ -32,7 +32,7 @@ namespace KPcore.Services
                 .Where(sg => sg.StudentId == userid).ToList();
         }
 
-        public void AddUserToGroup(int groupId, string newMemberId, bool leader)
+        public void AddUserToGroup(int groupId, int newMemberId, bool leader)
         {
             var studentGroup = new StudentGroup
             {
@@ -86,7 +86,7 @@ namespace KPcore.Services
             _dbContext.SaveChanges();
         }
 
-        public void RemoveMemberFromGroup(int groupid, string memberid)
+        public void RemoveMemberFromGroup(int groupid, int memberid)
         {
             var memberToRemove = _dbContext.StudentGroups.FirstOrDefault(sg => sg.GroupId == groupid && sg.StudentId == memberid);
             _dbContext.StudentGroups.Remove(memberToRemove);
