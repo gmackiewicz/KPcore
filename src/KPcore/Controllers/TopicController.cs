@@ -81,6 +81,7 @@ namespace KPcore.Controllers
 
             var topic = new Topic
             {
+                Id = 1,
                 Title = model.Title,
                 Description = model.Description,
                 CreationDate = DateTime.Now,

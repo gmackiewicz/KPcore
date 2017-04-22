@@ -90,6 +90,7 @@ namespace KPcore.Controllers
 
             var subject = new Subject
             {
+                Id = 1,
                 Name = model.Name,
                 Description = model.Description,
             };

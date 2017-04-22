@@ -91,6 +91,7 @@ namespace KPcore.Controllers
 
             var group = new Group
             {
+                Id = 1,
                 Name = model.Name
             };
 
@@ -100,13 +101,8 @@ namespace KPcore.Controllers
 
         // GET: /Group/Details
         [HttpGet]
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id = 0)
         {
-            if (id == null)
-            {
-                return RedirectToAction(nameof(Index), new { Message = GroupMessageId.NoGroupToView });
-            }
-
             var group = _groupRepository.GetGroupById(id);
 
             if (group == null)
@@ -219,14 +215,13 @@ namespace KPcore.Controllers
 
             if (model.CommentId == null)
             {
-                comment.CreationDate = DateTime.Now;
+                comment.Id = 1;
                 _groupRepository.AddComment(comment);
             }
             else
             {
                 comment.Id = model.CommentId.Value;
                 comment.CreationDate = model.CreationDate;
-                comment.ModificationDate = DateTime.Now;
                 _groupRepository.EditComment(comment);
             }
 
@@ -409,6 +404,7 @@ namespace KPcore.Controllers
 
             var deadline = new Deadline
             {
+                Id = 1,
                 DeadlineDate = model.DeadlineDate.Value,
                 Comment = model.Comment,
                 GroupId = model.GroupId
