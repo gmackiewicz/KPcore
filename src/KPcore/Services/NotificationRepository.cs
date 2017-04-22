@@ -30,5 +30,19 @@ namespace KPcore.Services
         {
             _dbContext.Database.ExecuteSqlCommand($"[dbo].[AddNotification] @Msg = '{msg}', @GroupId = '{groupId}'");
         }
+
+        public bool MarkUserNotificationAsSeen(int userId, int notificationId)
+        {
+            var notification = _dbContext.UserNotifications
+                .FirstOrDefault(n => n.UserId == userId && n.NotificationId == notificationId);
+
+            if (notification == null)
+                return false;
+
+            notification.Seen = true;
+            _dbContext.UserNotifications.Update(notification);
+            _dbContext.SaveChanges();
+            return true;
+        }
     }
 }
