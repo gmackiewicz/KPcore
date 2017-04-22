@@ -54,6 +54,12 @@
   top: 100%;
   background-color: white;
 }
+#logoutForm .notifications__list .single-notification .hide-notif {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
 #logoutForm .notifications__list .single-notification:hover {
   background: none;
 }

@@ -16,7 +16,7 @@ namespace KPcore.Controllers
         { }
 
         [HttpPost]
-        public JsonResult MaskAsSeen(int notificationId)
+        public JsonResult MarkAsSeen(int notificationId)
         {
             var userId = GetCurrentUserAsync().Result.Id;
             var marked = _notificationRepository.MarkUserNotificationAsSeen(userId, notificationId);

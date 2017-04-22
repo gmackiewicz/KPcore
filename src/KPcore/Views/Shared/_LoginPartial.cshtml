@@ -11,14 +11,17 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="user-name">
                 <a asp-area="" asp-controller="Manage" asp-action="Index">Witaj <strong>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</strong></a>
-                <div class="custom-login__baloon">@Model.Notifications.Count</div>
+                <div class="custom-login__baloon" id="notificationCounter">@Model.Notifications.Count</div>
                 <div class="notifications__list">
-                    <ul>
+                    <ul id="notif__ul">
                         @if (Model.Notifications.Count > 0)
                         {
                             foreach (var n in @Model.Notifications)
                             {
-                                <li class="single-notification">@n.NotificationDate - @n.Content</li>
+                                <li class="single-notification" id="notification-@n.Id">
+                                    @n.NotificationDate - @n.Content
+                                    <div onclick="markAsSeen(@n.Id)" class="btn hide-notif"><i class="fa fa-times-circle"></i></div>
+                                </li>
                             }
                         }
                         else
@@ -42,3 +45,25 @@ else
         <li><a asp-area="" asp-controller="Account" asp-action="Login">Zaloguj się</a></li>
     </ul>
 }
+<script>
+    var markAsSeen = function (notifId) {
+        $.ajax({
+            type: "POST",
+            url: "/Notification/MarkAsSeen",
+            data: { notificationId: notifId },
+            success: function () {
+                document.getElementById("notification-" + notifId).style.display = "none";
+                var counter = parseInt($("#notificationCounter").html());
+                $("#notificationCounter").html(counter-1);
+                if (counter - 1 <= 0) {
+                    $("#notif__ul").html('<li class="single-notification">Brak powiadomień.</li>')
+
+                }
+
+            },
+            error: function () {
+                Console.log("Post error. Notification still exists now.")
+            }
+        })
+    }
+</script>
