@@ -4,14 +4,15 @@
     top: 50%;
     left: 7px;
     transform: translateY(-50%);
-    background: rgba(255,0,0,0.5);
+    background: rgba(255,0,0,0.3);
     min-width: 20px;
     border-radius: 5px;
     text-align: center;
 }
-.navbar-collapse{
-    li{
-        &:after{
+
+.navbar-collapse {
+    li {
+        &:after {
             content: "";
             position: absolute;
             width: 0;
@@ -20,17 +21,20 @@
             transition: 0.3s all ease;
             left: 0;
         }
-        &:hover{
-            &:after{
+
+        &:hover {
+            &:after {
                 width: 100%;
             }
         }
     }
 }
+
 #logoutForm {
-    .btn, .btn:hover{
+    .btn, .btn:hover {
         text-decoration: none !important;
     }
+
     & .user-name {
         padding-left: 20px;
 
@@ -75,6 +79,10 @@
         &:hover {
             .notifications__list {
                 display: block;
+            }
+
+            .custom-login__baloon {
+                background: rgba(255,0,0,0.7);
             }
         }
     }

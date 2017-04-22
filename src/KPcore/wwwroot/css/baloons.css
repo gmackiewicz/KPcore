@@ -3,7 +3,7 @@
   top: 50%;
   left: 7px;
   transform: translateY(-50%);
-  background: rgba(255, 0, 0, 0.5);
+  background: rgba(255, 0, 0, 0.3);
   min-width: 20px;
   border-radius: 5px;
   text-align: center;
@@ -60,4 +60,7 @@
 }
 #logoutForm .user-name:hover .notifications__list {
   display: block;
+}
+#logoutForm .user-name:hover .custom-login__baloon {
+  background: rgba(255, 0, 0, 0.7);
 }

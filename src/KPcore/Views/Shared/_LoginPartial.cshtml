@@ -10,7 +10,7 @@
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li class="user-name">
-                <a asp-area="" asp-controller="Manage" asp-action="Index">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
+                <a asp-area="" asp-controller="Manage" asp-action="Index">Witaj <strong>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</strong></a>
                 <div class="custom-login__baloon">@Model.Notifications.Count</div>
                 <div class="notifications__list">
                     <ul>
