@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using KPcore.Data;
 using KPcore.Interfaces;
@@ -19,9 +21,14 @@ namespace KPcore.Services
         public IEnumerable<Notification> GetUsersNotofications(int userId = 0)
         {
             return _dbContext.UserNotifications
-                .Where(n => n.UserId == userId)
+                .Where(n => n.UserId == userId && n.Seen == false)
                 .Include(n => n.Notification)
                 .Select(n => n.Notification);
+        }
+
+        public void AddNotification(string msg, int groupId)
+        {
+            _dbContext.Database.ExecuteSqlCommand($"[dbo].[AddNotification] @Msg = '{msg}', @GroupId = '{groupId}'");
         }
     }
 }

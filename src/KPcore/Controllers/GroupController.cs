@@ -218,6 +218,10 @@ namespace KPcore.Controllers
             {
                 comment.Id = 1;
                 _groupRepository.AddComment(comment);
+
+                var group = _groupRepository.GetGroupById(comment.GroupId);
+                var notificationMsg = $"Pojawił się nowy komentarz w grupie [{group.Id}] {group.Name}";
+                _notificationRepository.AddNotification(notificationMsg, group.Id);
             }
             else
             {
