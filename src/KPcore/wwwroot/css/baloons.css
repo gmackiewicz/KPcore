@@ -9,9 +9,6 @@
 }
 #logoutForm .notifications__list {
   display: none;
-}
-#logoutForm:hover .notifications__list {
-  display: block;
   min-width: 320px;
   position: absolute;
   min-height: 28px;
@@ -19,12 +16,28 @@
   border-radius: 5px;
   top: 100%;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(100, 100, 100, 0.9);
 }
-#logoutForm:hover .notifications__list ul {
+#logoutForm .notifications__list ul {
   padding: 5px;
   list-style-type: none;
 }
-#logoutForm:hover .notifications__list .single-notification:hover {
+#logoutForm .notifications__list ul li {
+  padding: 3px;
+  position: relative;
+}
+#logoutForm .notifications__list ul li:not(:last-of-type):after {
+  content: "";
+  width: 80%;
+  position: absolute;
+  left: 10%;
+  height: 1px;
+  top: 100%;
+  background-color: white;
+}
+#logoutForm .notifications__list .single-notification:hover {
   background: none;
+}
+#logoutForm:hover .notifications__list {
+  display: block;
 }
