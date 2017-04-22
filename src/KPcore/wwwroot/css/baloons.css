@@ -9,7 +9,7 @@
   border-radius: 5px;
   text-align: center;
 }
-.navbar-collapse li:after {
+.navbar-collapse > li:after {
   content: "";
   position: absolute;
   width: 0;
@@ -19,7 +19,7 @@
   left: 0;
   bottom: 0;
 }
-.navbar-collapse li:hover:after {
+.navbar-collapse > li:hover:after {
   width: 100%;
 }
 #logoutForm .btn,
