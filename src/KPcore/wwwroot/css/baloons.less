@@ -1,0 +1,44 @@
+﻿
+.custom-login__baloon {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    background: rgba(255,0,0,0.5);
+    min-width: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+#logoutForm {
+    & .notifications__list{
+        display:none;
+    }
+    &:hover{
+        .notifications__list {
+        display: block;
+        min-width: 320px;
+        position: absolute;
+        min-height: 28px;
+        border: 1px solid white;
+        border-radius: 5px;
+        top: 100%;
+        right: 0;
+        background-color: rgba(255,255,255,0.2);
+
+        &:hover, & li {
+        }
+
+        ul {
+            padding: 5px;
+            list-style-type: none;
+        }
+
+        .single-notification {
+            &:hover {
+                background: none;
+            }
+        }
+    }
+    }
+    
+}
