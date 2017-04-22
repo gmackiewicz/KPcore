@@ -7,5 +7,6 @@ namespace KPcore.Interfaces
     {
         IEnumerable<Notification> GetUsersNotofications(int userId = 0);
         void AddNotification(string msg, int groupId);
+        bool MarkUserNotificationAsSeen(int userId, int notificationId);
     }
 }
