@@ -1,7 +1,8 @@
 ﻿.custom-login__baloon {
+  padding: 3px;
   position: absolute;
   top: 50%;
-  left: 7px;
+  left: 4px;
   transform: translateY(-50%);
   background: rgba(255, 0, 0, 0.3);
   min-width: 20px;
