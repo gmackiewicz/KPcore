@@ -20,7 +20,8 @@ namespace KPcore.Controllers
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        ILoggerFactory loggerFactory) : base(userManager)
+            INotificationRepository notificationRepository,
+        ILoggerFactory loggerFactory) : base(userManager, notificationRepository)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<ManageController>();
@@ -50,7 +51,7 @@ namespace KPcore.Controllers
             };
             return View(model);
         }
-        
+
         //
         // GET: /Manage/ChangePassword
         [HttpGet]
@@ -118,7 +119,7 @@ namespace KPcore.Controllers
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
-        
+
         //
         // GET: /Manage/VerifyTeacher
         [HttpGet]
@@ -159,7 +160,7 @@ namespace KPcore.Controllers
             ModelState.AddModelError(string.Empty, "Failed to verify teacher's account");
             return View(model);
         }
-        
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)
@@ -177,7 +178,7 @@ namespace KPcore.Controllers
             VerifyTeacherSuccess,
             Error
         }
-        
+
         #endregion
     }
 }

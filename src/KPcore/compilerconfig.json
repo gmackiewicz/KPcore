@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/siteless.css",
     "inputFile": "wwwroot/less/siteless.less"
+  },
+  {
+    "outputFile": "wwwroot/css/baloons.css",
+    "inputFile": "wwwroot/css/baloons.less"
   }
 ]

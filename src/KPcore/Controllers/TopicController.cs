@@ -22,7 +22,8 @@ namespace KPcore.Controllers
             ITopicRepository topicRepository,
             IGroupRepository groupRepository,
             IDeadlineRepository deadlineRepository,
-            ISubjectRepository subjectRepository) : base(userManager)
+            INotificationRepository notificationRepository,
+            ISubjectRepository subjectRepository) : base(userManager, notificationRepository)
         {
             _topicRepository = topicRepository;
             _groupRepository = groupRepository;

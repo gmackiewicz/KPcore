@@ -52,6 +52,15 @@ namespace KPcore.Services
                 .Include(g => g.Topic.Subject)
                 .FirstOrDefault(g => g.Id == groupId);
         }
+        
+        public IEnumerable<ApplicationUser> GetAllMembers(int groupId = 0)
+        {
+            return _dbContext.StudentGroups
+                .Include(g => g.Student)
+                .Where(g => g.GroupId == groupId)
+                .Select(g => g.Student)
+                .ToList();
+        }
 
         public IEnumerable<ApplicationUser> GetStudentsOfGroup(int? groupId)
         {

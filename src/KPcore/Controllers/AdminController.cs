@@ -19,7 +19,8 @@ namespace KPcore.Controllers
 
         public AdminController(
             UserManager<ApplicationUser> userManager,
-            ISubjectRepository subjectRepository) : base(userManager)
+            INotificationRepository notificationRepository,
+            ISubjectRepository subjectRepository) : base(userManager, notificationRepository)
         {
             _subjectRepository = subjectRepository;
         }

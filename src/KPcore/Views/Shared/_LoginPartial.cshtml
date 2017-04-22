@@ -9,8 +9,25 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
+            <li class="user-name">
+                <a asp-area="" asp-controller="Manage" asp-action="Index">Witaj <strong>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</strong></a>
+                <div class="custom-login__baloon">@Model.Notifications.Count</div>
+                <div class="notifications__list">
+                    <ul>
+                        @if (Model.Notifications.Count > 0)
+                        {
+                            foreach (var n in @Model.Notifications)
+                            {
+                                <li class="single-notification">@n.NotificationDate - @n.Content</li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="single-notification">Brak powiadomień.</li>
+                        }
+                    </ul>
+
+                </div>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj się</button>

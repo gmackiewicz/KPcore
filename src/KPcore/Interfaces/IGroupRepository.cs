@@ -5,6 +5,7 @@ namespace KPcore.Interfaces
 {
     public interface IGroupRepository
     {
+        IEnumerable<ApplicationUser> GetAllMembers(int groupId = 0);
         void CreateGroup(Group group, int creator);
         IEnumerable<StudentGroup> GetAllUsersGroup(int userid);
         void AddUserToGroup(int groupId, int newMemberId, bool leader);
