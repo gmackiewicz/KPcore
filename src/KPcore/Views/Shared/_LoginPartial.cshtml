@@ -14,9 +14,10 @@
                 <div class="custom-login__baloon">@Model.Notifications.Count</div>
                 <div class="notifications__list">
                     <ul>
-                        <li class="single-notification">JAKIES POWIADMIENIE.</li>
-                        <li class="single-notification">JAKIES POWIADMIENIE.</li>
-                        <li class="single-notification">JAKIES POWIADMIENIE.</li>
+                        @foreach (var n in @Model.Notifications)
+                        {
+                            <li class="single-notification">@n.NotificationDate - @n.Content</li>
+                        }
                     </ul>
                 </div>
             </li>
