@@ -8,6 +8,22 @@
   border-radius: 5px;
   text-align: center;
 }
+.navbar-collapse li:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: 0.3s all ease;
+  left: 0;
+}
+.navbar-collapse li:hover:after {
+  width: 100%;
+}
+#logoutForm .btn,
+#logoutForm .btn:hover {
+  text-decoration: none !important;
+}
 #logoutForm .user-name {
   padding-left: 20px;
 }
@@ -18,7 +34,7 @@
   min-height: 28px;
   border: 1px solid white;
   border-radius: 5px;
-  top: 100%;
+  top: 110%;
   right: -5px;
   background-color: rgba(100, 100, 100, 0.9);
 }
