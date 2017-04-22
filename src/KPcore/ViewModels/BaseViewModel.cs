@@ -11,5 +11,6 @@ namespace KPcore.ViewModels
     public class BaseViewModel
     {
         public ApplicationUser CurrentUser { get; set; }
+        public List<Notification> Notifications { get; set; }
     }
 }
