@@ -9,14 +9,14 @@
 {
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" data-balloon-visible data-balloon="I am always visible!" data-balloon-pos="up">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
+            <li class="user-name">
+                <a asp-area="" asp-controller="Manage" asp-action="Index">Witaj @Model.CurrentUser.FirstName @Model.CurrentUser.LastName!</a>
                 <div class="custom-login__baloon">@Model.Notifications.Count</div>
                 <div class="notifications__list">
                     <ul>
                         @if (Model.Notifications.Count > 0)
                         {
-                            @foreach (var n in @Model.Notifications)
+                            foreach (var n in @Model.Notifications)
                             {
                                 <li class="single-notification">@n.NotificationDate - @n.Content</li>
                             }

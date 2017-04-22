@@ -1,8 +1,9 @@
 ﻿
 .custom-login__baloon {
     position: absolute;
-    top: 2px;
-    right: 0;
+    top: 50%;
+    left: 7px;
+    transform: translateY(-50%);
     background: rgba(255,0,0,0.5);
     min-width: 20px;
     border-radius: 5px;
@@ -10,6 +11,9 @@
 }
 
 #logoutForm {
+    & .user-name{
+        padding-left: 20px;
+    }
     & .notifications__list {
         display: none;
         min-width: 320px;
