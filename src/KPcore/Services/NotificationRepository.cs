@@ -48,14 +48,20 @@ namespace KPcore.Services
             AddNotificationToMultipleUsers(msg, userIds);
         }
 
-        public void AddNotificationToMultipleUsers(string msg, List<int> users)
+        public void AddNotificationToMultipleUsers(string msg, List<int> userIds)
         {
             var notifId = InsertNotification(msg);
 
-            foreach (var userId in users)
+            foreach (var userId in userIds)
             {
                 InsertUserNotification(userId, notifId);
             }
+        }
+
+        public void AddNotificationToUser(string msg, ApplicationUser user)
+        {
+            var userId = user.Id;
+            AddNotificationToUser(msg, userId);
         }
 
         public void AddNotificationToUser(string msg, int userId)
