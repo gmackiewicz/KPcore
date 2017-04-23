@@ -11,5 +11,6 @@ namespace KPcore.Interfaces
         void AddNotificationToMultipleUsers(string msg, List<int> userIds);
         void AddNotificationToUser(string msg, ApplicationUser user);
         void AddNotificationToUser(string msg, int userId);
+        void CleanNotifications();
     }
 }

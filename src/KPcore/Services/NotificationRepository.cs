@@ -70,6 +70,18 @@ namespace KPcore.Services
             InsertUserNotification(userId, notifId);
         }
 
+        public void CleanNotifications()
+        {
+            var notificationIds = _dbContext.Notifications.Select(n => n.Id);
+            foreach (var id in notificationIds)
+            {
+                var allSeen = _dbContext.UserNotifications.Where(n => n.NotificationId == id).All(n => n.Seen);
+                if (allSeen)
+                    _dbContext.Database.ExecuteSqlCommand($"[dbo].[RemoveNotification] @Id='{id}'");
+            }
+            Console.WriteLine();
+        }
+
         private int InsertNotification(string msg)
         {
             var msgParam = new SqlParameter

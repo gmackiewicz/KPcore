@@ -124,8 +124,7 @@ namespace KPcore.Controllers
             _subjectRepository.RemoveSubject(subject);
             return RedirectToAction(nameof(Index), new { Message = AdminMessageId.RemoveSubjectSuccess });
         }
-
-
+        
         [HttpPost]
         public JsonResult NotifyEveryone(string message)
         {
@@ -143,6 +142,21 @@ namespace KPcore.Controllers
             return Json("Wysłano wszystkim podaną notyfikację.");
         }
 
+
+        [HttpPost]
+        public JsonResult CleanSeenNotifications()
+        {
+            var user = GetCurrentUserAsync().Result;
+            if (user == null || user.Status != 2)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Nie możesz tego zrobić!");
+            }
+            
+            _notificationRepository.CleanNotifications();
+            Response.StatusCode = (int)HttpStatusCode.OK;
+            return Json("Wyczyszczono przeczytane notyfikacje.");
+        }
         #region Helpers
 
         private void AddErrors(IdentityResult result)
