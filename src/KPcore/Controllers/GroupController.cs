@@ -368,6 +368,11 @@ namespace KPcore.Controllers
             }
 
             _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
+
+            var selectedTopic = _topicRepository.GetTopicById(model.SelectedTopic);
+            var group = _groupRepository.GetGroupById(model.GroupId);
+            var notificationMsg = $"Twój temat '{selectedTopic.Title}' został wybrany przez grupę '{group.Name}'.";
+            _notificationRepository.AddNotificationToUser(notificationMsg, selectedTopic.TeacherId);
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
