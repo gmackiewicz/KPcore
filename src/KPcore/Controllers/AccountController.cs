@@ -35,8 +35,11 @@ namespace KPcore.Controllers
         // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string returnUrl = null, string msg = null)
         {
+            if (msg != null)
+                ViewData["Info"] = "Zarejestrowałeś się poprawnie! Możesz się teraz zalogować.";
+
             ViewData["ReturnUrl"] = returnUrl;
             return View(new LoginViewModel());
         }
@@ -115,7 +118,7 @@ namespace KPcore.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Login", new { msg = "OK" });
                 }
                 AddErrors(result);
             }
@@ -134,7 +137,7 @@ namespace KPcore.Controllers
             _logger.LogInformation(4, "User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-        
+
         //
         // GET: /Account/ForgotPassword
         [HttpGet]
@@ -225,7 +228,7 @@ namespace KPcore.Controllers
         {
             return View(new ResetPasswordViewModel());
         }
-        
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)

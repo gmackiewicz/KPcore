@@ -19,9 +19,7 @@ namespace KPcore.Services
 
         public void CreateGroup(Group group, int creatorId)
         {
-            _dbContext.Groups.Add(group);
-            _dbContext.SaveChanges();
-            AddUserToGroup(group.Id, creatorId, true);
+            _dbContext.Database.ExecuteSqlCommand($"[dbo].[CreateGroup] @Name = '{group.Name}', @UserId = '{creatorId}'");
         }
 
         public IEnumerable<StudentGroup> GetAllUsersGroup(int userid)

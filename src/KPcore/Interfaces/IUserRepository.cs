@@ -6,5 +6,6 @@ namespace KPcore.Interfaces
     public interface IUserRepository
     {
         IEnumerable<ApplicationUser> GetAllStudents();
+        IEnumerable<ApplicationUser> GetAllUsers();
     }
 }

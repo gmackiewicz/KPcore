@@ -258,6 +258,7 @@ namespace KPcore.Controllers
 
             var comment = new TopicEntry
             {
+                Id = 1,
                 TopicId = model.TopicId,
                 AuthorId = user.Id,
                 Content = model.Content,
@@ -265,7 +266,18 @@ namespace KPcore.Controllers
 
             if (model.CommentId == null)
             {
-                comment.CreationDate = DateTime.Now;
+                var groupId = _topicRepository.GetGroupIdForTopic(comment.TopicId);
+                if (groupId != 0)
+                {
+                    var topic = _topicRepository.GetTopicById(comment.TopicId);
+                    var notificationMsg = $"Pojawił się nowy komentarz do tematu [{topic.Id}] {topic.Title}";
+
+                    var users = _groupRepository.GetAllMembers(groupId).Where(m => m.Id != user.Id).Select(m => m.Id).ToList();
+                    if (!users.Contains(topic.TeacherId) && topic.TeacherId != user.Id)
+                        users.Add(topic.TeacherId);
+
+                    _notificationRepository.AddNotificationToMultipleUsers(notificationMsg, users);
+                }
                 _topicRepository.AddComment(comment);
             }
             else
