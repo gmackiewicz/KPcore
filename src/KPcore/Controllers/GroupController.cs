@@ -221,7 +221,8 @@ namespace KPcore.Controllers
 
                 var group = _groupRepository.GetGroupById(comment.GroupId);
                 var notificationMsg = $"Pojawił się nowy komentarz w grupie [{group.Id}] {group.Name}";
-                _notificationRepository.AddNotification(notificationMsg, group.Id);
+                var groupMembers = _groupRepository.GetAllMembers(group.Id).Where(m => m.Id != user.Id).ToList();
+                _notificationRepository.AddNotificationToMultipleUsers(notificationMsg, groupMembers);
             }
             else
             {
