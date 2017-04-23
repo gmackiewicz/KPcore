@@ -511,6 +511,17 @@ namespace KPcore.Controllers
 
         public IActionResult KickGroupFromTopic(int topicid, int groupid)
         {
+            var topic = _topicRepository.GetTopicById(topicid);
+            var user = GetCurrentUserAsync().Result;
+            if (user == null || topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Index), "Home");
+            }
+
+            var members = _groupRepository.GetAllMembers(groupid).ToList();
+            var notificationMsg = $"Twoja grupa została usunięta z tematu '{topic.Title}'.";
+            _notificationRepository.AddNotificationToMultipleUsers(notificationMsg, members);
+
             _groupRepository.RemoveTopicForGroup(groupid);
             return RedirectToAction(nameof(Details), "Topic", new { id = topicid });
         }
