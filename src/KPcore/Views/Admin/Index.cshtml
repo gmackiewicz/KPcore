@@ -62,8 +62,14 @@
                 <h4 class="modal-title">Globalne powiadomienie</h4>
             </div>
             <div class="modal-body">
-                <p>Treść wiadomości:</p>
-                <input id="globalNotifText" type="text" class="form-control" />
+                <div class="form-horizontal custom-form">
+                    <div class="form-group">
+                        <label class="control-label">Treść: <i class="fa fa-pencil" aria-hidden="true"></i></label>
+                        <div>
+                            <input id="globalNotifText" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="sendNotif()">Wyślij</button>
