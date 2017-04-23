@@ -830,3 +830,9 @@ TABLE .table-wrapper-custom {
   border-top-right-radius: 5px;
 }
 /*#endregion */
+.modal-content {
+  background-color: #151515;
+}
+.modal-content .close {
+  color: white;
+}

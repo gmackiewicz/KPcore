@@ -19,7 +19,7 @@
                             foreach (var n in @Model.Notifications)
                             {
                                 <li class="single-notification" id="notification-@n.Id">
-                                    @n.NotificationDate - @n.Content
+                                    <small>@n.NotificationDate</small> - @n.Content
                                     <div onclick="markAsSeen(@n.Id)" class="btn hide-notif"><i class="fa fa-times-circle"></i></div>
                                 </li>
                             }

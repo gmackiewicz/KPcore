@@ -30,4 +30,91 @@
     <div class="row space-before">
         <a asp-controller="Admin" asp-action="Subject" class="btn btn-grey">Dodaj nowy</a>
     </div>
+    <hr />
+    <h2>Inne opcje.</h2>
+    <div class="btn btn-grey" data-toggle="modal" data-target="#clearNotif">Wyczyść przeczytane powiadomienia.</div>
+    <div class="btn btn-grey" data-toggle="modal" data-target="#sendGlobalNotif">Wyślij powiadomienie globalne.</div>
 </div>
+
+<div id="clearNotif" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Czyszczenie powiadomień</h4>
+            </div>
+            <div class="modal-body">
+                <p>Jesteś pewny, że chcesz wyczyścić powiadomienia?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="clearNotifs()">Wyczyść</button>
+                <button type="button" class="btn btn-grey" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="sendGlobalNotif" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Globalne powiadomienie</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal custom-form">
+                    <div class="form-group">
+                        <label class="control-label">Treść: <i class="fa fa-pencil" aria-hidden="true"></i></label>
+                        <div>
+                            <input id="globalNotifText" type="text" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="sendNotif()">Wyślij</button>
+                <button type="button" class="btn btn-grey" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var clearNotifs = function () {
+        $("#clearNotif").modal('hide');
+        $.ajax({
+            type: "post",
+            url: "/Admin/CleanSeenNotifications",
+            success: function () {
+                alert("Powiadomienia zostały wyczyszczone.")
+            },
+            error: function () {
+                alert("Nie udało się wyczyścić powiadomień. Skontaktuj się z administratorem.")
+            }
+
+        });
+
+    }
+    var sendNotif = function () {
+        var message = $("#globalNotifText").val();
+        $("#sendGlobalNotif").modal('hide');
+
+
+        if (message.length > 0) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/NotifyEveryone",
+                data: {
+                    message: message
+
+                },
+                success: function () {
+                    alert("Powiadomienie globalne wysłane!");
+
+                },
+                error: function () {
+                    alert('Blad poczas wysylania powiadomienia globalnego. Skontaktuj się z administratorem.');
+                }
+            });
+        }
+    }
+</script>
