@@ -59,6 +59,14 @@ namespace KPcore.Services
             _dbContext.SaveChanges();
         }
 
+        public int GetGroupIdForTopic(int topicId)
+        {
+            return _dbContext.Groups
+                .Where(g => g.TopicId == topicId)
+                .Select(g => g.Id)
+                .FirstOrDefault();
+        }
+
         public IEnumerable<TopicEntry> GetTopicComments(int? topicId)
         {
             return _dbContext.TopicEntries

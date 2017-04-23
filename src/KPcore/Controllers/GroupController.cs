@@ -221,7 +221,8 @@ namespace KPcore.Controllers
 
                 var group = _groupRepository.GetGroupById(comment.GroupId);
                 var notificationMsg = $"Pojawił się nowy komentarz w grupie [{group.Id}] {group.Name}";
-                _notificationRepository.AddNotification(notificationMsg, group.Id);
+                var groupMembers = _groupRepository.GetAllMembers(group.Id).Where(m => m.Id != user.Id).ToList();
+                _notificationRepository.AddNotificationToMultipleUsers(notificationMsg, groupMembers);
             }
             else
             {
@@ -256,7 +257,11 @@ namespace KPcore.Controllers
 
             if (currentUser != null && currentUser.Id == groupLeader.Id)
             {
+                var group = _groupRepository.GetGroupById(groupid);
                 _groupRepository.RemoveMemberFromGroup(groupid, memberid);
+
+                var notificationMsg = $"Zostałeś usunięty z grupy [{group.Id}] {group.Name}.";
+                _notificationRepository.AddNotificationToUser(notificationMsg, memberid);
                 return RedirectToAction(nameof(Details), new { id = groupid });
             }
 
@@ -281,7 +286,6 @@ namespace KPcore.Controllers
 
             var model = new AddMemberToGroupViewModel(membersToAdd) { GroupId = id };
             ViewBag.UserList = model.UsersList;
-
             return View(model);
         }
 
@@ -302,7 +306,11 @@ namespace KPcore.Controllers
                 return View(model);
             }
 
-            _groupRepository.AddUserToGroup(model.GroupId, model.SelectedUser, false);
+            var group = _groupRepository.GetGroupById(model.GroupId);
+            _groupRepository.AddUserToGroup(group.Id, model.SelectedUser, false);
+
+            var notificationMsg = $"Zostałeś dodany do grupy [{group.Id}] {group.Name}.";
+            _notificationRepository.AddNotificationToUser(notificationMsg, model.SelectedUser);
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
@@ -360,6 +368,11 @@ namespace KPcore.Controllers
             }
 
             _groupRepository.AddTopicToGroup(model.GroupId, model.SelectedTopic);
+
+            var selectedTopic = _topicRepository.GetTopicById(model.SelectedTopic);
+            var group = _groupRepository.GetGroupById(model.GroupId);
+            var notificationMsg = $"Twój temat '{selectedTopic.Title}' został wybrany przez grupę '{group.Name}'.";
+            _notificationRepository.AddNotificationToUser(notificationMsg, selectedTopic.TeacherId);
             return RedirectToAction(nameof(Details), new { id = model.GroupId });
         }
 
@@ -498,6 +511,17 @@ namespace KPcore.Controllers
 
         public IActionResult KickGroupFromTopic(int topicid, int groupid)
         {
+            var topic = _topicRepository.GetTopicById(topicid);
+            var user = GetCurrentUserAsync().Result;
+            if (user == null || topic.TeacherId != user.Id)
+            {
+                return RedirectToAction(nameof(Index), "Home");
+            }
+
+            var members = _groupRepository.GetAllMembers(groupid).ToList();
+            var notificationMsg = $"Twoja grupa została usunięta z tematu '{topic.Title}'.";
+            _notificationRepository.AddNotificationToMultipleUsers(notificationMsg, members);
+
             _groupRepository.RemoveTopicForGroup(groupid);
             return RedirectToAction(nameof(Details), "Topic", new { id = topicid });
         }

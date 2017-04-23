@@ -21,5 +21,10 @@ namespace KPcore.Services
         {
             return _dbContext.Users.Where(u => u.Status == 0).ToList();
         }
+
+        public IEnumerable<ApplicationUser> GetAllUsers()
+        {
+            return _dbContext.Users;
+        }
     }
 }
