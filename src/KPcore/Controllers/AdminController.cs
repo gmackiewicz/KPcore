@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using KPcore.Data;
 using KPcore.Interfaces;
@@ -16,13 +17,16 @@ namespace KPcore.Controllers
     public class AdminController : BaseController
     {
         private readonly ISubjectRepository _subjectRepository;
+        private readonly IUserRepository _userRepository;
 
         public AdminController(
             UserManager<ApplicationUser> userManager,
             INotificationRepository notificationRepository,
+            IUserRepository userRepository,
             ISubjectRepository subjectRepository) : base(userManager, notificationRepository)
         {
             _subjectRepository = subjectRepository;
+            _userRepository = userRepository;
         }
 
         // GET: /Admin/Index
@@ -119,6 +123,24 @@ namespace KPcore.Controllers
             var subject = _subjectRepository.FindSubjectById(id);
             _subjectRepository.RemoveSubject(subject);
             return RedirectToAction(nameof(Index), new { Message = AdminMessageId.RemoveSubjectSuccess });
+        }
+
+
+        [HttpPost]
+        public JsonResult NotifyEveryone(string message)
+        {
+            var user = GetCurrentUserAsync().Result;
+            if (user == null || user.Status != 2)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Nie możesz tego zrobić!");
+            }
+
+            var allUsers = _userRepository.GetAllUsers().ToList();
+            _notificationRepository.AddNotificationToMultipleUsers(message, allUsers);
+
+            Response.StatusCode = (int)HttpStatusCode.OK;
+            return Json("Wysłano wszystkim podaną notyfikację.");
         }
 
         #region Helpers
