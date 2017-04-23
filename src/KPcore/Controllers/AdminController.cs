@@ -141,8 +141,7 @@ namespace KPcore.Controllers
             Response.StatusCode = (int)HttpStatusCode.OK;
             return Json("Wysłano wszystkim podaną notyfikację.");
         }
-
-
+        
         [HttpPost]
         public JsonResult CleanSeenNotifications()
         {
