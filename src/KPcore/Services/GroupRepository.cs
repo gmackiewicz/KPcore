@@ -30,17 +30,9 @@ namespace KPcore.Services
                 .Where(sg => sg.StudentId == userid).ToList();
         }
 
-        public void AddUserToGroup(int groupId, int newMemberId, bool leader)
+        public void AddUserToGroup(int groupId, int newMemberId)
         {
-            var studentGroup = new StudentGroup
-            {
-                GroupId = groupId,
-                StudentId = newMemberId,
-                Leader = leader
-            };
-
-            _dbContext.StudentGroups.Add(studentGroup);
-            _dbContext.SaveChanges();
+            _dbContext.Database.ExecuteSqlCommand($"[dbo].[AddStudentGroup] @GroupId = '{groupId}', @StudentId = '{newMemberId}'");
         }
 
         public Group GetGroupById(int? groupId)

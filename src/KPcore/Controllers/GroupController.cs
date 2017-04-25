@@ -307,7 +307,7 @@ namespace KPcore.Controllers
             }
 
             var group = _groupRepository.GetGroupById(model.GroupId);
-            _groupRepository.AddUserToGroup(group.Id, model.SelectedUser, false);
+            _groupRepository.AddUserToGroup(group.Id, model.SelectedUser);
 
             var notificationMsg = $"Zostałeś dodany do grupy [{group.Id}] {group.Name}.";
             _notificationRepository.AddNotificationToUser(notificationMsg, model.SelectedUser);
