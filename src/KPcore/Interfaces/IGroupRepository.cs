@@ -8,7 +8,7 @@ namespace KPcore.Interfaces
         IEnumerable<ApplicationUser> GetAllMembers(int groupId = 0);
         void CreateGroup(Group group, int creator);
         IEnumerable<StudentGroup> GetAllUsersGroup(int userid);
-        void AddUserToGroup(int groupId, int newMemberId, bool leader);
+        void AddUserToGroup(int groupId, int newMemberId);
         Group GetGroupById(int? groupId);
         IEnumerable<ApplicationUser> GetStudentsOfGroup(int? groupId);
         ApplicationUser GetLeader(int? groupId);
